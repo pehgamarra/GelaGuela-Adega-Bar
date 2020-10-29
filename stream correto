@@ -1,13 +1,15 @@
 package help;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+
+import programWindow.ApplicationView;
 
 public class Db {
 
@@ -37,13 +39,13 @@ public class Db {
 	}
 
 	private static Properties loadProperties() {
-		try (FileInputStream fs = new FileInputStream("db.properties")) {
-			Properties props = new Properties();
-			props.load(fs);
-			return props;
-		} catch (IOException e) {
-			throw new DbException(e.getMessage());
-		}
+	    try (InputStream is = ApplicationView.class.getClassLoader().getResourceAsStream("db.properties")) {
+	        Properties props = new Properties();
+	        props.load(is);
+	        return props;
+	    } catch (IOException e) {
+	        throw new DbException(e.getMessage()); 
+	    }
 	}
 
 	public static void closeStatement(Statement st) {

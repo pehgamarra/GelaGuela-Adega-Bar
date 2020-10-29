@@ -1,0 +1,14 @@
+	public void refreshtableTodosOsProdutos() {
+		try {
+			String query = "SELECT * FROM gelaguela.todosprodutos";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			tableProdutosNaAdega.setModel(DbUtils.resultSetToTableModel(rs));
+
+			pst.close();
+			rs.close();
+
+		} catch (Exception g) {
+			g.printStackTrace();
+		}
+	}
