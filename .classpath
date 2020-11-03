@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Pedro/Pictures/Camera Roll/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/java-lips/jdbc-connectors/mysql-connector-java-5.1.49.jar"/>
+	<classpathentry kind="lib" path="C:/java-lips/JTattoo-1.6.13.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQLConnector"/>
 	<classpathentry kind="lib" path="C:/java-lips/jdbc-connectors/rs2xml.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rs2xml"/>
