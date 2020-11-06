@@ -1,253 +1,101 @@
 
 		//
-		// TodosOsProdutos
+		//
+		//VENDA ATACADO
 		//
 		//
 
-		JMenuBar menuBarTodosOsProdutos = new JMenuBar();
-		menuBarTodosOsProdutos.setBounds(0, 0, 934, 22);
-		menuBarTodosOsProdutos.setBackground(Color.LIGHT_GRAY);
-		todosOsProdutos.add(menuBarTodosOsProdutos);
+		JMenuBar menuBarVendaPersonalizada = new JMenuBar();
+		menuBarVendaPersonalizada.setBounds(0, 0, 934, 22);
+		menuBarVendaPersonalizada.setBackground(Color.LIGHT_GRAY);
+		vendaPersonalizada.add(menuBarVendaPersonalizada);
 
-		JMenu mnProdutosTodosOsProdutos = new JMenu("Produtos");
-		mnProdutosTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
-		menuBarTodosOsProdutos.add(mnProdutosTodosOsProdutos);
+		JMenu mnProdutosVendaPersonalizada = new JMenu("Produtos");
+		mnProdutosVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarVendaPersonalizada.add(mnProdutosVendaPersonalizada);
 
-		JMenuItem mntmProdutosNaAdegaTodosOsProdutos = new JMenuItem("Produtos na Adega");
-		mntmProdutosNaAdegaTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmProdutosNaAdegaVendaPersonalizada = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				produtosNaAdega.setVisible(true);
-				todosOsProdutos.setVisible(false);
+				vendaPersonalizada.setVisible(false);
 			}
 		});
-		mntmProdutosNaAdegaTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
-		mnProdutosTodosOsProdutos.add(mntmProdutosNaAdegaTodosOsProdutos);
+		mntmProdutosNaAdegaVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosVendaPersonalizada.add(mntmProdutosNaAdegaVendaPersonalizada);
 
-		JMenuItem mntmTodosOsProdutosTodosOsProdutos = new JMenuItem("Produtos Em Estoque");
-		mntmTodosOsProdutosTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmProdutosEmEstoqueVendaPersonalizada = new JMenuItem("Produtos Em Estoque");
+		mntmProdutosEmEstoqueVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				todosOsProdutos.setVisible(false);
+				vendaPersonalizada.setVisible(false);
 				produtosEmEstoque.setVisible(true);
 			}
 		});
-		mntmTodosOsProdutosTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
-		mnProdutosTodosOsProdutos.add(mntmTodosOsProdutosTodosOsProdutos);
+		mntmProdutosEmEstoqueVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosVendaPersonalizada.add(mntmProdutosEmEstoqueVendaPersonalizada);
 
-		JMenuItem mntmTodosProdutosTodosOsProdutos = new JMenuItem("Todos Produtos");
-		mntmTodosProdutosTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmTodosOsProdutosVendaPersonalizada;
+		mntmTodosOsProdutosVendaPersonalizada = new JMenuItem("Todos Produtos");
+		mntmTodosOsProdutosVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				todosOsProdutos.setVisible(false);
-				todosProdutos.setVisible(true);
 			}
 		});
+		mntmTodosOsProdutosVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosVendaPersonalizada.add(mntmTodosOsProdutosVendaPersonalizada);
 
-		JMenuItem mntmTodosOsProdutos = new JMenuItem("Produtos para Comprar");
-		mntmTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
-		mnProdutosTodosOsProdutos.add(mntmTodosOsProdutos);
-		mntmTodosProdutosTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
-		mnProdutosTodosOsProdutos.add(mntmTodosProdutosTodosOsProdutos);
-
-		JMenu mnVenderTodosOsProdutos = new JMenu("Vender");
-		mnVenderTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
-		menuBarTodosOsProdutos.add(mnVenderTodosOsProdutos);
-
-		JMenuItem mntmVendaVarejoTodosOsProdutos = new JMenuItem("Venda Varejo");
-		mntmVendaVarejoTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmProdutosParaComprarVendaPersonalizada = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				todosOsProdutos.setVisible(false);
+				vendaPersonalizada.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosVendaPersonalizada.add(mntmProdutosParaComprarVendaPersonalizada);
+
+		JMenu mnVenderVendaPersonalizada = new JMenu("Vender");
+		mnVenderVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarVendaPersonalizada.add(mnVenderVendaPersonalizada);
+
+		JMenuItem mntmVendaVarejoVendaPersonalizada = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoVendaPersonalizada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
 				vendaVarejo.setVisible(true);
 			}
 		});
-		mntmVendaVarejoTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
-		mnVenderTodosOsProdutos.add(mntmVendaVarejoTodosOsProdutos);
+		mntmVendaVarejoVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderVendaPersonalizada.add(mntmVendaVarejoVendaPersonalizada);
 
-		JMenuItem mntmVendaAtacadoTodosOsProdutos = new JMenuItem("Venda Atacado");
-		mntmVendaAtacadoTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmVendaPersonalizadaVendaPersonalizada = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				todosOsProdutos.setVisible(false);
-				vendaAtacado.setVisible(true);
-			}
-		});
-		mntmVendaAtacadoTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
-		mnVenderTodosOsProdutos.add(mntmVendaAtacadoTodosOsProdutos);
-
-		JMenuItem mntmVendaPersonalizadaTodosOsProdutos = new JMenuItem("Venda Personalizada");
-		mntmVendaPersonalizadaTodosOsProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				todosOsProdutos.setVisible(false);
+				vendaPersonalizada.setVisible(false);
 				vendaPersonalizada.setVisible(true);
 			}
 		});
-		mntmVendaPersonalizadaTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
-		mnVenderTodosOsProdutos.add(mntmVendaPersonalizadaTodosOsProdutos);
+		
+		JMenuItem mntmVendaPersonalizadaVendaPersonalizada = new JMenuItem("Venda Atacado");
+		mntmVendaPersonalizadaVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderVendaPersonalizada.add(mntmVendaPersonalizadaVendaPersonalizada);
+		mntmVendaPersonalizadaVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderVendaPersonalizada.add(mntmVendaPersonalizadaVendaPersonalizada);
 
-		JMenu mnFinanceiroTodosOsProdutos = new JMenu("Financeiro");
-		mnFinanceiroTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\US-dollar-icon (1).png"));
-		menuBarTodosOsProdutos.add(mnFinanceiroTodosOsProdutos);
+		JMenu mnFinanceiroVendaPersonalizada = new JMenu("Financeiro");
+		mnFinanceiroVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\US-dollar-icon (1).png"));
+		menuBarVendaPersonalizada.add(mnFinanceiroVendaPersonalizada);
 
-		JMenu mnAjudaTodosOsProdutos = new JMenu("Ajuda");
-		mnAjudaTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
-		menuBarTodosOsProdutos.add(mnAjudaTodosOsProdutos);
+		JMenu mnAjudaVendaPersonalizada = new JMenu("Ajuda");
+		mnAjudaVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarVendaPersonalizada.add(mnAjudaVendaPersonalizada);
 
-		JMenuItem mntmDadosDaVersaoTodosOsProdutos = new JMenuItem("Dados da Vers\u00E3o");
-		mntmDadosDaVersaoTodosOsProdutos.addActionListener(new ActionListener() {
+		JMenuItem mntmDadosDaVersaoVendaPersonalizada = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
 						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
 						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		mntmDadosDaVersaoTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
-		mnAjudaTodosOsProdutos.add(mntmDadosDaVersaoTodosOsProdutos);
-
-		JScrollPane scrollPaneTodosOsProdutos = new JScrollPane();
-		scrollPaneTodosOsProdutos.setBounds(274, 77, 500, 471);
-		todosOsProdutos.add(scrollPaneTodosOsProdutos);
-
-		JTable tableTodosOsProdutos = new JTable();
-		scrollPaneTodosOsProdutos.setViewportView(tableTodosOsProdutos);
-
-		JButton btnListarTodosOsProdutos = new JButton("Mostrar Lista de Compras");
-		btnListarTodosOsProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String query = "SELECT * FROM gelaguela.todosprodutos";
-					PreparedStatement pst = conexao.prepareStatement(query);
-					ResultSet rs = pst.executeQuery();
-					tableTodosOsProdutos.setModel(DbUtils.resultSetToTableModel(rs));
-
-					pst.close();
-					rs.close();
-
-				} catch (Exception g) {
-					g.printStackTrace();
-				}
-			}
-		});
-		btnListarTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-down-icon.png"));
-		btnListarTodosOsProdutos.setBounds(274, 33, 200, 33);
-		todosOsProdutos.add(btnListarTodosOsProdutos);
-
-		JLabel lblIdTodosOsProdutos = new JLabel("ID do Produto : ");
-		lblIdTodosOsProdutos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblIdTodosOsProdutos.setBounds(39, 85, 97, 20);
-		todosOsProdutos.add(lblIdTodosOsProdutos);
-
-		JLabel lblNomeTodosOsProdutos = new JLabel("Nome :");
-		lblNomeTodosOsProdutos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNomeTodosOsProdutos.setBounds(85, 115, 48, 20);
-		todosOsProdutos.add(lblNomeTodosOsProdutos);
-
-		JLabel lblQuantidadeTodosOsProdutos = new JLabel("Quantidade (UN) :");
-		lblQuantidadeTodosOsProdutos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblQuantidadeTodosOsProdutos.setBounds(25, 145, 109, 20);
-		todosOsProdutos.add(lblQuantidadeTodosOsProdutos);
-
-		JLabel lblPrecoTodosOsProdutos = new JLabel("Pre\u00E7o :");
-		lblPrecoTodosOsProdutos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPrecoTodosOsProdutos.setBounds(86, 175, 48, 20);
-		todosOsProdutos.add(lblPrecoTodosOsProdutos);
-
-		JTextField textFieldIdTodosOsProdutos = new JTextField();
-		textFieldIdTodosOsProdutos.setBounds(154, 85, 86, 20);
-		todosOsProdutos.add(textFieldIdTodosOsProdutos);
-		textFieldIdTodosOsProdutos.setColumns(10);
-
-		JTextField textFieldNomeTodosOsProdutos = new JTextField();
-		textFieldNomeTodosOsProdutos.setBounds(154, 115, 86, 20);
-		todosOsProdutos.add(textFieldNomeTodosOsProdutos);
-		textFieldNomeTodosOsProdutos.setColumns(10);
-
-		JTextField textFieldQuantidadeTodosOsProdutos = new JTextField();
-		textFieldQuantidadeTodosOsProdutos.setBounds(154, 145, 86, 20);
-		todosOsProdutos.add(textFieldQuantidadeTodosOsProdutos);
-		textFieldQuantidadeTodosOsProdutos.setColumns(10);
-
-		JTextField textFieldPrecoTodosOsProdutos = new JTextField();
-		textFieldPrecoTodosOsProdutos.setBounds(154, 175, 86, 20);
-		todosOsProdutos.add(textFieldPrecoTodosOsProdutos);
-		textFieldPrecoTodosOsProdutos.setColumns(10);
-
-		JButton btnAdicionarTodosOsProdutos = new JButton("Adicionar");
-		btnAdicionarTodosOsProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String query = "insert into todosprodutos (Id, Nome, Unidades, Preço) values (?, ?, ?, ?)";
-					PreparedStatement pst = conexao.prepareStatement(query);
-					pst.setString(1, textFieldIdTodosOsProdutos.getText());
-					pst.setString(2, textFieldNomeTodosOsProdutos.getText());
-					pst.setString(3, textFieldQuantidadeTodosOsProdutos.getText());
-					pst.setString(4, textFieldPrecoTodosOsProdutos.getText());
-					pst.execute();
-
-					JOptionPane.showMessageDialog(null, "Salvo com sucesso !");
-
-					pst.close();
-				} catch (Exception g) {
-					g.printStackTrace();
-				}
-				refreshtableTodosOsProdutos();
-			}
-		});
-		btnAdicionarTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Export-icon.png"));
-		btnAdicionarTodosOsProdutos.setBounds(85, 225, 113, 25);
-		todosOsProdutos.add(btnAdicionarTodosOsProdutos);
-
-		JButton btnAtualizarTodosOsProdutos = new JButton("Atualizar");
-		btnAtualizarTodosOsProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String query = "Update todosprodutos set Id='" + textFieldIdTodosOsProdutos.getText()
-							+ "' ,nome = '" + textFieldNomeTodosOsProdutos.getText() + "' ,Unidades = '"
-							+ textFieldQuantidadeTodosOsProdutos.getText() + "' ,preço = '"
-							+ textFieldPrecoTodosOsProdutos.getText() + "' where Id='"
-							+ textFieldIdTodosOsProdutos.getText() + "'  ";
-					PreparedStatement pst = conexao.prepareStatement(query);
-					pst.execute();
-
-					JOptionPane.showMessageDialog(null, "Atualizado com sucesso !");
-
-					pst.close();
-				} catch (Exception g) {
-					g.printStackTrace();
-				}
-				refreshtableTodosOsProdutos();
-			}
-		});
-		btnAtualizarTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Files-Check-File-icon.png"));
-		btnAtualizarTodosOsProdutos.setBounds(85, 260, 113, 25);
-		todosOsProdutos.add(btnAtualizarTodosOsProdutos);
-
-		JButton btnDeletarTodosOsProdutos = new JButton("Deletar");
-		btnDeletarTodosOsProdutos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String query = "delete from todosprodutos where Id='"
-							+ textFieldIdTodosOsProdutos.getText() + "' ";
-					PreparedStatement pst = conexao.prepareStatement(query);
-					pst.execute();
-					JOptionPane.showMessageDialog(null, "Produto Deletado !", "", JOptionPane.ERROR_MESSAGE);
-					pst.close();
-				} catch (Exception g) {
-					g.printStackTrace();
-				}
-				refreshtableTodosOsProdutos();
-			}
-		});
-		btnDeletarTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
-		btnDeletarTodosOsProdutos.setBounds(85, 295, 113, 25);
-		todosOsProdutos.add(btnDeletarTodosOsProdutos);
-
-		JLabel lblGelaGuelaImageTodosOsProdutos = new JLabel("");
-		lblGelaGuelaImageTodosOsProdutos
-				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\gelaimages.jpg"));
-		lblGelaGuelaImageTodosOsProdutos.setBounds(10, 328, 249, 217);
-		todosOsProdutos.add(lblGelaGuelaImageTodosOsProdutos);
-		telaDeLogin.setLayout(null);
+		mntmDadosDaVersaoVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaVendaPersonalizada.add(mntmDadosDaVersaoVendaPersonalizada);

@@ -1,0 +1,142 @@
+		//
+		//
+		// TELA DE LOGIN
+		//
+		//
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.setBackground(Color.DARK_GRAY);
+		btnEntrar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_NUMPAD1) {
+					btnEntrar.addActionListener(new ActionListener() {
+						@SuppressWarnings("deprecation")
+						public void actionPerformed(ActionEvent e) {
+							if (checkLogin(textLogin.getText(), new String(txtSenha.getText()))) {
+								menuInicial.setVisible(true);
+								telaDeLogin.setVisible(false);
+								mntmProdutosEmEstoqueMenuInicial.setVisible(false);
+								mntmProdutosParaComprarMenuInicial.setVisible(false);
+								mntmProdutosEmEstoqueProdutosNaAdega.setVisible(false);
+								mntmProdutosParaComprarProdutosNaAdega.setVisible(false);
+								mntmTodosOsProdutosProdutosEmEstoque.setVisible(false);
+								mntmProdutosParaComprarProdutosNaAdega.setVisible(false);
+								mntmTodosOsProdutosProdutosParaComprar.setVisible(false);
+								mnFinanceiroMenuInicial.setVisible(false);
+								mntmVendaAtacadoMenuInicial.setVisible(false);
+								mntmVendaPersonalizadaMenuInicial.setVisible(false);
+								mnFinanceiroProdutosNaAdega.setVisible(false);
+								mntmVendaAtacadoProdutosNaAdega.setVisible(false);
+								mntmVendaPersonalizadaProdutosNaAdega.setVisible(false);
+								mnFinanceiroTodosOsProdutos.setVisible(false);
+								mntmVendaAtacadoTodosOsProdutos.setVisible(false);
+								mntmVendaPersonalizadaTodosOsProdutos.setVisible(false);
+								btnEntrar.getRootPane().setDefaultButton(btnEntrar);
+							} else if (checkLoginADM(textLogin.getText(), new String(txtSenha.getText()))) {
+								menuInicial.setVisible(true);
+								telaDeLogin.setVisible(false);
+								mntmProdutosNaAdegaMenuInicial.setVisible(false);
+								btnEntrar.getRootPane().setDefaultButton(btnEntrar);
+							} else {
+								JOptionPane.showMessageDialog(null, "Dados inválidos!", "ERRO!!", JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
+					});
+				}
+			}
+		});
+		btnEntrar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-dialog-ok-apply-icon.png"));
+		btnEntrar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				if (checkLogin(textLogin.getText(), new String(txtSenha.getText()))) {
+					menuInicial.setVisible(true);
+					telaDeLogin.setVisible(false);
+					mntmProdutosEmEstoqueMenuInicial.setVisible(false);
+					mntmProdutosParaComprarMenuInicial.setVisible(false);
+					mntmProdutosEmEstoqueProdutosNaAdega.setVisible(false);
+					mntmProdutosParaComprarProdutosNaAdega.setVisible(false);
+					mntmTodosOsProdutosProdutosEmEstoque.setVisible(false);
+					mntmProdutosParaComprarProdutosNaAdega.setVisible(false);
+					mntmTodosOsProdutosProdutosParaComprar.setVisible(false);
+					mnFinanceiroMenuInicial.setVisible(false);
+					mntmVendaAtacadoMenuInicial.setVisible(false);
+					mntmVendaPersonalizadaMenuInicial.setVisible(false);
+					mnFinanceiroProdutosNaAdega.setVisible(false);
+					mntmVendaAtacadoProdutosNaAdega.setVisible(false);
+					mntmVendaPersonalizadaProdutosNaAdega.setVisible(false);
+					mnFinanceiroTodosOsProdutos.setVisible(false);
+					mntmVendaAtacadoTodosOsProdutos.setVisible(false);
+					mntmVendaPersonalizadaTodosOsProdutos.setVisible(false);
+					btnEntrar.getRootPane().setDefaultButton(btnEntrar);
+				} else if (checkLoginADM(textLogin.getText(), new String(txtSenha.getText()))) {
+					menuInicial.setVisible(true);
+					telaDeLogin.setVisible(false);
+					btnEntrar.getRootPane().setDefaultButton(btnEntrar);
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Dados inválidos!", "ERRO!!", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+			@SuppressWarnings("unused")
+			public void keyPressed(KeyEvent e) {
+				btnEntrar.getRootPane().setDefaultButton(btnEntrar);
+			}
+		});
+		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnEntrar.setForeground(Color.WHITE);
+		btnEntrar.setBounds(465, 221, 101, 20);
+		telaDeLogin.add(btnEntrar);
+
+		JLabel lblNewLabelLogin = new JLabel("Login");
+		lblNewLabelLogin.setForeground(Color.WHITE);
+		lblNewLabelLogin.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		lblNewLabelLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabelLogin.setBounds(359, 150, 83, 23);
+		telaDeLogin.add(lblNewLabelLogin);
+
+		textLogin = new JTextField();
+		textLogin.setSelectionColor(Color.WHITE);
+		textLogin.setOpaque(false);
+		textLogin.setBounds(444, 150, 145, 23);
+		telaDeLogin.add(textLogin);
+		textLogin.setColumns(10);
+
+		JLabel lblNewLabelSenha = new JLabel("Senha");
+		lblNewLabelSenha.setForeground(Color.WHITE);
+		lblNewLabelSenha.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\key-icon (1).png"));
+		lblNewLabelSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabelSenha.setBounds(359, 190, 83, 20);
+		telaDeLogin.add(lblNewLabelSenha);
+		
+		txtSenha = new JPasswordField();
+		txtSenha.setOpaque(false);
+		txtSenha.setForeground(Color.WHITE);
+		txtSenha.setSelectionColor(Color.WHITE);
+		txtSenha.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtSenha.getRootPane().setDefaultButton(btnEntrar);
+			}
+		});
+		txtSenha.setBackground(Color.WHITE);
+		txtSenha.setEchoChar('*');
+		txtSenha.setColumns(10);
+		txtSenha.setBounds(444, 190, 145, 20);
+		telaDeLogin.add(txtSenha);
+
+		JLabel lblNewLabelImagemDeFundo = new JLabel("");
+		lblNewLabelImagemDeFundo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Blue-Label-e1489370807665.jpg"));
+		lblNewLabelImagemDeFundo.setBounds(0, -22, 789, 630);
+		telaDeLogin.add(lblNewLabelImagemDeFundo);
+
+	}
+
+	public boolean checkLogin(String login, String senha) {
+		return login.equals("user") && senha.equals("123");
+	}
+	public boolean checkLoginADM(String login, String senha) {
+		return login.equals("junior") && senha.equals("gabriela");
+	}
