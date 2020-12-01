@@ -1,7 +1,0 @@
-if(!textFieldNomeProdutosParaComprar.getText().equals("")) {
-							if(!textFieldQuantidadeProdutosParaComprar.getText().equals("")) {
-								if(!textFieldPrecoProdutosParaComprar.getText().equals("")) {
-
-								}else JOptionPane.showMessageDialog(null, "Preço vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
-							}else JOptionPane.showMessageDialog(null, "Quantidade vazia !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
-						}else JOptionPane.showMessageDialog(null, "Nome vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
