@@ -19,6 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -32,6 +34,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -44,10 +47,10 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.toedter.calendar.JCalendar;
 
 import help.Db;
 import net.proteanit.sql.DbUtils;
-import javax.swing.JRadioButton;
 
 public class ApplicationView {
 	
@@ -101,6 +104,7 @@ public class ApplicationView {
 	private JTextField txt_NmrVendaVendaPersonalizada;
 	private Double valorCarrinhoVarejo =0.0;
 	private Double valorCarrinhoPersonalizada = 0.0;
+	private Double valorCarrinhoAtacado = 0.0;
 	private JTextField txtValorTotal;
 	private JTable table_ProdutoVendaVarejo;
 	private JTextField textFieldProdutoVendaVarejo;
@@ -112,9 +116,55 @@ public class ApplicationView {
 	private JTextField textField_TrocoVendaVarejo;
 	private JTextField textFieldIDProdutoVendaVarejo;
 	private JTextField textFieldVendaVendaVarejo;
-	
-	
-
+	private JTable tableClientesClientes;
+	private JTextField textFieldNmrDeCliente;
+	private JTextField textField_NomeDoClienteCliente;
+	private JTextField textField_EmpresaCliente;
+	private JTextField textField_EmailCliente;
+	private JTextField textField_Telefone1Cliente;
+	private JTextField textField_Telefone2Cliente;
+	private JTextField textField_CPFCliente;
+	private JTextField textField_EnderecoCliente;
+	private JTextField textField_NmrCliente;
+	private JTextField textField_TelEmpresaCliente;
+	private JTextField textField_CNPJCliente;
+	private JTextField textField_BairroCliente;
+	private JTextField textField_CidadeCliente;
+	private JTextField textFieldIDCliente;
+	private JTable tableNmrClientes;
+	private JTable tableRelatorioDeVendas;
+	private JTextField textFieldNumeroDaVendaRelatorioDeVendas;
+	private JTextField textFieldDiaRelatorioDeVendas;
+	private JTextField textFieldMesRelatorioDeVendas;
+	private JTextField textFieldAnoRelatorioDeVendas;
+	private JTable tableRelatorioDeProdutos;
+	private JTable tableRelatorioDeProdutosAtacado;
+	private JTextField textFieldNomeDoProdutoRelatorioDeProdutosAtacado;
+	private JTextField textFieldIdDoProdutoRelatorioDeProdutosAtacado;
+	private JTable tableListaDeProdutosRelatorioDeProdutos;
+	private JTable tableListaDeProdutosRelatorioDeProdutosAtacado;
+	private JTextField textFieldMesRelatorioRelatorioDeProdutosAtacado;
+	private JTextField textFieldAnoRelatorioRelatorioDeProdutosAtacado;
+	private JTextField textFieldPagarFuncionarioBancoFinanceiro;
+	private JTextField txtQuantiaNoCofreBancoFinanceiro;
+	private JTable tableListaDeFuncionariosBancoFinanceiro;
+	private JTextField textField_RealizarRetiradaBancoFinanceiro;
+	private JTextField textField_RealizarDepositoBancoFinanceiro;
+	private JTextField textFieldIDFuncionarioBancoFinanceiro;
+	private JTextField textFieldNomeFuncionarioBancoFinanceiro;
+	private JTextField textFieldAteDiaRelatorioDeVendas;
+	private JTextField textFieldAteMesRelatorioDeVendas;
+	private JTextField textFieldAteAnoRelatorioDeVendas;
+	private JTextField textFieldMesBancoFinanceiro;
+	private JTextField textFieldAnoBancoFinanceiro;
+	private JRadioButton rdbtnDetalharBancoFinanceiro;
+	private JTextField textFieldIdProdutosParaComprar;
+	private JTextField textFieldNomeProdutosParaComprar;
+	private JTextField textFieldQuantidadeProdutosParaComprar;
+	private JTextField textFieldPrecoProdutosParaComprar;
+	private JTextField textFieldIdTodosOsProdutos;
+	private JTextField textFieldNomeTodosOsProdutos;
+	private JTextField textFieldPrecoTodosOsProdutos;
 
 	/**
 	 * Launch the application.
@@ -158,10 +208,13 @@ public class ApplicationView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime now = LocalDateTime.now();
+		String data = dtf.format(now);
 		frmGelaGuelaBar = new JFrame();
 		frmGelaGuelaBar.setResizable(false);
-		frmGelaGuelaBar.setTitle("Gela Guela Bar & Adega - Application");
-		frmGelaGuelaBar.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		frmGelaGuelaBar.setTitle("Gela Guela Bar & Adega - Application                                                                                                                                                    " + data);
+		frmGelaGuelaBar.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\gelaimages.jpg"));
 		frmGelaGuelaBar.setBackground(Color.BLACK);
 		frmGelaGuelaBar.setBounds(100, 100, 798, 595);
 		frmGelaGuelaBar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -204,36 +257,22 @@ public class ApplicationView {
 		JPanel vendaPersonalizada = new JPanel();
 		frmGelaGuelaBar.getContentPane().add(vendaPersonalizada, "name_10251987733900");
 		vendaPersonalizada.setLayout(null);
-
-		JPanel fluxoDeCaixa = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(fluxoDeCaixa, "name_10261460448500");
-		fluxoDeCaixa.setLayout(null);
-
-		JPanel entrada = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(entrada, "name_10265053203100");
-		entrada.setLayout(null);
-
-		JPanel saida = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(saida, "name_10266988574700");
-		saida.setLayout(null);
-
-		JPanel custoXvenda = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(custoXvenda, "name_10268519796800");
-		custoXvenda.setLayout(null);
-
-		JPanel orcamentoDiario = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(orcamentoDiario, "name_10271596026600");
-		orcamentoDiario.setLayout(null);
-
-		JPanel orcamentoMensal = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(orcamentoMensal, "name_10393550066500");
-		orcamentoMensal.setLayout(null);
-
-		JPanel orcamentoAnual = new JPanel();
-		frmGelaGuelaBar.getContentPane().add(orcamentoAnual, "name_10409225634100");
-		orcamentoAnual.setLayout(null);
 		
+		JPanel clientesAtacado = new JPanel();
+		frmGelaGuelaBar.getContentPane().add(clientesAtacado, "name_152240224685300");
 		
+		JPanel relatorioDeVendas = new JPanel();
+		frmGelaGuelaBar.getContentPane().add(relatorioDeVendas, "name_1447314359100");
+
+		JPanel relatorioDeProdutosAtacado = new JPanel();
+		frmGelaGuelaBar.getContentPane().add(relatorioDeProdutosAtacado, "name_177844535578300");
+		
+		JPanel relatorioDeProdutosVarejo = new JPanel();
+		frmGelaGuelaBar.getContentPane().add(relatorioDeProdutosVarejo, "name_156871579121900");
+		relatorioDeProdutosVarejo.setLayout(null);
+		
+		JPanel bancoFinanceiro = new JPanel();
+		frmGelaGuelaBar.getContentPane().add(bancoFinanceiro, "name_862446212671800");
 		
 		
 		//
@@ -335,6 +374,12 @@ public class ApplicationView {
 		menuBarMenuInicial.add(mnClientesMenuInicial);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(false);
+				clientesAtacado.setVisible(true);
+			}
+		});
 		mntmNewMenuItem.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesMenuInicial.add(mntmNewMenuItem);
 
@@ -342,6 +387,50 @@ public class ApplicationView {
 		mnFinanceiroMenuInicial.setIcon(
 				new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarMenuInicial.add(mnFinanceiroMenuInicial);
+		
+		JMenuItem mntmNewMenuRelatorioDeVendasMenuInicial = new JMenuItem("Relatorio De Vendas");
+		mntmNewMenuRelatorioDeVendasMenuInicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmNewMenuRelatorioDeVendasMenuInicial.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroMenuInicial.add(mntmNewMenuRelatorioDeVendasMenuInicial);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu = new JMenu("Relatorio de Produtos");
+		mnNewMenu.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroMenuInicial.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosMenuInicial = new JMenuItem("Atacado");
+		mnNewMenu.add(mntmNewMenuItemRelatorioDeProdutosMenuInicial);
+		mntmNewMenuItemRelatorioDeProdutosMenuInicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosMenuInicial.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Varejo");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_3.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu.add(mntmNewMenuItem_3);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroMenuInicial.add(mntmNewMenuItemBancoFinanceiroMenuUnicial);
 
 		JMenu mnAjudaMenuInicial = new JMenu("Ajuda");
 		mnAjudaMenuInicial.setIcon(
@@ -462,12 +551,62 @@ public class ApplicationView {
 		menuBarProdutosNaAdega.add(mnClientesProdutosNaAdega);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				produtosNaAdega.setVisible(false);
+			}
+		});
 		mntmNewMenuItem_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesProdutosNaAdega.add(mntmNewMenuItem_1);
 
 		JMenu mnFinanceiroProdutosNaAdega = new JMenu("Financeiro");
 		mnFinanceiroProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarProdutosNaAdega.add(mnFinanceiroProdutosNaAdega);
+		
+		JMenuItem mntmRelatorioDeVendasProdutosNaAdega = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasProdutosNaAdega.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosNaAdega.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroProdutosNaAdega.add(mntmRelatorioDeVendasProdutosNaAdega);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_1 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosNaAdega.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroProdutosNaAdega.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega = new JMenuItem("Atacado");
+		mnNewMenu_1.add(mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega);
+		mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosNaAdega.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo = new JMenuItem("Varejo");
+		mntmVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosNaAdega.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1.add(mntmVarejo);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroProdutosNaAdega.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_1);
 
 		JMenu mnAjudaProdutosNaAdega = new JMenu("Ajuda");
 		mnAjudaProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -519,7 +658,6 @@ public class ApplicationView {
 		produtosNaAdega.add(btnListarProdutosNaAdega);
 
 		JLabel lblIdProdutosNaAdega = new JLabel("ID do Produto : ");
-		lblIdProdutosNaAdega.setVisible(false);
 		lblIdProdutosNaAdega.setForeground(Color.WHITE);
 		lblIdProdutosNaAdega.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblIdProdutosNaAdega.setBounds(39, 85, 97, 20);
@@ -544,7 +682,6 @@ public class ApplicationView {
 		produtosNaAdega.add(lblPrecoProdutosNaAdega);
 
 		textFieldIdProdutosNaAdega = new JTextField();
-		textFieldIdProdutosNaAdega.setVisible(false);
 		textFieldIdProdutosNaAdega.setBounds(154, 85, 86, 20);
 		produtosNaAdega.add(textFieldIdProdutosNaAdega);
 		textFieldIdProdutosNaAdega.setColumns(10);
@@ -585,6 +722,7 @@ public class ApplicationView {
 									JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
 								}
 								refreshtableProdutosNaAdega();
+								limpadorDeDadosProdutosNaAdega();
 	
 							}else JOptionPane.showMessageDialog(null, "Preço vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}else JOptionPane.showMessageDialog(null, "Quantidade vazia !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -620,6 +758,7 @@ public class ApplicationView {
 										JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
 									}
 									refreshtableProdutosNaAdega();
+									limpadorDeDadosProdutosNaAdega();
 								}else JOptionPane.showMessageDialog(null, "Preço vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 							}else JOptionPane.showMessageDialog(null, "Quantidade vazia !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}else JOptionPane.showMessageDialog(null, "Nome vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -650,7 +789,7 @@ public class ApplicationView {
 								JOptionPane.showMessageDialog(null, "Selecione o Produto na tabela para deletar !"); g.printStackTrace();
 							}
 							refreshtableProdutosNaAdega();
-	
+							limpadorDeDadosProdutosNaAdega();
 						}else JOptionPane.showMessageDialog(null, "Selecione o Produto na tabela para deletar !", "ERRO!", JOptionPane.WARNING_MESSAGE);
 					}
 				}
@@ -677,25 +816,25 @@ public class ApplicationView {
 			}
 		});
 		btnNewButtonExitProdutosNaAdega.setContentAreaFilled(false);
-		btnNewButtonExitProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Arrows-Undo-icon.png"));
+		btnNewButtonExitProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVoltaPreto.png"));
 		btnNewButtonExitProdutosNaAdega.setBounds(0, 23, 16, 16);
 		produtosNaAdega.add(btnNewButtonExitProdutosNaAdega);
 		telaDeLogin.setLayout(null);
 
 		JLabel lblGelaGuelaImageProdutosNaAdega = new JLabel("");
-		lblGelaGuelaImageProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\1111111111111111111111111111111111.jpg"));
+		lblGelaGuelaImageProdutosNaAdega.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoAdega.jpg"));
 		lblGelaGuelaImageProdutosNaAdega.setBounds(-300, 11, 753, 662);
 		produtosNaAdega.add(lblGelaGuelaImageProdutosNaAdega);
 		
 		JLabel lblNewLabel_Fundo1 = new JLabel("");
-		lblNewLabel_Fundo1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\vede.jpg"));
+		lblNewLabel_Fundo1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\fundo1Adega.jpg"));
 		lblNewLabel_Fundo1.setBounds(363, 329, 439, 243);
 		produtosNaAdega.add(lblNewLabel_Fundo1);
 		
-		JLabel lblNewLabel_6 = new JLabel("");
-		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\FundoDaJackApple2jpg.jpg"));
-		lblNewLabel_6.setBounds(412, -66, 379, 402);
-		produtosNaAdega.add(lblNewLabel_6);
+		JLabel lblNewLabel_Fundo2 = new JLabel("");
+		lblNewLabel_Fundo2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\fundoAdega2.jpg"));
+		lblNewLabel_Fundo2.setBounds(412, -66, 379, 402);
+		produtosNaAdega.add(lblNewLabel_Fundo2);
 		telaDeLogin.setLayout(null);
 		
 		textFieldUnidadesProdutosEmEstoque = new JTextField();
@@ -802,12 +941,62 @@ public class ApplicationView {
 		menuBarProdutosEmEstoque.add(mnClientesProdutosEmEstoque);
 		
 		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				produtosEmEstoque.setVisible(false);
+			}
+		});
 		mntmNewMenuItem_1_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesProdutosEmEstoque.add(mntmNewMenuItem_1_1);
 
 		JMenu mnFinanceiroProdutosEmEstoque = new JMenu("Financeiro");
 		mnFinanceiroProdutosEmEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarProdutosEmEstoque.add(mnFinanceiroProdutosEmEstoque);
+		
+		JMenuItem mntmRelatorioDeVendasProdutosEmEstoque = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasProdutosEmEstoque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosEmEstoque.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasProdutosEmEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroProdutosEmEstoque.add(mntmRelatorioDeVendasProdutosEmEstoque);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_2 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosEmEstoque.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_1 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroProdutosEmEstoque.add(mnNewMenu_1_1);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosProdutosEmEstoque = new JMenuItem("Atacado");
+		mnNewMenu_1_1.add(mntmNewMenuItemRelatorioDeProdutosProdutosEmEstoque);
+		mntmNewMenuItemRelatorioDeProdutosProdutosEmEstoque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosEmEstoque.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosProdutosEmEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_1 = new JMenuItem("Varejo");
+		mntmVarejo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosEmEstoque.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_1.add(mntmVarejo_1);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroProdutosEmEstoque.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_2);
 
 		JMenu mnAjudaProdutosEmEstoque = new JMenu("Ajuda");
 		mnAjudaProdutosEmEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -861,7 +1050,6 @@ public class ApplicationView {
 		produtosEmEstoque.add(btnListarProdutosEmEstoque);
 
 		JLabel lblIdProdutosEmEstoque = new JLabel("ID do Produto : ");
-		lblIdProdutosEmEstoque.setVisible(false);
 		lblIdProdutosEmEstoque.setForeground(Color.WHITE);
 		lblIdProdutosEmEstoque.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblIdProdutosEmEstoque.setBounds(44, 84, 97, 20);
@@ -880,7 +1068,6 @@ public class ApplicationView {
 		produtosEmEstoque.add(lblPrecoProdutosEmEstoque);
 
 		textFieldIdProdutosEmEstoque = new JTextField();
-		textFieldIdProdutosEmEstoque.setVisible(false);
 		textFieldIdProdutosEmEstoque.setBounds(154, 85, 86, 20);
 		produtosEmEstoque.add(textFieldIdProdutosEmEstoque);
 		textFieldIdProdutosEmEstoque.setColumns(10);
@@ -918,6 +1105,7 @@ public class ApplicationView {
 											JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
 										}
 										refreshtableProdutosEmEstoque();
+										limpadorDeDadosProdutosEmEstoque();
 									}else JOptionPane.showMessageDialog(null, "Preço vazio!!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}else JOptionPane.showMessageDialog(null, "Unidades soltas vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 					}else JOptionPane.showMessageDialog(null, "Nome do produto vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -950,6 +1138,7 @@ public class ApplicationView {
 												}
 									        
 											refreshtableProdutosEmEstoque();
+											limpadorDeDadosProdutosEmEstoque();
 										}else JOptionPane.showMessageDialog(null, "Preço vazio!!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}else JOptionPane.showMessageDialog(null, "Unidades soltas vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 					}else JOptionPane.showMessageDialog(null, "Nome do produto vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -977,6 +1166,7 @@ public class ApplicationView {
 									JOptionPane.showMessageDialog(null, "Selecione um produto da tabela para excluir!!", "ERRO!", JOptionPane.WARNING_MESSAGE); g.printStackTrace();
 								}
 								refreshtableProdutosEmEstoque();
+								limpadorDeDadosProdutosEmEstoque();
 							}else JOptionPane.showMessageDialog(null, "Selecione um produto da tabela para excluir!!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}
 					}
@@ -1001,14 +1191,14 @@ public class ApplicationView {
 			}
 		});
 		btnNewButtonExitProdutosNoEstoque.setContentAreaFilled(false);
-		btnNewButtonExitProdutosNoEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Actions-go-previous-icon.png"));
+		btnNewButtonExitProdutosNoEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVolta.png"));
 		btnNewButtonExitProdutosNoEstoque.setBounds(0, 23, 16, 16);
 		produtosEmEstoque.add(btnNewButtonExitProdutosNoEstoque);
 		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\minsk-bielorr\u00FAssia-de-julho-de-foto-editorial-da-garrafa-da-cerveja-de-corona-extra-no-fundo-de-madeira-uma-da-parte-superior-96219995.jpg"));
-		lblNewLabel_5.setBounds(-129, -11, 1008, 621);
-		produtosEmEstoque.add(lblNewLabel_5);
+		JLabel lblNewLabel_FundoProdutosNoEstoque = new JLabel("");
+		lblNewLabel_FundoProdutosNoEstoque.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\minsk-bielorr\u00FAssia-de-julho-de-foto-editorial-da-garrafa-da-cerveja-de-corona-extra-no-fundo-de-madeira-uma-da-parte-superior-96219995.jpg"));
+		lblNewLabel_FundoProdutosNoEstoque.setBounds(-129, -11, 1008, 621);
+		produtosEmEstoque.add(lblNewLabel_FundoProdutosNoEstoque);
 		telaDeLogin.setLayout(null);
 		
 
@@ -1106,12 +1296,62 @@ public class ApplicationView {
 		menuBarProdutosParaComprar.add(mnClientesProdutosParaComprar);
 		
 		JMenuItem mntmNewMenuItem_1_1_1 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				produtosParaComprar.setVisible(false);
+			}
+		});
 		mntmNewMenuItem_1_1_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesProdutosParaComprar.add(mntmNewMenuItem_1_1_1);
 
 		JMenu mnFinanceiroProdutosParaComprar = new JMenu("Financeiro");
 		mnFinanceiroProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarProdutosParaComprar.add(mnFinanceiroProdutosParaComprar);
+		
+		JMenuItem mntmRelatorioDeVendasProdutosParaComprar = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasProdutosParaComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosParaComprar.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroProdutosParaComprar.add(mntmRelatorioDeVendasProdutosParaComprar);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_3 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosParaComprar.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_2 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroProdutosParaComprar.add(mnNewMenu_1_2);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosProdutosParaComprar = new JMenuItem("Atacado");
+		mnNewMenu_1_2.add(mntmNewMenuItemRelatorioDeProdutosProdutosParaComprar);
+		mntmNewMenuItemRelatorioDeProdutosProdutosParaComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosParaComprar.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_2 = new JMenuItem("Varejo");
+		mntmVarejo_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				produtosParaComprar.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_2.add(mntmVarejo_2);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_3.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroProdutosParaComprar.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_3);
 
 		JMenu mnAjudaProdutosParaComprar = new JMenu("Ajuda");
 		mnAjudaProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -1163,24 +1403,24 @@ public class ApplicationView {
 		lblPrecoProdutosParaComprar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblPrecoProdutosParaComprar.setBounds(86, 175, 48, 20);
 		produtosParaComprar.add(lblPrecoProdutosParaComprar);
-
-		JTextField textFieldIdProdutosParaComprar = new JTextField();
+		
+		textFieldIdProdutosParaComprar= new JTextField();
 		textFieldIdProdutosParaComprar.setVisible(false);
 		textFieldIdProdutosParaComprar.setBounds(154, 85, 86, 20);
 		produtosParaComprar.add(textFieldIdProdutosParaComprar);
 		textFieldIdProdutosParaComprar.setColumns(10);
-
-		JTextField textFieldNomeProdutosParaComprar = new JTextField();
+		
+		textFieldNomeProdutosParaComprar = new JTextField();
 		textFieldNomeProdutosParaComprar.setBounds(154, 115, 86, 20);
 		produtosParaComprar.add(textFieldNomeProdutosParaComprar);
 		textFieldNomeProdutosParaComprar.setColumns(10);
 
-		JTextField textFieldQuantidadeProdutosParaComprar = new JTextField();
+		textFieldQuantidadeProdutosParaComprar = new JTextField();
 		textFieldQuantidadeProdutosParaComprar.setBounds(154, 145, 86, 20);
 		produtosParaComprar.add(textFieldQuantidadeProdutosParaComprar);
 		textFieldQuantidadeProdutosParaComprar.setColumns(10);
 
-		JTextField textFieldPrecoProdutosParaComprar = new JTextField();
+		textFieldPrecoProdutosParaComprar = new JTextField();
 		textFieldPrecoProdutosParaComprar.setBounds(154, 175, 86, 20);
 		produtosParaComprar.add(textFieldPrecoProdutosParaComprar);
 		textFieldPrecoProdutosParaComprar.setColumns(10);
@@ -1209,7 +1449,6 @@ public class ApplicationView {
 		});
 		scrollPaneProdutosParaComprar.setViewportView(tableProdutosParaComprar);
 
-
 		JButton btnAdicionarProdutosParaComprar = new JButton("Adicionar");
 		btnAdicionarProdutosParaComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1225,6 +1464,8 @@ public class ApplicationView {
 									pst.setString(3, textFieldPrecoProdutosParaComprar.getText());
 									pst.execute();
 									JOptionPane.showMessageDialog(null, "Salvo com sucesso !");
+									refreshtableProdutosParaComprar();
+									limpadorDeDadosProdutosParaComprar();
 									pst.close();
 								}else JOptionPane.showMessageDialog(null, "Preço vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 							}else JOptionPane.showMessageDialog(null, "Quantidade vazia !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -1234,7 +1475,6 @@ public class ApplicationView {
 						JOptionPane.showMessageDialog(null, "Tente trocar a virgula pelo ponto!"); g.printStackTrace();
 					}
 				
-				refreshtableProdutosParaComprar();
 				}else JOptionPane.showMessageDialog(null, "Senha Incorreta ! Tente Novamente !");
 			}
 		});
@@ -1260,6 +1500,8 @@ public class ApplicationView {
 										pst.execute();
 										pst.close();
 										JOptionPane.showMessageDialog(null, "Atualizado com sucesso !");
+										refreshtableProdutosParaComprar();
+										limpadorDeDadosProdutosParaComprar();
 								
 									}else JOptionPane.showMessageDialog(null, "Preço vazio !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 								}else JOptionPane.showMessageDialog(null, "Quantidade vazia !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -1269,6 +1511,7 @@ public class ApplicationView {
 						JOptionPane.showMessageDialog(null, "Tente trocar a virgula pelo ponto!!"); g.printStackTrace();
 					}
 					refreshtableProdutosParaComprar();
+					limpadorDeDadosProdutosParaComprar();
 		        } else {
 	        		JOptionPane.showMessageDialog(null, "Senha Incorreta ! Tente Novamente !");
 				}
@@ -1290,11 +1533,15 @@ public class ApplicationView {
 								pst.execute();
 								JOptionPane.showMessageDialog(null, "Produto Deletado !", "", JOptionPane.ERROR_MESSAGE);
 								pst.close();
+								
+								refreshtableProdutosParaComprar();
+								limpadorDeDadosProdutosParaComprar();
 							}
 						} catch (Exception g) {
 							JOptionPane.showMessageDialog(null, "Selecione um produto da lista para deletar !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 						}
 						refreshtableProdutosParaComprar();
+						limpadorDeDadosProdutosParaComprar();
 					}else JOptionPane.showMessageDialog(null, "Selecione um produto da lista para deletar !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 				} else {
 		        		JOptionPane.showMessageDialog(null, "Senha Incorreta ! Tente Novamente !");
@@ -1321,15 +1568,15 @@ public class ApplicationView {
 			}
 		});
 		btnNewButtonExitProdutosParaComprar.setContentAreaFilled(false);
-		btnNewButtonExitProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Arrows-Undo-icon.png"));
+		btnNewButtonExitProdutosParaComprar.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVoltaPreto.png"));
 		btnNewButtonExitProdutosParaComprar.setBounds(0, 23, 16, 16);
 		produtosParaComprar.add(btnNewButtonExitProdutosParaComprar);
 		telaDeLogin.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(-70, 11, 865, 555);
-		produtosParaComprar.add(lblNewLabel_2);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\19_Gin-Bombay-FundoListaDeCompras.jpg"));
+		JLabel lblNewLabel_FundoProdutoCompra = new JLabel("");
+		lblNewLabel_FundoProdutoCompra.setBounds(-70, 11, 865, 555);
+		produtosParaComprar.add(lblNewLabel_FundoProdutoCompra);
+		lblNewLabel_FundoProdutoCompra.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\19_Gin-Bombay-FundoListaDeCompras.jpg"));
 
 		
 
@@ -1425,12 +1672,62 @@ public class ApplicationView {
 		menuBarTodosOsProdutos.add(mnClientesTodosOsProdutos);
 		
 		JMenuItem mntmNewMenuItem_1_1_1_1 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_1_1_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				todosProdutos.setVisible(false);
+			}
+		});
 		mntmNewMenuItem_1_1_1_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesTodosOsProdutos.add(mntmNewMenuItem_1_1_1_1);
 
 		JMenu mnFinanceiroTodosOsProdutos = new JMenu("Financeiro");
 		mnFinanceiroTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarTodosOsProdutos.add(mnFinanceiroTodosOsProdutos);
+		
+		JMenuItem mntmRelatorioDeVendasTodosProdutos = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasTodosProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				todosProdutos.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasTodosProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroTodosOsProdutos.add(mntmRelatorioDeVendasTodosProdutos);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_4 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				todosProdutos.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_3 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_3.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroTodosOsProdutos.add(mnNewMenu_1_3);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosTodosProdutos = new JMenuItem("Atacado");
+		mnNewMenu_1_3.add(mntmNewMenuItemRelatorioDeProdutosTodosProdutos);
+		mntmNewMenuItemRelatorioDeProdutosTodosProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				todosProdutos.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosTodosProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_3 = new JMenuItem("Varejo");
+		mntmVarejo_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				todosProdutos.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_3.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_3.add(mntmVarejo_3);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_4.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroTodosOsProdutos.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_4);
 
 		JMenu mnAjudaTodosOsProdutos = new JMenu("Ajuda");
 		mnAjudaTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -1497,41 +1794,47 @@ public class ApplicationView {
 		lblQuantidadeTodosOsProdutos.setBounds(28, 145, 109, 20);
 		todosProdutos.add(lblQuantidadeTodosOsProdutos);
 
-		JTextField textFieldIdTodosOsProdutos = new JTextField();
+
+		textFieldIdTodosOsProdutos = new JTextField();
 		textFieldIdTodosOsProdutos.setVisible(false);
 		textFieldIdTodosOsProdutos.setBounds(154, 85, 86, 20);
 		todosProdutos.add(textFieldIdTodosOsProdutos);
 		textFieldIdTodosOsProdutos.setColumns(10);
 
-		JTextField textFieldNomeTodosOsProdutos = new JTextField();
+		textFieldNomeTodosOsProdutos = new JTextField();
 		textFieldNomeTodosOsProdutos.setBounds(154, 115, 86, 20);
 		todosProdutos.add(textFieldNomeTodosOsProdutos);
 		textFieldNomeTodosOsProdutos.setColumns(10);
 
-		JTextField textFieldQuantidadeTodosOsProdutos = new JTextField();
-		textFieldQuantidadeTodosOsProdutos.setBounds(154, 145, 86, 20);
-		todosProdutos.add(textFieldQuantidadeTodosOsProdutos);
-		textFieldQuantidadeTodosOsProdutos.setColumns(10);
+		textFieldPrecoTodosOsProdutos = new JTextField();
+		textFieldPrecoTodosOsProdutos.setBounds(154, 145, 86, 20);
+		todosProdutos.add(textFieldPrecoTodosOsProdutos);
+		textFieldPrecoTodosOsProdutos.setColumns(10);
 
 		
 		JButton btnAdicionarTodosOsProdutos = new JButton("Adicionar");
 		btnAdicionarTodosOsProdutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (admSenha().equals("1996")){
-					try {
-						String query = "insert into todosprodutos (Produto, PrecoUnidade) values (?, ?)";
-						PreparedStatement pst = conexao.prepareStatement(query);
-						pst.setString(1, textFieldNomeTodosOsProdutos.getText());
-						pst.setString(2, textFieldQuantidadeTodosOsProdutos.getText());
-						pst.execute();
-	
-						JOptionPane.showMessageDialog(null, "Salvo com sucesso !");
-	
-						pst.close();
-					} catch (Exception g) {
-						JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
-					}
-					refreshtableTodosOsProdutos();
+					if(!textFieldNomeTodosOsProdutos.getText().equals("")) {
+						if(!textFieldPrecoTodosOsProdutos.getText().equals("")) {
+							try {
+								String query = "insert into todosprodutos (Produto, PrecoUnidade) values (?, ?)";
+								PreparedStatement pst = conexao.prepareStatement(query);
+								pst.setString(1, textFieldNomeTodosOsProdutos.getText());
+								pst.setString(2, textFieldPrecoTodosOsProdutos.getText());
+								pst.execute();
+			
+								JOptionPane.showMessageDialog(null, "Salvo com sucesso !");
+			
+								pst.close();
+							} catch (Exception g) {
+								JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
+							}
+							refreshtableTodosOsProdutos();
+							limpadorDeDadosTodosProdutos();
+						}else JOptionPane.showMessageDialog(null, "Preencha o Preço para adicionar");
+					}else JOptionPane.showMessageDialog(null, "Preencha o Nome para adicionar");
 				}
 			}
 		});
@@ -1546,7 +1849,7 @@ public class ApplicationView {
 					 try {
 						 if(!textFieldIdTodosOsProdutos.getText().equals("")) {
 							 
-							String query = "Update todosprodutos set Id='" + textFieldIdTodosOsProdutos.getText()+ "' ,Produto = '" + textFieldNomeTodosOsProdutos.getText() + "' ,PrecoUnidade = '"+ textFieldQuantidadeTodosOsProdutos.getText() + "' where Id='"+ textFieldIdTodosOsProdutos.getText() + "'  ";
+							String query = "Update todosprodutos set Id='" + textFieldIdTodosOsProdutos.getText()+ "' ,Produto = '" + textFieldNomeTodosOsProdutos.getText() + "' ,PrecoUnidade = '"+ textFieldPrecoTodosOsProdutos.getText() + "' where Id='"+ textFieldIdTodosOsProdutos.getText() + "'  ";
 							PreparedStatement pst = conexao.prepareStatement(query);
 							pst.execute();
 							pst.close();
@@ -1558,6 +1861,7 @@ public class ApplicationView {
 							JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula !"); g.printStackTrace();
 					 }	
 					 refreshtableTodosOsProdutos();
+						limpadorDeDadosTodosProdutos();
 			    } else JOptionPane.showMessageDialog(null, "Senha Incorreta ! Tente Novamente !");
 			}
 		});
@@ -1580,6 +1884,7 @@ public class ApplicationView {
 							JOptionPane.showMessageDialog(null, "ERRO !"); g.printStackTrace();
 						}
 						refreshtableTodosOsProdutos();
+						limpadorDeDadosTodosProdutos();
 					}
 				}
 			}
@@ -1603,7 +1908,7 @@ public class ApplicationView {
 			}
 		});
 		btnNewButtonExitTodosOsProdutos.setContentAreaFilled(false);
-		btnNewButtonExitTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Arrows-Undo-icon.png"));
+		btnNewButtonExitTodosOsProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVoltaPreto.png"));
 		btnNewButtonExitTodosOsProdutos.setBounds(0, 23, 16, 16);
 		todosProdutos.add(btnNewButtonExitTodosOsProdutos);
 		telaDeLogin.setLayout(null);
@@ -1622,21 +1927,21 @@ public class ApplicationView {
 				int linha = tableTodosProdutos.getSelectedRow();
 				textFieldIdTodosOsProdutos.setText(tableTodosProdutos.getValueAt(linha, 0).toString());
 				textFieldNomeTodosOsProdutos.setText(tableTodosProdutos.getValueAt(linha, 1).toString());
-				textFieldQuantidadeTodosOsProdutos.setText(tableTodosProdutos.getValueAt(linha, 2).toString());
+				textFieldPrecoTodosOsProdutos.setText(tableTodosProdutos.getValueAt(linha, 2).toString());
 			}
 		});
 		tableTodosProdutos.setOpaque(false);
 		scrollPaneTodosOsProdutos.setViewportView(tableTodosProdutos);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\e74e4d60430d27452f47f279859c921a.jpg"));
-		lblNewLabel_1.setBounds(-129, 77, 435, 493);
-		todosProdutos.add(lblNewLabel_1);
+		JLabel lblNewLabel_Fundo1TodosProdutos = new JLabel("");
+		lblNewLabel_Fundo1TodosProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\fundoTodosProdutos.jpg"));
+		lblNewLabel_Fundo1TodosProdutos.setBounds(-129, 77, 435, 493);
+		todosProdutos.add(lblNewLabel_Fundo1TodosProdutos);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\52f47f279859c921a.jpg"));
-		lblNewLabel.setBounds(0, 21, 782, 535);
-		todosProdutos.add(lblNewLabel);
+		JLabel lblNewLabel_Fundo2TodosProdutos = new JLabel("");
+		lblNewLabel_Fundo2TodosProdutos.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\fundoTodosProtudos2.jpg"));
+		lblNewLabel_Fundo2TodosProdutos.setBounds(0, 21, 782, 535);
+		todosProdutos.add(lblNewLabel_Fundo2TodosProdutos);
 		telaDeLogin.setLayout(null);
 		vendaAtacado.setLayout(null);
 		
@@ -1736,16 +2041,77 @@ public class ApplicationView {
 		menuBarVendaVarejo.add(mnClientesVendaVarejo);
 		
 		JMenuItem mntmNewMenuItem_ClienteVendaVarejo = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_ClienteVendaVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				vendaVarejo.setVisible(false);
+			}
+		});
 		mntmNewMenuItem_ClienteVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesVendaVarejo.add(mntmNewMenuItem_ClienteVendaVarejo);
 
 		JMenu mnFinanceiroVendaVarejo = new JMenu("Financeiro");
 		mnFinanceiroVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarVendaVarejo.add(mnFinanceiroVendaVarejo);
+		
+		JMenuItem mntmRelatorioDeVendasVendaVarejo = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasVendaVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaVarejo.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroVendaVarejo.add(mntmRelatorioDeVendasVendaVarejo);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_5 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaVarejo.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_4 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_4.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroVendaVarejo.add(mnNewMenu_1_4);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosVendaVarejo = new JMenuItem("Atacado");
+		mnNewMenu_1_4.add(mntmNewMenuItemRelatorioDeProdutosVendaVarejo);
+		mntmNewMenuItemRelatorioDeProdutosVendaVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaVarejo.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_4 = new JMenuItem("Varejo");
+		mntmVarejo_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaVarejo.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_4.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_4.add(mntmVarejo_4);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_5.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroVendaVarejo.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_5);
 
 		JMenu mnAjudaVendaVarejo = new JMenu("Ajuda");
 		mnAjudaVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
 		menuBarVendaVarejo.add(mnAjudaVendaVarejo);
+		
+		JMenuItem mntmDadosDaVersaoVendaVarejo = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoVendaVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaVendaVarejo.add(mntmDadosDaVersaoVendaVarejo);
 		
 		JScrollPane scrollPaneProdutosVendaVarejo = new JScrollPane();
 		scrollPaneProdutosVendaVarejo.setBounds(322, 68, 420, 156);
@@ -1786,18 +2152,7 @@ public class ApplicationView {
 		JButton btnNewButtonProdutosVendaVarejo = new JButton("Produtos");
 		btnNewButtonProdutosVendaVarejo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String query = "SELECT Id 'ID', Nome 'Nome do Produto', Unidades, Preco 'Preço por Un' FROM adegagelaguela.lojaTatuape ORDER BY Nome";
-					PreparedStatement pst = conexao.prepareStatement(query);
-					ResultSet rs = pst.executeQuery();
-					table_ProdutoVendaVarejo.setModel(DbUtils.resultSetToTableModel(rs));
-
-					pst.close();
-					rs.close();
-
-				} catch (Exception g) {
-					g.printStackTrace();
-				}
+				refreshTableProdutoVendaVarejo();
 			}
 		});
 		btnNewButtonProdutosVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Alphabetical-Sorting-icon.png"));
@@ -1879,7 +2234,10 @@ public class ApplicationView {
 		JButton btnNewButton_RemoverDoCarrinhoVendaVarejo = new JButton("Remover do carrinho");
 		btnNewButton_RemoverDoCarrinhoVendaVarejo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				valorCarrinhoVarejo = valorCarrinhoVarejo - Double.parseDouble(table_CarrinhoVendaVarejo.getValueAt(table_CarrinhoVendaVarejo.getSelectedRow(), 4).toString());
+				table_CarrinhoVendaVarejo.getValueAt(table_CarrinhoVendaVarejo.getSelectedRow(), 4);
 				carrinhoVendaVarejo.removeRow(table_CarrinhoVendaVarejo.getSelectedRow());
+				AttValorTotalVarejo();
 			}
 		});
 		btnNewButton_RemoverDoCarrinhoVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
@@ -1894,10 +2252,12 @@ public class ApplicationView {
 		
 		
 		JRadioButton rdbtnDinheiroVendaVarejo = new JRadioButton("Dinheiro");
+		rdbtnDinheiroVendaVarejo.setContentAreaFilled(false);
 		rdbtnDinheiroVendaVarejo.setBounds(599, 425, 109, 23);
 		vendaVarejo.add(rdbtnDinheiroVendaVarejo);
 		
 		JRadioButton rdbtnCartaoVendaVarejo = new JRadioButton("Cart\u00E3o");
+		rdbtnCartaoVendaVarejo.setContentAreaFilled(false);
 		rdbtnCartaoVendaVarejo.setBounds(599, 457, 109, 23);
 		vendaVarejo.add(rdbtnCartaoVendaVarejo);
 		
@@ -1910,7 +2270,7 @@ public class ApplicationView {
 		JButton btnNewButton_VenderVendaVarejo = new JButton("Vender");
 		btnNewButton_VenderVendaVarejo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					if (JOptionPane.showConfirmDialog(null, "Venda no valor de R$: " + valorCarrinhoVarejo.toString(), "Confirmação de Venda", JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
+					if (JOptionPane.showConfirmDialog(null, "Venda no valor de R$: " + textField_ValorTotalVendaVarejo.getText().toString(), "Confirmação de Venda", JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
 						int contador = 0;
 						if(rdbtnDinheiroVendaVarejo.isSelected() && rdbtnCartaoVendaVarejo.isSelected()) {
 							JOptionPane.showMessageDialog(null, "Selecione apenas um metodo para pagar!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -1935,7 +2295,7 @@ public class ApplicationView {
 										}
 								}	
 									JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
-								
+									limpadorDeDadosVendaVarejo();
 									while (carrinhoVendaVarejo.getRowCount() > 0) {
 										carrinhoVendaVarejo.removeRow(carrinhoVendaVarejo.getRowCount()-1);
 									}
@@ -1962,12 +2322,13 @@ public class ApplicationView {
 											carrinhoVendaVarejo.removeRow(carrinhoVendaVarejo.getRowCount()-1);
 										}
 										JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
-						
+										limpadorDeDadosVendaVarejo();
 						}
 					}
 				NumeroDaVendaVarejo();
 				AtualizarNumeroDaVenda();
 				DocumentoVendaVarejo();
+				refreshTableProdutoVendaVarejo();
 			}
 		});
 		btnNewButton_VenderVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
@@ -2024,17 +2385,31 @@ public class ApplicationView {
 		textFieldVendaVendaVarejo.setColumns(10);
 		textFieldVendaVendaVarejo.setText(NumeroDaVendaVarejo().toString());
 		
+		JLabel lblNewLabel_9 = new JLabel("Dados dos Produtos :");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_9.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-And-Pretzel-icon.png"));
+		lblNewLabel_9.setBounds(32, 37, 200, 24);
+		vendaVarejo.add(lblNewLabel_9);
 		
-
-		JMenuItem mntmDadosDaVersaoVendaVarejo = new JMenuItem("Dados da Vers\u00E3o");
-		mntmDadosDaVersaoVendaVarejo.addActionListener(new ActionListener() {
+		JButton btnNewButtonVoltarMenuVendaVarejo = new JButton("");
+		btnNewButtonVoltarMenuVendaVarejo.setBorderPainted(false);
+		btnNewButtonVoltarMenuVendaVarejo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
-						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+				vendaVarejo.setVisible(false);
+				menuInicial.setVisible(true);
 			}
 		});
-		mntmDadosDaVersaoVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		btnNewButtonVoltarMenuVendaVarejo.setContentAreaFilled(false);
+		btnNewButtonVoltarMenuVendaVarejo.setOpaque(false);
+		btnNewButtonVoltarMenuVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVolta.png"));
+		btnNewButtonVoltarMenuVendaVarejo.setBounds(0, 22, 16, 16);
+		vendaVarejo.add(btnNewButtonVoltarMenuVendaVarejo);
+		
+		JLabel lblNewLabel_FundoVendaVarejo = new JLabel("");
+		lblNewLabel_FundoVendaVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoVendaVarejo.jpg"));
+		lblNewLabel_FundoVendaVarejo.setBounds(0, 0, 790, 565);
+		vendaVarejo.add(lblNewLabel_FundoVendaVarejo);
+		
 
 		
 		
@@ -2141,12 +2516,62 @@ public class ApplicationView {
 		menuBarVendaAtacado.add(mnClientesVendaAtacado);
 		
 		JMenuItem mntmNewMenuItem_1_1_1_2 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem_1_1_1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaAtacado.setVisible(false);
+				clientesAtacado.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_1_1_1_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesVendaAtacado.add(mntmNewMenuItem_1_1_1_2);
 
 		JMenu mnFinanceiroVendaAtacado = new JMenu("Financeiro");
 		mnFinanceiroVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarVendaAtacado.add(mnFinanceiroVendaAtacado);
+		
+		JMenuItem mntmRelatorioDeVendasVendaAtacado = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasVendaAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaAtacado.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroVendaAtacado.add(mntmRelatorioDeVendasVendaAtacado);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_6 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaAtacado.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_5 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_5.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroVendaAtacado.add(mnNewMenu_1_5);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosVendaAtacado = new JMenuItem("Atacado");
+		mntmNewMenuItemRelatorioDeProdutosVendaAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaAtacado.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mnNewMenu_1_5.add(mntmNewMenuItemRelatorioDeProdutosVendaAtacado);
+		mntmNewMenuItemRelatorioDeProdutosVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_5 = new JMenuItem("Varejo");
+		mntmVarejo_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaAtacado.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_5.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_5.add(mntmVarejo_5);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_6.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroVendaAtacado.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_6);
 
 		JMenu mnAjudaVendaAtacado = new JMenu("Ajuda");
 		mnAjudaVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -2247,94 +2672,6 @@ public class ApplicationView {
 		vendaAtacado.add(txtIdDoClienteVendaAtacado);
 		txtIdDoClienteVendaAtacado.setColumns(10);
 		
-		JButton btnNewButton_AddCarrinhoVendaAtacado = new JButton("Adicionar  ao Carrinho");
-		btnNewButton_AddCarrinhoVendaAtacado.setBounds(205, 189, 149, 23);
-		btnNewButton_AddCarrinhoVendaAtacado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!textFieldIdDoProdutoVendaAtacado.getText().equals("")) {
-					if(!textField_QuantidadeUnidadeVendaAtacado.getText().equals("") && !textField_QuantidadeUnidadeVendaAtacado.getText().equals("0")&& 
-							!textField_QuantidadeUnidadeVendaAtacado.getText().equals("00")&& !textField_QuantidadeUnidadeVendaAtacado.getText().equals("000")) {
-						try {
-							String query = "INSERT INTO adegagelaguela.carrinho (Estoque_idEstoque, PrecoDeVenda, QuantidadeAVender, NumeroDaVenda) VALUES (?, ?, ?, ?) ";
-							PreparedStatement pst = conexao.prepareStatement(query);
-							pst.setString(1, textFieldIdDoProdutoVendaAtacado.getText());
-							pst.setString(2, textField_PrecoParaOCarrinhoVendaAtacado.getText());
-							pst.setString(3, textField_QuantidadeUnidadeVendaAtacado.getText());
-							pst.setString(4, txt_NumeroDaVendaAtacado.getText());
-							pst.execute();
-							pst.close();
-							
-							JOptionPane.showMessageDialog(null, "PRODUTO ADICIONADO !", "", JOptionPane.INFORMATION_MESSAGE);
-						
-						} catch (Exception g) {
-							JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de confirmar !"); g.printStackTrace();
-							
-						}
-						refreshtableCarrinhoVendaAtacado();
-						refreshtableProdutosVendaAtacado();
-					}else JOptionPane.showMessageDialog(null, "Quantidade não pode estar vazia ou ser '0' !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
-				}else JOptionPane.showMessageDialog(null, "Selecione um produto da tabela ao lado !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
-			}
-		});
-		btnNewButton_AddCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnNewButton_AddCarrinhoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Export-icon.png"));
-		vendaAtacado.add(btnNewButton_AddCarrinhoVendaAtacado);
-		
-		JButton btnNewButton_RemoverCarrinhoVendaAtacado = new JButton("Remover do Carrinho");
-		btnNewButton_RemoverCarrinhoVendaAtacado.setBounds(364, 189, 149, 23);
-		btnNewButton_RemoverCarrinhoVendaAtacado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Deletar o Produto do carrinho?", "", JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {	
-						try {
-							String query = "delete from carrinho where idCarrinho='" + tableProdutosNoCarrinhoVendaAtacado.getValueAt(tableProdutosNoCarrinhoVendaAtacado.getSelectedRow(), 0).toString() + "' ";
-							PreparedStatement pst = conexao.prepareStatement(query);
-							pst.execute();
-							JOptionPane.showMessageDialog(null, "PRODUTO REMOVIDO!", "", JOptionPane.ERROR_MESSAGE);
-							pst.close();
-						} catch (Exception g) {
-							JOptionPane.showMessageDialog(null,"Selecione um produto da tabela abaixo !!", "ERROR!", JOptionPane.WARNING_MESSAGE); g.printStackTrace();
-						}
-						textFieldPrecoTotalVendaAtacado.setText("");
-						refreshtableCarrinhoVendaAtacado();
-						refreshtableProdutosVendaAtacado();
-				}
-			}
-		});
-		btnNewButton_RemoverCarrinhoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
-		btnNewButton_RemoverCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		vendaAtacado.add(btnNewButton_RemoverCarrinhoVendaAtacado);
-		
-
-		JButton btnNewButton_LimparProdutosVendaAtacado = new JButton("Limpar Carrinho");
-		btnNewButton_LimparProdutosVendaAtacado.setBounds(523, 329, 149, 23);
-		btnNewButton_LimparProdutosVendaAtacado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Deletar TODOS Produtos do carrinho?", "", JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
-					try {
-						String query = "delete from carrinho where adegagelaguela.carrinho.NumeroDaVenda=?";
-						PreparedStatement pst = conexao.prepareStatement(query);
-						pst.setString(1,  txt_NumeroDaVendaAtacado.getText());
-						pst.execute();
-						JOptionPane.showMessageDialog(null, "Carrinho Limpo!", "", JOptionPane.INFORMATION_MESSAGE);
-						pst.close();
-					} catch (Exception g) {
-						JOptionPane.showMessageDialog(null, "ERROR!"); g.printStackTrace();
-					}
-					refreshtableCarrinhoVendaAtacado();
-					refreshtableProdutosVendaAtacado();
-					textFieldPrecoTotalVendaAtacado.setText("");
-				}
-			}
-		});
-		btnNewButton_LimparProdutosVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
-		btnNewButton_LimparProdutosVendaAtacado.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		vendaAtacado.add(btnNewButton_LimparProdutosVendaAtacado);
-		
-		JLabel lblNewLabel_ProdutosNoCarrinhoVendaAtacado = new JLabel("Produtos no carrinho :");
-		lblNewLabel_ProdutosNoCarrinhoVendaAtacado.setBounds(20, 189, 142, 20);
-		lblNewLabel_ProdutosNoCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.BOLD, 12));
-		vendaAtacado.add(lblNewLabel_ProdutosNoCarrinhoVendaAtacado);
-		
 		JScrollPane scrollPaneCarrinhoVendaAtacado = new JScrollPane();
 		scrollPaneCarrinhoVendaAtacado.setBounds(20, 220, 493, 132);
 		vendaAtacado.add(scrollPaneCarrinhoVendaAtacado);
@@ -2347,11 +2684,13 @@ public class ApplicationView {
 	        };
 	        
 	    };
-		scrollPaneCarrinhoVendaAtacado.setViewportView(tableProdutosNoCarrinhoVendaAtacado);
-		
-		JLabel lblNewLabelNomeDoProdutoVendaAtacado = new JLabel("Nome do Produto : ");
-		lblNewLabelNomeDoProdutoVendaAtacado.setBounds(20, 60, 120, 20);
-		vendaAtacado.add(lblNewLabelNomeDoProdutoVendaAtacado);
+	    DefaultTableModel carrinhoVendaAtacado = (DefaultTableModel) tableProdutosNoCarrinhoVendaAtacado.getModel();
+	    carrinhoVendaAtacado.addColumn("ID");
+		carrinhoVendaAtacado.addColumn("Produto");
+		carrinhoVendaAtacado.addColumn("Preço");
+		carrinhoVendaAtacado.addColumn("Quantidade");
+		carrinhoVendaAtacado.addColumn("Valor Total");
+		scrollPaneCarrinhoVendaAtacado.setViewportView(tableProdutosNoCarrinhoVendaAtacado);	
 		
 		textField_NomeDoProdutoVendaAtacado = new JTextField();
 		textField_NomeDoProdutoVendaAtacado.setBounds(137, 60, 157, 20);
@@ -2368,6 +2707,54 @@ public class ApplicationView {
 		textField_PrecoVendaAtacado.setEditable(false);
 		vendaAtacado.add(textField_PrecoVendaAtacado);
 		textField_PrecoVendaAtacado.setColumns(10);
+		
+		JButton btnNewButton_AddCarrinhoVendaAtacado = new JButton("Adicionar  ao Carrinho");
+		btnNewButton_AddCarrinhoVendaAtacado.setBounds(205, 189, 149, 23);
+		btnNewButton_AddCarrinhoVendaAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textFieldIdDoProdutoVendaAtacado.getText().equals("")) {
+					if(!textField_QuantidadeUnidadeVendaAtacado.getText().equals("") && !textField_QuantidadeUnidadeVendaAtacado.getText().equals("0")&& 
+							!textField_QuantidadeUnidadeVendaAtacado.getText().equals("00")&& !textField_QuantidadeUnidadeVendaAtacado.getText().equals("000")) {
+
+						 double precovenda = Double.parseDouble(textField_PrecoVendaAtacado.getText().toString());
+						 double quantiavenda = Double.parseDouble(textField_QuantidadeUnidadeVendaAtacado.getText().toString());
+						 double valortotal = precovenda * quantiavenda;
+						 
+						valorCarrinhoAtacado = valorCarrinhoAtacado + precovenda * quantiavenda;
+						carrinhoVendaAtacado.addRow(new String [] {textFieldIdDoProdutoVendaAtacado.getText(), textField_NomeDoProdutoVendaAtacado.getText(), textField_PrecoVendaAtacado.getText(), textField_QuantidadeUnidadeVendaAtacado.getText(), String.valueOf(valortotal)});
+						textFieldPrecoTotalVendaAtacado.setText(String.valueOf(valorCarrinhoAtacado));
+					}else JOptionPane.showMessageDialog(null, "Quantidade não pode estar vazia ou ser '0' !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
+				}else JOptionPane.showMessageDialog(null, "Selecione um produto da tabela ao lado !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		btnNewButton_AddCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnNewButton_AddCarrinhoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Export-icon.png"));
+		vendaAtacado.add(btnNewButton_AddCarrinhoVendaAtacado);
+		
+		JButton btnNewButton_RemoverCarrinhoVendaAtacado = new JButton("Remover do Carrinho");
+		btnNewButton_RemoverCarrinhoVendaAtacado.setBounds(364, 189, 149, 23);
+		btnNewButton_RemoverCarrinhoVendaAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				valorCarrinhoAtacado =  valorCarrinhoAtacado - Double.parseDouble(tableProdutosNoCarrinhoVendaAtacado.getValueAt(tableProdutosNoCarrinhoVendaAtacado.getSelectedRow(), 4).toString());
+				carrinhoVendaAtacado.removeRow(tableProdutosNoCarrinhoVendaAtacado.getSelectedRow());
+				textFieldPrecoTotalVendaAtacado.setText(String.valueOf(valorCarrinhoAtacado));
+			}
+		});
+		btnNewButton_RemoverCarrinhoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
+		btnNewButton_RemoverCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		vendaAtacado.add(btnNewButton_RemoverCarrinhoVendaAtacado);
+		
+		
+		JLabel lblNewLabel_ProdutosNoCarrinhoVendaAtacado = new JLabel("Produtos no carrinho :");
+		lblNewLabel_ProdutosNoCarrinhoVendaAtacado.setBounds(20, 189, 142, 20);
+		lblNewLabel_ProdutosNoCarrinhoVendaAtacado.setFont(new Font("Tahoma", Font.BOLD, 12));
+		vendaAtacado.add(lblNewLabel_ProdutosNoCarrinhoVendaAtacado);
+		
+		
+		JLabel lblNewLabelNomeDoProdutoVendaAtacado = new JLabel("Nome do Produto : ");
+		lblNewLabelNomeDoProdutoVendaAtacado.setBounds(20, 60, 120, 20);
+		vendaAtacado.add(lblNewLabelNomeDoProdutoVendaAtacado);
+	
 		
 		JScrollPane scrollPane_ProdutosVendaAtacado = new JScrollPane();
 		scrollPane_ProdutosVendaAtacado.setBounds(327, 56, 432, 122);
@@ -2386,21 +2773,11 @@ public class ApplicationView {
 				int linha = tableProdutosVendaAtacado.getSelectedRow();
 				textFieldIdDoProdutoVendaAtacado.setText(tableProdutosVendaAtacado.getValueAt(linha, 0).toString());
 				textField_NomeDoProdutoVendaAtacado.setText(tableProdutosVendaAtacado.getValueAt(linha, 1).toString());
-				textField_PrecoVendaAtacado.setText("R$ :  " + tableProdutosVendaAtacado.getValueAt(linha, 3).toString() + "0");
+				textField_PrecoVendaAtacado.setText(tableProdutosVendaAtacado.getValueAt(linha, 3).toString());
 				textField_PrecoParaOCarrinhoVendaAtacado.setText(tableProdutosVendaAtacado.getValueAt(linha, 3).toString());
 			}
 		});
 		scrollPane_ProdutosVendaAtacado.setViewportView(tableProdutosVendaAtacado);
-		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(172, 189, 25, 22);
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refreshtableCarrinhoVendaAtacado();
-			}
-		});
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
-		vendaAtacado.add(btnNewButton_1);
 		
 		textFieldNomeClienteCarrinhoVendaAtacado = new JTextField();
 		textFieldNomeClienteCarrinhoVendaAtacado.setEditable(false);
@@ -2453,10 +2830,10 @@ public class ApplicationView {
 		chckbxDinheiroVendaAtacado.setBounds(554, 420, 79, 23);
 		vendaAtacado.add(chckbxDinheiroVendaAtacado);
 		
-		JLabel lblNewLabel_3 = new JLabel("Selecione um cliente para venda :");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(20, 350, 310, 41);
-		vendaAtacado.add(lblNewLabel_3);
+		JLabel lblNewLabel_SelecioneClienteVendaAtacado = new JLabel("Selecione um cliente para venda :");
+		lblNewLabel_SelecioneClienteVendaAtacado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_SelecioneClienteVendaAtacado.setBounds(20, 350, 310, 41);
+		vendaAtacado.add(lblNewLabel_SelecioneClienteVendaAtacado);
 		
 		JButton btnNewButtonVenderVendaAtacado = new JButton("Vender");
 		btnNewButtonVenderVendaAtacado.setBounds(614, 522, 158, 23);
@@ -2475,13 +2852,16 @@ public class ApplicationView {
 									}else if(chckbxDinheiroVendaAtacado.isSelected()) {
 										while(tableProdutosNoCarrinhoVendaAtacado.getRowCount() != contador) {
 											try {
-												String query = "INSERT INTO adegagelaguela.venda (Cliente_idCliente, Carrinho_idCarrinho, FormaDePgmt, NumeroDaVenda, Desconto) VALUES (?, ?, ?, ?, ?)";
+												String query = "INSERT INTO adegagelaguela.vendaatacado (IDCliente, IDProduto, produto, quantidade, preco, NumeroDaVenda, FormaDePagamento, Desconto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 												PreparedStatement pst = conexao.prepareStatement(query);
 												pst.setString(1, txtIdDoClienteVendaAtacado.getText());
 												pst.setString(2, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 0).toString());
-												pst.setString(3, "Dinheiro");
-												pst.setString(4,  txt_NumeroDaVendaAtacado.getText());
-												pst.setString(5,  textField_DescontoVendaAtacado.getText());
+												pst.setString(3, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 1).toString());
+												pst.setString(4, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 2).toString());
+												pst.setString(5, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 3).toString());
+												pst.setString(6,  txt_NumeroDaVendaAtacado.getText());
+												pst.setString(7, "Dinheiro");
+												pst.setString(8,  textField_DescontoVendaAtacado.getText());
 												pst.execute();
 												pst.close();
 												contador++;
@@ -2493,33 +2873,43 @@ public class ApplicationView {
 									AtualizarNumeroDaVenda();
 									NumeroDaVendaToPDF();
 									DocumentoVendaAtacado();
-									refreshtableCarrinhoVendaAtacado();
+									refreshtableProdutosVendaAtacado();
+									limpadorDeDadosVendaAtacado();
 									JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
-										
+									while (carrinhoVendaAtacado.getRowCount() > 0) {
+										carrinhoVendaAtacado.removeRow(carrinhoVendaAtacado.getRowCount()-1);
+									}
 									
 										}else if(chckbxCartaoVendaAtacado.isSelected()) {
 											while(tableProdutosNoCarrinhoVendaAtacado.getRowCount() != contador) {
 												try {
-													String query = "INSERT INTO adegagelaguela.venda (Cliente_idCliente, Carrinho_idCarrinho, FormaDePgmt,  NumeroDaVenda, Desconto) VALUES (?, ?, ?, ?, ?)";
+													String query = "INSERT INTO adegagelaguela.vendaatacado (IDCliente, IDProduto, produto, quantidade, preco, NumeroDaVenda, FormaDePagamento, Desconto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 													PreparedStatement pst = conexao.prepareStatement(query);
 													pst.setString(1, txtIdDoClienteVendaAtacado.getText());
 													pst.setString(2, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 0).toString());
-													pst.setString(3, "Cartão");
-													pst.setString(4, txt_NumeroDaVendaAtacado.getText());
-													pst.setString(5,  textField_DescontoVendaAtacado.getText());
+													pst.setString(3, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 1).toString());
+													pst.setString(4, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 2).toString());
+													pst.setString(5, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 3).toString());
+													pst.setString(6,  txt_NumeroDaVendaAtacado.getText());
+													pst.setString(7, "Cartão");
+													pst.setString(8,  textField_DescontoVendaAtacado.getText());
 													pst.execute();
 													pst.close();
 													contador++;
 												} catch (Exception g) {
 													g.printStackTrace();
-												}	
-											}	
-											NumeroDaVenda();
-											AtualizarNumeroDaVenda();
-											NumeroDaVendaToPDF();
-											DocumentoVendaAtacado();
-											refreshtableCarrinhoVendaAtacado();
-											JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+												}
+										}	
+										NumeroDaVenda();
+										AtualizarNumeroDaVenda();
+										NumeroDaVendaToPDF();
+										DocumentoVendaAtacado();
+										refreshtableProdutosVendaAtacado();
+										limpadorDeDadosVendaAtacado();
+										JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+										while (carrinhoVendaAtacado.getRowCount() > 0) {
+											carrinhoVendaAtacado.removeRow(carrinhoVendaAtacado.getRowCount()-1);
+										}
 										}
 							}	
 					}else if (chckbxAPagarVendaAtacado.isSelected()) {
@@ -2532,14 +2922,17 @@ public class ApplicationView {
 									}else if(chckbxDinheiroVendaAtacado.isSelected()) {
 										while(tableProdutosNoCarrinhoVendaAtacado.getRowCount() != contador) {
 											try {
-												String query = "INSERT INTO adegagelaguela.venda (Cliente_idCliente, Carrinho_idCarrinho, FormaDePgmt, PagamentoFuturo, NumeroDaVenda, Desconto) VALUES (?, ?, ?, ?, ?, ?)";
+												String query = "INSERT INTO adegagelaguela.vendaatacado (IDCliente, IDProduto, produto, quantidade, preco, NumeroDaVenda, FormaDePagamento, Desconto, PagarFuturo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 												PreparedStatement pst = conexao.prepareStatement(query);
 												pst.setString(1, txtIdDoClienteVendaAtacado.getText());
 												pst.setString(2, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 0).toString());
-												pst.setString(3, "Dinheiro");
-												pst.setString(4, "SIM");
-												pst.setString(5, txt_NumeroDaVendaAtacado.getText());
-												pst.setString(6,  textField_DescontoVendaAtacado.getText());
+												pst.setString(3, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 1).toString());
+												pst.setString(4, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 2).toString());
+												pst.setString(5, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 3).toString());
+												pst.setString(6,  txt_NumeroDaVendaAtacado.getText());
+												pst.setString(7, "Dinheiro");
+												pst.setString(8,  textField_DescontoVendaAtacado.getText());
+												pst.setString(9,  "Sim");
 												pst.execute();
 												pst.close();
 												contador++;
@@ -2551,32 +2944,43 @@ public class ApplicationView {
 									AtualizarNumeroDaVenda();
 									NumeroDaVendaToPDF();
 									DocumentoVendaAtacado();
-									refreshtableCarrinhoVendaAtacado();
+									refreshtableProdutosVendaAtacado();
+									limpadorDeDadosVendaAtacado();
 									JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+									while (carrinhoVendaAtacado.getRowCount() > 0) {
+										carrinhoVendaAtacado.removeRow(carrinhoVendaAtacado.getRowCount()-1);
+									}
 										}else if(chckbxCartaoVendaAtacado.isSelected()) {
 											while(tableProdutosNoCarrinhoVendaAtacado.getRowCount() != contador) {
 												try {
-													String query = "INSERT INTO adegagelaguela.venda (Cliente_idCliente, Carrinho_idCarrinho, FormaDePgmt, PagamentoFuturo, NumeroDaVenda, Desconto) VALUES (?, ?, ?, ?, ?, ?)";
+													String query = "INSERT INTO adegagelaguela.vendaatacado (IDCliente, IDProduto, produto, quantidade, preco, NumeroDaVenda, FormaDePagamento, Desconto, PagarFuturo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 													PreparedStatement pst = conexao.prepareStatement(query);
 													pst.setString(1, txtIdDoClienteVendaAtacado.getText());
 													pst.setString(2, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 0).toString());
-													pst.setString(3, "Cartão");
-													pst.setString(4, "SIM");
-													pst.setString(5, txt_NumeroDaVendaAtacado.getText());
-													pst.setString(6,  textField_DescontoVendaAtacado.getText());
+													pst.setString(3, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 1).toString());
+													pst.setString(4, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 2).toString());
+													pst.setString(5, tableProdutosNoCarrinhoVendaAtacado.getValueAt(contador, 3).toString());
+													pst.setString(6,  txt_NumeroDaVendaAtacado.getText());
+													pst.setString(7, "Cartão");
+													pst.setString(8,  textField_DescontoVendaAtacado.getText());
+													pst.setString(8,  "Sim");
 													pst.execute();
 													pst.close();
 													contador++;
 												} catch (Exception g) {
 													g.printStackTrace();
-												}	
-											}	
-								NumeroDaVenda();
-								AtualizarNumeroDaVenda();
-								NumeroDaVendaToPDF();
-								DocumentoVendaAtacado();
-								refreshtableCarrinhoVendaAtacado();
-								JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+												}
+										}	
+										NumeroDaVenda();
+										AtualizarNumeroDaVenda();
+										NumeroDaVendaToPDF();
+										DocumentoVendaAtacado();
+										refreshtableProdutosVendaAtacado();
+										limpadorDeDadosVendaAtacado();
+										JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+										while (carrinhoVendaAtacado.getRowCount() > 0) {
+											carrinhoVendaAtacado.removeRow(carrinhoVendaAtacado.getRowCount()-1);
+										}
 							
 							}
 						}
@@ -2588,14 +2992,14 @@ public class ApplicationView {
 		btnNewButtonVenderVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
 		vendaAtacado.add(btnNewButtonVenderVendaAtacado);
 		
-		JLabel lblNewLabel_4 = new JLabel("Desconto R$:");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\money-delete-icon.png"));
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_4.setBounds(518, 259, 115, 41);
-		vendaAtacado.add(lblNewLabel_4);
+		JLabel lblNewLabel_DescontoVendaAtacado = new JLabel("Desconto R$:");
+		lblNewLabel_DescontoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\money-delete-icon.png"));
+		lblNewLabel_DescontoVendaAtacado.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_DescontoVendaAtacado.setBounds(518, 259, 115, 41);
+		vendaAtacado.add(lblNewLabel_DescontoVendaAtacado);
 		
 		textField_DescontoVendaAtacado = new JTextField();
-		textField_DescontoVendaAtacado.setText("00.00");
+		textField_DescontoVendaAtacado.setText("0");
 		textField_DescontoVendaAtacado.setBounds(642, 270, 117, 20);
 		vendaAtacado.add(textField_DescontoVendaAtacado);
 		textField_DescontoVendaAtacado.setColumns(10);
@@ -2633,9 +3037,14 @@ public class ApplicationView {
 			}
 		});
 		btnNewButtonVoltarMenuVendaAtacado.setOpaque(false);
-		btnNewButtonVoltarMenuVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Actions-go-previous-icon.png"));
+		btnNewButtonVoltarMenuVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVolta.png"));
 		btnNewButtonVoltarMenuVendaAtacado.setBounds(0, 20, 25, 20);
 		vendaAtacado.add(btnNewButtonVoltarMenuVendaAtacado);
+		
+		JLabel lblNewLabel_FundoVendaAtacado = new JLabel("");
+		lblNewLabel_FundoVendaAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoVendaAtacado.jpg"));
+		lblNewLabel_FundoVendaAtacado.setBounds(0, 0, 790, 565);
+		vendaAtacado.add(lblNewLabel_FundoVendaAtacado);
 
 
 		//
@@ -2674,13 +3083,6 @@ public class ApplicationView {
 		mnProdutosVendaPersonalizada.add(mntmProdutosEmEstoqueVendaPersonalizada);
 
 		JMenuItem mntmTodosOsProdutosVendaPersonalizada;
-		mntmTodosOsProdutosVendaPersonalizada = new JMenuItem("Todos Produtos");
-		mntmTodosOsProdutosVendaPersonalizada.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mntmTodosOsProdutosVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
-		mnProdutosVendaPersonalizada.add(mntmTodosOsProdutosVendaPersonalizada);
 
 		JMenuItem mntmProdutosParaComprarVendaPersonalizada = new JMenuItem("Produtos para Comprar");
 		mntmProdutosParaComprarVendaPersonalizada.addActionListener(new ActionListener() {
@@ -2691,6 +3093,15 @@ public class ApplicationView {
 		});
 		mntmProdutosParaComprarVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
 		mnProdutosVendaPersonalizada.add(mntmProdutosParaComprarVendaPersonalizada);
+		mntmTodosOsProdutosVendaPersonalizada = new JMenuItem("Todos Produtos");
+		mntmTodosOsProdutosVendaPersonalizada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosOsProdutosVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosVendaPersonalizada.add(mntmTodosOsProdutosVendaPersonalizada);
 
 		JMenu mnVenderVendaPersonalizada = new JMenu("Vender");
 		mnVenderVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
@@ -2730,12 +3141,62 @@ public class ApplicationView {
 		menuBarVendaPersonalizada.add(mnClientesVendaPersonalizada);
 		
 		JMenuItem mntmNewMenuItemClientesAtacadoVendaPersonalizada = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItemClientesAtacadoVendaPersonalizada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				clientesAtacado.setVisible(true);
+			}
+		});
 		mntmNewMenuItemClientesAtacadoVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
 		mnClientesVendaPersonalizada.add(mntmNewMenuItemClientesAtacadoVendaPersonalizada);
 		
 		JMenu mnFinanceiroVendaPersonalizada = new JMenu("Financeiro");
 		mnFinanceiroVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
 		menuBarVendaPersonalizada.add(mnFinanceiroVendaPersonalizada);
+		
+		JMenuItem mntmRelatorioDeVendasVendaPersonalizada = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasVendaPersonalizada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroVendaPersonalizada.add(mntmRelatorioDeVendasVendaPersonalizada);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_7 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_6 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_6.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroVendaPersonalizada.add(mnNewMenu_1_6);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega_6 = new JMenuItem("Atacado");
+		mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega_6.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnNewMenu_1_6.add(mntmNewMenuItemRelatorioDeProdutosProdutosnaAdega_6);
+		
+		JMenuItem mntmVarejo_6 = new JMenuItem("Varejo");
+		mntmVarejo_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_6.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_6.add(mntmVarejo_6);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_7.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroVendaPersonalizada.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_7);
 
 		JMenu mnAjudaVendaPersonalizada = new JMenu("Ajuda");
 		mnAjudaVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
@@ -2863,7 +3324,7 @@ public class ApplicationView {
 		textField_NomeClienteVendaPersonalizada.setColumns(10);
 		
 		JLabel lblNewLabel_CPFRGVendaPersonalizada = new JLabel("CPF ou RG :");
-		lblNewLabel_CPFRGVendaPersonalizada.setBounds(264, 306, 67, 20);
+		lblNewLabel_CPFRGVendaPersonalizada.setBounds(260, 306, 67, 20);
 		vendaPersonalizada.add(lblNewLabel_CPFRGVendaPersonalizada);
 		
 		textField_CPFRGVendaPersonalizada = new JTextField();
@@ -2887,7 +3348,7 @@ public class ApplicationView {
 		vendaPersonalizada.add(lblNewLabel_Carrinho);
 		
 		JScrollPane scrollPaneCarrinhoVendaPersonalizada = new JScrollPane();
-		scrollPaneCarrinhoVendaPersonalizada.setBounds(37, 407, 433, 118);
+		scrollPaneCarrinhoVendaPersonalizada.setBounds(37, 407, 529, 107);
 		vendaPersonalizada.add(scrollPaneCarrinhoVendaPersonalizada);
 	
 		
@@ -2904,6 +3365,7 @@ public class ApplicationView {
 		carrinhoVendaPersonalizada.addColumn("Produto");
 		carrinhoVendaPersonalizada.addColumn("Preço");
 		carrinhoVendaPersonalizada.addColumn("Quantidade");
+		carrinhoVendaPersonalizada.addColumn("Valor do Produto");
 		scrollPaneCarrinhoVendaPersonalizada.setViewportView(tableCarrinhoVendaPersonalizada);
 	
 		JButton btnNewButtonAddCarinhoVendaPersonalizada = new JButton("Adicionar ao Carrinho");
@@ -2915,9 +3377,9 @@ public class ApplicationView {
 						if(!textField_PrecoVendaPersonalizada.getText().equals("")) {
 							 double precovenda = Double.parseDouble(textField_PrecoVendaPersonalizada.getText().toString());
 							 double quantiavenda = Double.parseDouble(textField_QuantidadeVendaPersonalizada.getText().toString());
-							 
+							 String total = String.valueOf(precovenda * quantiavenda);
 							 valorCarrinhoPersonalizada = valorCarrinhoPersonalizada+ precovenda * quantiavenda;
-							carrinhoVendaPersonalizada.addRow(new String [] {textFieldIDVendaPersonalizada.getText(), textFieldNomeProdutoVendaPersonalizada.getText(), textField_PrecoVendaPersonalizada.getText(), textField_QuantidadeVendaPersonalizada.getText()});
+							carrinhoVendaPersonalizada.addRow(new String [] {textFieldIDVendaPersonalizada.getText(), textFieldNomeProdutoVendaPersonalizada.getText(), textField_PrecoVendaPersonalizada.getText(), textField_QuantidadeVendaPersonalizada.getText(), total});
 						}else JOptionPane.showMessageDialog(null, "Adicione o valor personalizado!!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 					}else JOptionPane.showMessageDialog(null, "Quantidade não pode estar vazia ou ser '0' !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
 				}else JOptionPane.showMessageDialog(null, "Selecione um produto da tabela ao lado !!", "ERRO!", JOptionPane.WARNING_MESSAGE);
@@ -2932,7 +3394,9 @@ public class ApplicationView {
 		JButton btnRemoverDoCarrinhoVendaPersonalizada = new JButton("Remover do Carrinho");
 		btnRemoverDoCarrinhoVendaPersonalizada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				valorCarrinhoPersonalizada =  valorCarrinhoPersonalizada - Double.parseDouble(tableCarrinhoVendaPersonalizada.getValueAt(tableCarrinhoVendaPersonalizada.getSelectedRow(), 4).toString());
 				carrinhoVendaPersonalizada.removeRow(tableCarrinhoVendaPersonalizada.getSelectedRow());
+				AttValorTotalPersonalizada();
 			}
 		});
 		btnRemoverDoCarrinhoVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
@@ -2954,7 +3418,7 @@ public class ApplicationView {
 		vendaPersonalizada.add(lblNewLabel_EmrpesaVendaPersonalizada);
 		
 		textField_EmpresaVendaPersonalizada = new JTextField();
-		textField_EmpresaVendaPersonalizada.setBounds(288, 341, 157, 20);
+		textField_EmpresaVendaPersonalizada.setBounds(281, 341, 164, 20);
 		vendaPersonalizada.add(textField_EmpresaVendaPersonalizada);
 		textField_EmpresaVendaPersonalizada.setColumns(10);
 		
@@ -2978,14 +3442,17 @@ public class ApplicationView {
 		vendaPersonalizada.add(lblNewLabel_FormaDePagamentoVendaPersonalizada);
 		
 		JCheckBox chckbxNewCheckBoxDinheiroVendaPersonalizada = new JCheckBox("Dinheiro");
+		chckbxNewCheckBoxDinheiroVendaPersonalizada.setContentAreaFilled(false);
 		chckbxNewCheckBoxDinheiroVendaPersonalizada.setBounds(586, 274, 97, 23);
 		vendaPersonalizada.add(chckbxNewCheckBoxDinheiroVendaPersonalizada);
 		
 		JCheckBox chckbxNewCheckBoxCartaoVendaPersonalizada = new JCheckBox("Cart\u00E3o");
+		chckbxNewCheckBoxCartaoVendaPersonalizada.setContentAreaFilled(false);
 		chckbxNewCheckBoxCartaoVendaPersonalizada.setBounds(586, 305, 97, 23);
 		vendaPersonalizada.add(chckbxNewCheckBoxCartaoVendaPersonalizada);
 		
 		JCheckBox chckbxPagamentoFuturoVendaPersonalizada = new JCheckBox("Pagamento Futuro");
+		chckbxPagamentoFuturoVendaPersonalizada.setContentAreaFilled(false);
 		chckbxPagamentoFuturoVendaPersonalizada.setBounds(586, 338, 135, 23);
 		vendaPersonalizada.add(chckbxPagamentoFuturoVendaPersonalizada);
 		
@@ -2994,7 +3461,7 @@ public class ApplicationView {
 			public void actionPerformed(ActionEvent e) {
 				if(!textField_NomeClienteVendaPersonalizada.getText().equals("")){
 					if(!chckbxPagamentoFuturoVendaPersonalizada.isSelected()) {
-						if (JOptionPane.showConfirmDialog(null, "Venda no valor de R$: " + valorCarrinhoVarejo.toString() +".00" , "Confirmação de Venda", JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
+						if (JOptionPane.showConfirmDialog(null, "Venda no valor de" + txtValorTotal.getText().toString(), "Confirmação de Venda", JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION) {
 							int contador = 0;
 							if(chckbxNewCheckBoxDinheiroVendaPersonalizada.isSelected() && chckbxNewCheckBoxCartaoVendaPersonalizada.isSelected()) {
 								JOptionPane.showMessageDialog(null, "Selecione apenas um metodo para pagar!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -3024,12 +3491,13 @@ public class ApplicationView {
 											}
 									}	
 										JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
+										limpadorDeDadosVendaPersonalizada();
+										DocumentoVendaPersonalizada();
 										NumeroDaVenda();
 										AtualizarNumeroDaVenda();
 										while (carrinhoVendaPersonalizada.getRowCount() > 0) {
 											carrinhoVendaPersonalizada.removeRow(carrinhoVendaPersonalizada.getRowCount()-1);
 										}
-									
 										}else if(chckbxNewCheckBoxCartaoVendaPersonalizada.isSelected()) {
 											while(tableCarrinhoVendaPersonalizada.getRowCount() != contador) {
 												try {
@@ -3053,13 +3521,14 @@ public class ApplicationView {
 													g.printStackTrace();
 												}
 										}	
-											NumeroDaVenda();
-											AtualizarNumeroDaVenda();
 											while (carrinhoVendaPersonalizada.getRowCount() > 0) {
 												carrinhoVendaPersonalizada.removeRow(carrinhoVendaPersonalizada.getRowCount()-1);
 											}
 											JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
-							
+											DocumentoVendaPersonalizada();
+											NumeroDaVenda();
+											AtualizarNumeroDaVenda();
+											limpadorDeDadosVendaPersonalizada();
 							}
 						}	
 					}else if (chckbxPagamentoFuturoVendaPersonalizada.isSelected()) {
@@ -3093,11 +3562,13 @@ public class ApplicationView {
 												g.printStackTrace();
 											}
 									}	
-									NumeroDaVenda();
-									AtualizarNumeroDaVenda();
 									while (carrinhoVendaPersonalizada.getRowCount() > 0) {
 										carrinhoVendaPersonalizada.removeRow(carrinhoVendaPersonalizada.getRowCount()-1);
 									}
+									DocumentoVendaPersonalizada();
+									NumeroDaVenda();
+									AtualizarNumeroDaVenda();
+									limpadorDeDadosVendaPersonalizada();
 									JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
 										}else if(chckbxNewCheckBoxCartaoVendaPersonalizada.isSelected()) {
 											while(tableCarrinhoVendaPersonalizada.getRowCount() != contador) {
@@ -3122,11 +3593,14 @@ public class ApplicationView {
 												} catch (Exception g) {
 													g.printStackTrace();
 												}
-											}	
-										AtualizarNumeroDaVenda();
+											}
 										while (carrinhoVendaPersonalizada.getRowCount() > 0) {
 											carrinhoVendaPersonalizada.removeRow(carrinhoVendaPersonalizada.getRowCount()-1);
 										}
+										DocumentoVendaPersonalizada();
+										NumeroDaVenda();
+										AtualizarNumeroDaVenda();
+										limpadorDeDadosVendaPersonalizada();
 									JOptionPane.showMessageDialog(null, "Venda Realizada!", "", JOptionPane.INFORMATION_MESSAGE);
 								}
 							}
@@ -3143,17 +3617,2145 @@ public class ApplicationView {
 		JLabel lblNewLabel_8 = new JLabel("Valor Total do Carrinho :");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Coin-us-dollar-icon.png"));
-		lblNewLabel_8.setBounds(480, 405, 196, 24);
+		lblNewLabel_8.setBounds(576, 402, 196, 24);
 		vendaPersonalizada.add(lblNewLabel_8);
 		
 		txtValorTotal = new JTextField();
 		txtValorTotal.setEditable(false);
-		txtValorTotal.setText("R$: "+ valorCarrinhoVarejo.toString() +"0");
-		txtValorTotal.setBounds(496, 428, 157, 20);
+		txtValorTotal.setText("R$: "+ valorCarrinhoPersonalizada.toString() +"0");
+		txtValorTotal.setBounds(589, 429, 157, 20);
 		vendaPersonalizada.add(txtValorTotal);
 		txtValorTotal.setColumns(10);
+		
+		JButton btnNewButtonMenuInicialVendaPersonalizada = new JButton("");
+		btnNewButtonMenuInicialVendaPersonalizada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaPersonalizada.setVisible(false);
+				menuInicial.setVisible(true);
+			}
+		});
+		btnNewButtonMenuInicialVendaPersonalizada.setContentAreaFilled(false);
+		btnNewButtonMenuInicialVendaPersonalizada.setBorderPainted(false);
+		btnNewButtonMenuInicialVendaPersonalizada.setOpaque(false);
+		btnNewButtonMenuInicialVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVolta.png"));
+		btnNewButtonMenuInicialVendaPersonalizada.setBounds(0, 25, 16, 16);
+		vendaPersonalizada.add(btnNewButtonMenuInicialVendaPersonalizada);
+		
+		JLabel lblNewLabel_FundoVendaPersonalizada = new JLabel("");
+		lblNewLabel_FundoVendaPersonalizada.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoVendaPersonalizada.jpg"));
+		lblNewLabel_FundoVendaPersonalizada.setBounds(0, 0, 790, 565);
+		vendaPersonalizada.add(lblNewLabel_FundoVendaPersonalizada);
+		clientesAtacado.setLayout(null);
+		
+		
+		
+		
+		//
+		//
+		//Clientes Atacado
+		//
+		//
+		
+		
 
+		JMenuBar menuBarclientesAtacado = new JMenuBar();
+		menuBarclientesAtacado.setBackground(Color.LIGHT_GRAY);
+		menuBarclientesAtacado.setBounds(0, 0, 934, 22);
+		clientesAtacado.add(menuBarclientesAtacado);
 
+		JMenu mnProdutosclientesAtacado = new JMenu("Produtos");
+		mnProdutosclientesAtacado.setToolTipText("");
+		mnProdutosclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarclientesAtacado.add(mnProdutosclientesAtacado);
+
+		JMenuItem mntmProdutosNaAdegaclientesAtacado = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				produtosNaAdega.setVisible(true);
+			}
+		});
+		mntmProdutosNaAdegaclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosclientesAtacado.add(mntmProdutosNaAdegaclientesAtacado);
+
+		JMenuItem mntmProdutosEmEstoqueclientesAtacado = new JMenuItem("Produtos em Estoque");
+		mntmProdutosEmEstoqueclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				produtosEmEstoque.setVisible(true);
+			}
+		});
+		mntmProdutosEmEstoqueclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosclientesAtacado.add(mntmProdutosEmEstoqueclientesAtacado);
+
+		JMenuItem mntmProdutosParaComprarclientesAtacado = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosclientesAtacado.add(mntmProdutosParaComprarclientesAtacado);
+
+		JMenuItem mntmTodosProdutosclientesAtacado = new JMenuItem("Todos Produtos");
+		mntmTodosProdutosclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				clientesAtacado.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosProdutosclientesAtacado.setIcon(
+				new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosclientesAtacado.add(mntmTodosProdutosclientesAtacado);
+
+		JMenu mnVenderclientesAtacado = new JMenu("Vender");
+		mnVenderclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarclientesAtacado.add(mnVenderclientesAtacado);
+
+		JMenuItem mntmVendaVarejoclientesAtacado = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				vendaVarejo.setVisible(true);
+			}
+		});
+		mntmVendaVarejoclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderclientesAtacado.add(mntmVendaVarejoclientesAtacado);
+
+		JMenuItem mntmVendaAtacadoclientesAtacado = new JMenuItem("Venda Atacado");
+		mntmVendaAtacadoclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				vendaAtacado.setVisible(true);
+			}
+		});
+		mntmVendaAtacadoclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderclientesAtacado.add(mntmVendaAtacadoclientesAtacado);
+
+		JMenuItem mntmVendaPersonalizadaclientesAtacado = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				vendaPersonalizada.setVisible(true);
+			}
+		});
+		mntmVendaPersonalizadaclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderclientesAtacado.add(mntmVendaPersonalizadaclientesAtacado);
+		
+		JMenu mnClientesclientesAtacado = new JMenu("Clientes");
+		mnClientesclientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		menuBarclientesAtacado.add(mnClientesclientesAtacado);
+		
+		JMenuItem mntmNewMenuItem1 = new JMenuItem("Clientes Atacado");
+		mntmNewMenuItem1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		mnClientesclientesAtacado.add(mntmNewMenuItem1);
+
+		JMenu mnFinanceiroclientesAtacado = new JMenu("Financeiro");
+		mnFinanceiroclientesAtacado.setIcon(
+				new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
+		menuBarclientesAtacado.add(mnFinanceiroclientesAtacado);
+		
+		JMenuItem mntmRelatorioDeVendasClientesAtacado = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasClientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				relatorioDeVendas.setVisible(true);
+			}
+		});
+		mntmRelatorioDeVendasClientesAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroclientesAtacado.add(mntmRelatorioDeVendasClientesAtacado);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_8 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_7 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_7.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroclientesAtacado.add(mnNewMenu_1_7);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosClientes = new JMenuItem("Atacado");
+		mnNewMenu_1_7.add(mntmNewMenuItemRelatorioDeProdutosClientes);
+		mntmNewMenuItemRelatorioDeProdutosClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mntmNewMenuItemRelatorioDeProdutosClientes.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_7 = new JMenuItem("Varejo");
+		mntmVarejo_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_7.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_7.add(mntmVarejo_7);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_8.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroclientesAtacado.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_8);
+
+		JMenu mnAjudaclientesAtacado = new JMenu("Ajuda");
+		mnAjudaclientesAtacado.setIcon(
+				new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarclientesAtacado.add(mnAjudaclientesAtacado);
+
+		JMenuItem mntmDadosDaVersaoclientesAtacado = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoclientesAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoclientesAtacado.setIcon(
+				new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaclientesAtacado.add(mntmDadosDaVersaoclientesAtacado);
+		
+		JButton btnNewButtonClientesClientes = new JButton("Clientes");
+		btnNewButtonClientesClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTableClientesClientes();
+			}
+		});
+		btnNewButtonClientesClientes.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		btnNewButtonClientesClientes.setBounds(640, 337, 132, 20);
+		clientesAtacado.add(btnNewButtonClientesClientes);
+		
+		textFieldNmrDeCliente = new JTextField();
+		textFieldNmrDeCliente.setEditable(false);
+		textFieldNmrDeCliente.setBounds(127, 525, 44, 20);
+		clientesAtacado.add(textFieldNmrDeCliente);
+		textFieldNmrDeCliente.setColumns(10);
+		
+		JLabel lblNewLabel_TotalDeClientesClientes = new JLabel("Total de Clientes :");
+		lblNewLabel_TotalDeClientesClientes.setForeground(Color.WHITE);
+		lblNewLabel_TotalDeClientesClientes.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_TotalDeClientesClientes.setBounds(10, 525, 107, 20);
+		clientesAtacado.add(lblNewLabel_TotalDeClientesClientes);
+		
+		JLabel lblNewLabel_AdicionarNovoClienteCliente = new JLabel("Dados do Cliente :");
+		lblNewLabel_AdicionarNovoClienteCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_AdicionarNovoClienteCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\TV-Johny-Cash-icon.png"));
+		lblNewLabel_AdicionarNovoClienteCliente.setBounds(27, 30, 200, 24);
+		clientesAtacado.add(lblNewLabel_AdicionarNovoClienteCliente);
+		
+		JLabel lblNewLabel_NomeCliente = new JLabel("Nome do cliente :");
+		lblNewLabel_NomeCliente.setForeground(Color.WHITE);
+		lblNewLabel_NomeCliente.setBounds(27, 70, 115, 20);
+		clientesAtacado.add(lblNewLabel_NomeCliente);
+		
+
+		textFieldIDCliente = new JTextField();
+		textFieldIDCliente.setVisible(false);
+		textFieldIDCliente.setEditable(false);
+		textFieldIDCliente.setBounds(178, 315, 60, 20);
+		clientesAtacado.add(textFieldIDCliente);
+		textFieldIDCliente.setColumns(10);
+		
+		textField_NomeDoClienteCliente = new JTextField();
+		textField_NomeDoClienteCliente.setBounds(141, 70, 340, 20);
+		clientesAtacado.add(textField_NomeDoClienteCliente);
+		textField_NomeDoClienteCliente.setColumns(10);
+		
+		JLabel lblNewLabel_EmpresaCliente = new JLabel("Empresa :");
+		lblNewLabel_EmpresaCliente.setBounds(27, 185, 83, 20);
+		clientesAtacado.add(lblNewLabel_EmpresaCliente);
+		
+		textField_EmpresaCliente = new JTextField();
+		textField_EmpresaCliente.setBounds(91, 185, 200, 20);
+		clientesAtacado.add(textField_EmpresaCliente);
+		textField_EmpresaCliente.setColumns(10);
+		
+		JLabel lblNewLabel_EmailCliente = new JLabel("Email :");
+		lblNewLabel_EmailCliente.setForeground(Color.WHITE);
+		lblNewLabel_EmailCliente.setBounds(27, 100, 60, 20);
+		clientesAtacado.add(lblNewLabel_EmailCliente);
+		
+		textField_EmailCliente = new JTextField();
+		textField_EmailCliente.setBounds(73, 100, 218, 20);
+		clientesAtacado.add(textField_EmailCliente);
+		textField_EmailCliente.setColumns(10);
+		
+		JLabel lblNewLabel_Telefone1Cliente = new JLabel("Telefone (1) :");
+		lblNewLabel_Telefone1Cliente.setBounds(301, 100, 90, 20);
+		clientesAtacado.add(lblNewLabel_Telefone1Cliente);
+		
+		textField_Telefone1Cliente = new JTextField();
+		textField_Telefone1Cliente.setBounds(378, 100, 121, 20);
+		clientesAtacado.add(textField_Telefone1Cliente);
+		textField_Telefone1Cliente.setColumns(10);
+		
+		JLabel lblNewLabel_Telefone2Cliente = new JLabel("Telefone (2) :");
+		lblNewLabel_Telefone2Cliente.setBounds(509, 100, 90, 20);
+		clientesAtacado.add(lblNewLabel_Telefone2Cliente);
+		
+		textField_Telefone2Cliente = new JTextField();
+		textField_Telefone2Cliente.setBounds(587, 100, 121, 20);
+		clientesAtacado.add(textField_Telefone2Cliente);
+		textField_Telefone2Cliente.setColumns(10);
+		
+		JLabel lblNewLabel_CPFCliente = new JLabel("CPF :");
+		lblNewLabel_CPFCliente.setBounds(500, 70, 46, 20);
+		clientesAtacado.add(lblNewLabel_CPFCliente);
+		
+		textField_CPFCliente = new JTextField();
+		textField_CPFCliente.setBounds(542, 70, 166, 20);
+		clientesAtacado.add(textField_CPFCliente);
+		textField_CPFCliente.setColumns(10);
+		
+		JLabel lblNewLabel_EnderecoClientes = new JLabel("Endere\u00E7o :");
+		lblNewLabel_EnderecoClientes.setBounds(27, 215, 90, 20);
+		clientesAtacado.add(lblNewLabel_EnderecoClientes);
+		
+		textField_EnderecoCliente = new JTextField();
+		textField_EnderecoCliente.setBounds(93, 215, 185, 20);
+		clientesAtacado.add(textField_EnderecoCliente);
+		textField_EnderecoCliente.setColumns(10);
+		
+		JLabel lblNewLabel_NmrCliente = new JLabel("N\u00BA :");
+		lblNewLabel_NmrCliente.setBounds(288, 215, 34, 20);
+		clientesAtacado.add(lblNewLabel_NmrCliente);
+		
+		textField_NmrCliente = new JTextField();
+		textField_NmrCliente.setBounds(311, 215, 60, 20);
+		clientesAtacado.add(textField_NmrCliente);
+		textField_NmrCliente.setColumns(10);
+		
+		JLabel lblNewLabel_DadosDaEmpresaCliente = new JLabel("Dados da Empresa :");
+		lblNewLabel_DadosDaEmpresaCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\drink-4-icon.png"));
+		lblNewLabel_DadosDaEmpresaCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_DadosDaEmpresaCliente.setBounds(27, 145, 200, 24);
+		clientesAtacado.add(lblNewLabel_DadosDaEmpresaCliente);
+		
+		JLabel lblNewLabel_TelefoneEmpresa = new JLabel("Telefone da Empresa :");
+		lblNewLabel_TelefoneEmpresa.setBounds(468, 185, 132, 20);
+		clientesAtacado.add(lblNewLabel_TelefoneEmpresa);
+		
+		textField_TelEmpresaCliente = new JTextField();
+		textField_TelEmpresaCliente.setBounds(601, 185, 107, 20);
+		clientesAtacado.add(textField_TelEmpresaCliente);
+		textField_TelEmpresaCliente.setColumns(10);
+		
+		JLabel lblNewLabel_CNPJClientes = new JLabel("CNPJ :");
+		lblNewLabel_CNPJClientes.setBounds(301, 185, 46, 20);
+		clientesAtacado.add(lblNewLabel_CNPJClientes);
+		
+		textField_CNPJCliente = new JTextField();
+		textField_CNPJCliente.setBounds(351, 185, 107, 20);
+		clientesAtacado.add(textField_CNPJCliente);
+		textField_CNPJCliente.setColumns(10);
+		
+		JLabel lblNewLabel_BairroCliente = new JLabel("Bairro :");
+		lblNewLabel_BairroCliente.setBounds(383, 215, 46, 20);
+		clientesAtacado.add(lblNewLabel_BairroCliente);
+		
+		textField_BairroCliente = new JTextField();
+		textField_BairroCliente.setBounds(431, 215, 115, 20);
+		clientesAtacado.add(textField_BairroCliente);
+		textField_BairroCliente.setColumns(10);
+		
+		JLabel lblNewLabel_CidadeClientes = new JLabel("Cidade :");
+		lblNewLabel_CidadeClientes.setBounds(556, 215, 60, 20);
+		clientesAtacado.add(lblNewLabel_CidadeClientes);
+		
+		textField_CidadeCliente = new JTextField();
+		textField_CidadeCliente.setBounds(611, 215, 97, 20);
+		clientesAtacado.add(textField_CidadeCliente);
+		textField_CidadeCliente.setColumns(10);
+		
+		JButton btnNewButtonAdicionarCliente = new JButton("Adicionar Cliente");
+		btnNewButtonAdicionarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textField_NomeDoClienteCliente.getText().equals("") || !textField_EmailCliente.getText().equals("") || !textField_CPFCliente.getText().equals("") || !textField_Telefone1Cliente.getText().equals(""))  {
+					try {
+						String query = "insert into adegagelaguela.cliente (Nome, Email, Empresa, Cidade, Bairro, CNPJ, TelefoneEmpresa, Numero, Endereco, CPF, Telefone1, Telefone2) values (?, ?, ?, ?,?, ?, ?, ?,?, ?, ?, ?)";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						pst.setString(1, textField_NomeDoClienteCliente.getText());;
+						pst.setString(2, textField_EmailCliente.getText());
+						pst.setString(3, textField_EmpresaCliente.getText());
+						pst.setString(4, textField_CidadeCliente.getText());;
+						pst.setString(5, textField_BairroCliente.getText());
+						pst.setString(6, textField_CNPJCliente.getText());
+						pst.setString(7, textField_TelEmpresaCliente.getText());;
+						pst.setString(8, textField_NmrCliente.getText());
+						pst.setString(9, textField_EnderecoCliente.getText());
+						pst.setString(10, textField_CPFCliente.getText());;
+						pst.setString(11, textField_Telefone1Cliente.getText());
+						pst.setString(12, textField_Telefone2Cliente.getText());
+						pst.execute();
+	
+						JOptionPane.showMessageDialog(null, "Salvo com sucesso !");
+						limpadorDeDadosClientes();
+						refreshTableClientesClientes();
+						pst.close();
+					} catch (SQLException g) {
+						JOptionPane.showMessageDialog(null, "Use ponto ao inves de virgula!"); g.printStackTrace();
+					}
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Preencha os principais campos (*) para adicionar um novo cliente");
+				}
+				
+			}
+		});
+		btnNewButtonAdicionarCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Export-icon.png"));
+		btnNewButtonAdicionarCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButtonAdicionarCliente.setBounds(27, 265, 170, 24);
+		clientesAtacado.add(btnNewButtonAdicionarCliente);
+		
+		JButton btnAtualizarCliente = new JButton("Atualizar Cliente");
+		btnAtualizarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textField_NomeDoClienteCliente.getText().equals("") || !textField_EmailCliente.getText().equals("") || !textField_CPFCliente.getText().equals("") || !textField_Telefone1Cliente.getText().equals(""))  {
+					try {
+						String query = "Update cliente set idCliente='" + textFieldIDCliente.getText()
+						+ "' ,Nome = '" + textField_NomeDoClienteCliente.getText() + "' ,Email = '" + textField_EmailCliente.getText() + "' ,Empresa = '" + textField_EmpresaCliente.getText() 
+						+ "' ,Cidade = '" + textField_CidadeCliente.getText() + "' ,Bairro = '" + textField_BairroCliente.getText() + "' ,CNPJ = '" + textField_CNPJCliente.getText()
+						+ "' ,TelefoneEmpresa = '" + textField_TelEmpresaCliente.getText() + "' ,Numero = '" + textField_NmrCliente.getText() + "' ,Endereco = '" + textField_EnderecoCliente.getText() 
+						+ "' ,CPF = '" + textField_CPFCliente.getText() + "' ,Telefone1 = '" + textField_Telefone1Cliente.getText() + "' ,Telefone2 = '" + textField_Telefone2Cliente.getText()
+						+ "' where idCliente='" + textFieldIDCliente.getText() + "'  ";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						pst.execute();
+						pst.close();
+						JOptionPane.showMessageDialog(null, "Atualizado com sucesso !");
+						refreshTableClientesClientes();
+						limpadorDeDadosClientes();
+					} catch (SQLException g) {
+						JOptionPane.showMessageDialog(null, "Erro !"); g.printStackTrace();
+					}
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Preencha os principais campos (*) para adicionar um novo cliente");
+				}
+				
+			}
+		});
+		btnAtualizarCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Import-icon.png"));
+		btnAtualizarCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAtualizarCliente.setBounds(221, 265, 170, 24);
+		clientesAtacado.add(btnAtualizarCliente);
+		
+		JScrollPane scrollPaneClientesClientes = new JScrollPane();
+		scrollPaneClientesClientes.setBounds(10, 359, 762, 155);
+		clientesAtacado.add(scrollPaneClientesClientes);
+		
+		tableClientesClientes = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		tableClientesClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int linha = tableClientesClientes.getSelectedRow();
+				textFieldIDCliente.setText(tableClientesClientes.getValueAt(linha, 0).toString());
+				textField_NomeDoClienteCliente.setText(tableClientesClientes.getValueAt(linha, 1).toString());
+				textField_CPFCliente.setText(tableClientesClientes.getValueAt(linha, 2).toString());
+				textField_EmailCliente.setText(tableClientesClientes.getValueAt(linha, 3).toString());
+				textField_Telefone1Cliente.setText(tableClientesClientes.getValueAt(linha, 4).toString());
+				textField_Telefone2Cliente.setText(tableClientesClientes.getValueAt(linha, 5).toString());
+				textField_EmpresaCliente.setText(tableClientesClientes.getValueAt(linha, 6).toString());
+				textField_CNPJCliente.setText(tableClientesClientes.getValueAt(linha, 7).toString());
+				textField_TelEmpresaCliente.setText(tableClientesClientes.getValueAt(linha, 8).toString());
+				textField_EnderecoCliente.setText(tableClientesClientes.getValueAt(linha, 9).toString());
+				textField_NmrCliente.setText(tableClientesClientes.getValueAt(linha, 10).toString());
+				textField_BairroCliente.setText(tableClientesClientes.getValueAt(linha, 11).toString());
+				textField_CidadeCliente.setText(tableClientesClientes.getValueAt(linha, 12).toString());
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int linha = tableClientesClientes.getSelectedRow();
+				textFieldIDCliente.setText(tableClientesClientes.getValueAt(linha, 0).toString());
+				textField_NomeDoClienteCliente.setText(tableClientesClientes.getValueAt(linha, 1).toString());
+				textField_CPFCliente.setText(tableClientesClientes.getValueAt(linha, 2).toString());
+				textField_EmailCliente.setText(tableClientesClientes.getValueAt(linha, 3).toString());
+				textField_Telefone1Cliente.setText(tableClientesClientes.getValueAt(linha, 4).toString());
+				textField_Telefone2Cliente.setText(tableClientesClientes.getValueAt(linha, 5).toString());
+				textField_EmpresaCliente.setText(tableClientesClientes.getValueAt(linha, 6).toString());
+				textField_CNPJCliente.setText(tableClientesClientes.getValueAt(linha, 7).toString());
+				textField_TelEmpresaCliente.setText(tableClientesClientes.getValueAt(linha, 8).toString());
+				textField_EnderecoCliente.setText(tableClientesClientes.getValueAt(linha, 9).toString());
+				textField_NmrCliente.setText(tableClientesClientes.getValueAt(linha, 10).toString());
+				textField_BairroCliente.setText(tableClientesClientes.getValueAt(linha, 11).toString());
+				textField_CidadeCliente.setText(tableClientesClientes.getValueAt(linha, 12).toString());
+			}
+		});
+		scrollPaneClientesClientes.setViewportView(tableClientesClientes);
+		
+		JButton btnNewButtonRemoverClienteCliente = new JButton("Remover Cliente");
+		btnNewButtonRemoverClienteCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(null, "Deletar o Cliente?", "", JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
+					if(!textFieldIDCliente.getText().equals("")) {
+						try {
+						String query = "delete from cliente where idCliente='" + tableClientesClientes.getValueAt(tableClientesClientes.getSelectedRow(), 0) + "' ";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						pst.execute();
+						JOptionPane.showMessageDialog(null, "Cliente Apagado !", "", JOptionPane.ERROR_MESSAGE);
+						pst.close();
+						} catch (Exception g) {
+							JOptionPane.showMessageDialog(null, "Selecione um cliente da tabela para deletar !"); g.printStackTrace();
+						}
+						refreshTableClientesClientes();
+						limpadorDeDadosClientes();
+
+					}else JOptionPane.showMessageDialog(null, "Selecione um cliente da tabela para deletar !", "ERRO!", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		btnNewButtonRemoverClienteCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\trash-icon.png"));
+		btnNewButtonRemoverClienteCliente.setBounds(587, 522, 185, 20);
+		clientesAtacado.add(btnNewButtonRemoverClienteCliente);
+		
+		JLabel lblNewLabelNeedCPFCliente = new JLabel("*");
+		lblNewLabelNeedCPFCliente.setForeground(Color.RED);
+		lblNewLabelNeedCPFCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabelNeedCPFCliente.setBounds(491, 69, 19, 20);
+		clientesAtacado.add(lblNewLabelNeedCPFCliente);
+		
+		JLabel lblNewLabelClienteNEEDCliente = new JLabel("*");
+		lblNewLabelClienteNEEDCliente.setForeground(Color.RED);
+		lblNewLabelClienteNEEDCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabelClienteNEEDCliente.setBounds(17, 70, 19, 20);
+		clientesAtacado.add(lblNewLabelClienteNEEDCliente);
+		
+		JLabel lblNewLabelTelNeedCliente = new JLabel("*");
+		lblNewLabelTelNeedCliente.setForeground(Color.RED);
+		lblNewLabelTelNeedCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabelTelNeedCliente.setBounds(291, 99, 19, 20);
+		clientesAtacado.add(lblNewLabelTelNeedCliente);
+		
+		JLabel lblNewLabelEmailNEEDCliente = new JLabel("*");
+		lblNewLabelEmailNEEDCliente.setForeground(Color.RED);
+		lblNewLabelEmailNEEDCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabelEmailNEEDCliente.setBounds(17, 100, 19, 20);
+		clientesAtacado.add(lblNewLabelEmailNEEDCliente);
+		
+		JButton btnNewButtonVoltarMenuCliente = new JButton("");
+		btnNewButtonVoltarMenuCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuInicial.setVisible(true);
+				clientesAtacado.setVisible(false);
+			}
+		});
+		btnNewButtonVoltarMenuCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\BotaoVolta.png"));
+		btnNewButtonVoltarMenuCliente.setOpaque(false);
+		btnNewButtonVoltarMenuCliente.setBorderPainted(false);
+		btnNewButtonVoltarMenuCliente.setContentAreaFilled(false);
+		btnNewButtonVoltarMenuCliente.setBounds(0, 23, 16, 16);
+		clientesAtacado.add(btnNewButtonVoltarMenuCliente);
+		
+		JLabel lblNewLabel_PlanoDeFundoCliente = new JLabel("");
+		lblNewLabel_PlanoDeFundoCliente.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoClientes.jpg"));
+		lblNewLabel_PlanoDeFundoCliente.setBounds(0, 0, 790, 565);
+		clientesAtacado.add(lblNewLabel_PlanoDeFundoCliente);
+		
+		tableNmrClientes = new JTable();
+		tableNmrClientes.setVisible(false);
+		tableNmrClientes.setBounds(498, 295, 1, 1);
+		clientesAtacado.add(tableNmrClientes);
+		relatorioDeVendas.setLayout(null);
+		
+		
+		//
+		//
+		//
+		//RELATORIO DE VENDAS
+		//
+		//
+		
+		JMenuBar menuBarRelatorioDeVendas = new JMenuBar();
+		menuBarRelatorioDeVendas.setBounds(0, 0, 934, 22);
+		menuBarRelatorioDeVendas.setBackground(Color.LIGHT_GRAY);
+		relatorioDeVendas.add(menuBarRelatorioDeVendas);
+
+		JMenu mnProdutosRelatorioDeVendas = new JMenu("Produtos");
+		mnProdutosRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarRelatorioDeVendas.add(mnProdutosRelatorioDeVendas);
+
+		JMenuItem mntmProdutosNaAdegaRelatorioDeVendas = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				produtosNaAdega.setVisible(true);
+			}
+		});
+		mntmProdutosNaAdegaRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosRelatorioDeVendas.add(mntmProdutosNaAdegaRelatorioDeVendas);
+
+		JMenuItem mntmProdutosEmEstoqueRelatorioDeVendas = new JMenuItem("Produtos em Estoque");
+		mntmProdutosEmEstoqueRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				produtosEmEstoque.setVisible(true);
+			}
+		});
+		mntmProdutosEmEstoqueRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosRelatorioDeVendas.add(mntmProdutosEmEstoqueRelatorioDeVendas);
+
+		JMenuItem mntmProdutosParaComprarRelatorioDeVendas = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarRelatorioDeVendas
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosRelatorioDeVendas.add(mntmProdutosParaComprarRelatorioDeVendas);
+
+		JMenuItem mntmTodosProdutosRelatorioDeVendas = new JMenuItem("Todos Produtos");
+		mntmTodosProdutosRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosProdutosRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosRelatorioDeVendas.add(mntmTodosProdutosRelatorioDeVendas);
+
+		JMenu mnVenderRelatorioDeVendas = new JMenu("Vender");
+		mnVenderRelatorioDeVendas
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarRelatorioDeVendas.add(mnVenderRelatorioDeVendas);
+
+		JMenuItem mntmVendaVarejoRelatorioDeVendas = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				vendaVarejo.setVisible(true);
+			}
+		});
+		mntmVendaVarejoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderRelatorioDeVendas.add(mntmVendaVarejoRelatorioDeVendas);
+
+		JMenuItem mntmVendaAtacadoRelatorioDeVendas = new JMenuItem("Venda Atacado");
+		mntmVendaAtacadoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				vendaAtacado.setVisible(true);
+			}
+		});
+		mntmVendaAtacadoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderRelatorioDeVendas.add(mntmVendaAtacadoRelatorioDeVendas);
+
+		JMenuItem mntmVendaPersonalizadaRelatorioDeVendas = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				vendaPersonalizada.setVisible(true);
+			}
+		});
+		mntmVendaPersonalizadaRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderRelatorioDeVendas.add(mntmVendaPersonalizadaRelatorioDeVendas);
+		
+		JMenu mnClientesRelatorioDeVendas = new JMenu("Clientes");
+		mnClientesRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		menuBarRelatorioDeVendas.add(mnClientesRelatorioDeVendas);
+		
+		JMenuItem mntmNewMenuClientesAtacadoRelatorioDeVendas = new JMenuItem("Clientes Atacado");
+		mntmNewMenuClientesAtacadoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				relatorioDeVendas.setVisible(false);
+			}
+		});
+		mntmNewMenuClientesAtacadoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		mnClientesRelatorioDeVendas.add(mntmNewMenuClientesAtacadoRelatorioDeVendas);
+
+		JMenu mnFinanceiroRelatorioDeVendas = new JMenu("Financeiro");
+		mnFinanceiroRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
+		menuBarRelatorioDeVendas.add(mnFinanceiroRelatorioDeVendas);
+		
+		JMenuItem mntmRelatorioDeVendasRelatorioDeVendas = new JMenuItem("Relatorio de Vendas");
+		mntmRelatorioDeVendasRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroRelatorioDeVendas.add(mntmRelatorioDeVendasRelatorioDeVendas);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_9 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_8 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_8.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroRelatorioDeVendas.add(mnNewMenu_1_8);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Atacado");
+		mnNewMenu_1_8.add(mntmNewMenuItem_2);
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(true);
+				relatorioDeVendas.setVisible(false);
+			}
+		});
+		mntmNewMenuItem_2.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_8 = new JMenuItem("Varejo");
+		mntmVarejo_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_8.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_8.add(mntmVarejo_8);
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_9.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroRelatorioDeVendas.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_9);
+
+		JMenu mnAjudaRelatorioDeVendas = new JMenu("Ajuda");
+		mnAjudaRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarRelatorioDeVendas.add(mnAjudaRelatorioDeVendas);
+
+		JMenuItem mntmDadosDaVersaoRelatorioDeVendas = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaRelatorioDeVendas.add(mntmDadosDaVersaoRelatorioDeVendas);
+		
+		
+		JCalendar calendarioRelatorioDeVendas = new JCalendar();
+		calendarioRelatorioDeVendas.setLocation(433, 54);
+		calendarioRelatorioDeVendas.setSize(322, 200);
+		relatorioDeVendas.add(calendarioRelatorioDeVendas);
+		
+		JScrollPane scrollPaneRelatorioDeVendas = new JScrollPane();
+		scrollPaneRelatorioDeVendas.setBounds(10, 265, 762, 280);
+		relatorioDeVendas.add(scrollPaneRelatorioDeVendas);
+		
+		tableRelatorioDeVendas = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		scrollPaneRelatorioDeVendas.setViewportView(tableRelatorioDeVendas);
+		
+		JButton btnVendaVarejoRelatorioDeVendas = new JButton("Relatorio Vendas Varejo");
+		btnVendaVarejoRelatorioDeVendas.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNumeroDaVendaRelatorioDeVendas.getText().equals("")) {
+					int ano = 1900 + calendarioRelatorioDeVendas.getDate().getYear();
+					int dia = calendarioRelatorioDeVendas.getDate().getDate();
+					int mes = 1 + calendarioRelatorioDeVendas.getDate().getMonth();
+					if(!(dia > 9)) {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', Produto, Quantidade, PrecoTotal 'Preço', FormaDePagamento 'Pagamento', HoraDaVenda 'Dia da venda' FROM vendavarejo WHERE HoraDaVenda LIKE '"+ano+"-"+mes+"-"+"0"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}else if(!(mes > 9)) {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', Produto, Quantidade, PrecoTotal 'Preço', FormaDePagamento 'Pagamento', HoraDaVenda 'Dia da venda' FROM vendavarejo WHERE HoraDaVenda LIKE '"+ano+"-0"+mes+"-"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						} 
+					}else {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', Produto, Quantidade, PrecoTotal 'Preço', FormaDePagamento 'Pagamento', HoraDaVenda 'Dia da venda' FROM vendavarejo WHERE HoraDaVenda LIKE '"+ano+"-"+mes+"-"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+			
+							pst.close();
+							rs.close();
+								
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}
+				}else {
+					try {
+						String query = "SELECT NumeroDaVenda 'Nmr da Venda', Produto, Quantidade, PrecoTotal 'Preço',  FormaDePagamento 'Pagamento', HoraDaVenda 'Dia da venda' FROM vendavarejo WHERE NumeroDaVenda = " +textFieldNumeroDaVendaRelatorioDeVendas.getText().toString()+" ORDER BY NumeroDaVenda";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						ResultSet rs = pst.executeQuery();
+						tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+
+						pst.close();
+						rs.close();
+								
+					}catch (Exception g) {
+						g.printStackTrace();
+					}
+				}
+			}
+		});
+		btnVendaVarejoRelatorioDeVendas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnVendaVarejoRelatorioDeVendas.setBounds(20, 161, 265, 24);
+		relatorioDeVendas.add(btnVendaVarejoRelatorioDeVendas);
+		
+		JButton btnVendaAtacadoRelatorioDeVendas = new JButton("Relatorio Vendas Atacado");
+		btnVendaAtacadoRelatorioDeVendas.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNumeroDaVendaRelatorioDeVendas.getText().equals("")) {
+					int ano = 1900 + calendarioRelatorioDeVendas.getDate().getYear();
+					int dia = calendarioRelatorioDeVendas.getDate().getDate();
+					int mes = 1 + calendarioRelatorioDeVendas.getDate().getMonth();
+					if(!(dia > 9)) {
+						try {
+							String query = "SELECT vendaatacado.NumeroDaVenda 'Nmr da Venda', cliente.Nome, cliente.Empresa, estoque.Produto 'Produto', vendaatacado.quantidade 'Quantidade', format(vendaatacado.precoTotal ,2,'de_DE') 'Preço', vendaatacado.FormaDePagamento 'Pagamento', "
+									+ "vendaatacado.PagarFuturo 'Pagar Futuro', format(vendaatacado.Desconto ,2,'de_DE') 'Desconto' FROM adegagelaguela.vendaatacado JOIN adegagelaguela.cliente ON vendaatacado.IDCliente = cliente.idCliente "
+									+ "JOIN adegagelaguela.estoque ON adegagelaguela.vendaatacado.IDProduto = estoque.idEstoque WHERE HoraDaVenda LIKE '"+ ano + "-" +mes+"-0"+dia+"%' ORDER BY adegagelaguela.vendaatacado.NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}else {
+						try {
+								String query = "SELECT vendaatacado.NumeroDaVenda 'Nmr da Venda', cliente.Nome, cliente.Empresa, estoque.Produto 'Produto', vendaatacado.quantidade 'Quantidade', format(vendaatacado.precoTotal ,2,'de_DE') 'Preço', vendaatacado.FormaDePagamento 'Pagamento', "
+										+ "vendaatacado.PagarFuturo 'Pagar Futuro', format(vendaatacado.Desconto ,2,'de_DE') 'Desconto' FROM adegagelaguela.vendaatacado JOIN adegagelaguela.cliente ON vendaatacado.IDCliente = cliente.idCliente "
+										+ "JOIN adegagelaguela.estoque ON adegagelaguela.vendaatacado.IDProduto = estoque.idEstoque WHERE HoraDaVenda LIKE '"+ ano + "-" +mes+"-"+dia+"%' ORDER BY adegagelaguela.vendaatacado.NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);		
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}
+				}else {
+					try {
+						String query = "SELECT vendaatacado.NumeroDaVenda 'Nmr da Venda', cliente.Nome, cliente.Empresa, estoque.Produto 'Produto', vendaatacado.quantidade 'Quantidade', format(vendaatacado.precoTotal ,2,'de_DE') 'Preço', vendaatacado.FormaDePagamento 'Pagamento',"
+								+ "vendaatacado.PagarFuturo 'Pagar Futuro', format(vendaatacado.Desconto ,2,'de_DE') 'Desconto' FROM adegagelaguela.vendaatacado JOIN adegagelaguela.cliente ON vendaatacado.IDCliente = cliente.idCliente "
+								+ "JOIN adegagelaguela.estoque ON adegagelaguela.vendaatacado.IDProduto = estoque.idEstoque WHERE adegagelaguela.vendaatacado.NumeroDaVenda = "+textFieldNumeroDaVendaRelatorioDeVendas.getText().toString()+" ORDER BY adegagelaguela.estoque.Produto;";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						ResultSet rs = pst.executeQuery();
+						tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+						pst.close();
+						rs.close();
+								
+					}catch (Exception g) {
+						g.printStackTrace();
+					}
+				}
+			}
+		});
+		btnVendaAtacadoRelatorioDeVendas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnVendaAtacadoRelatorioDeVendas.setBounds(20, 197, 265, 24);
+		relatorioDeVendas.add(btnVendaAtacadoRelatorioDeVendas);
+		
+		JButton btnVendaPersonalizadaRelatorioDeVendas = new JButton("Relatorio Vendas Personalizadas");
+		btnVendaPersonalizadaRelatorioDeVendas.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNumeroDaVendaRelatorioDeVendas.getText().equals("")) {
+					int ano = 1900 + calendarioRelatorioDeVendas.getDate().getYear();
+					int dia = calendarioRelatorioDeVendas.getDate().getDate();
+					int mes = 1 + calendarioRelatorioDeVendas.getDate().getMonth();
+					if(!(dia > 9)) {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', NomeCliente 'Nome', Telefone, NomeProduto 'Produto', QuantidadeProduto 'Quantidade', Preco 'Preço (un)', FormaDePagamento 'Pagamento', PagamentoFuturo 'Futuro', HoraDaVenda 'Dia da Venda' FROM vendapersonalizada WHERE HoraDaVenda LIKE '"+ ano + "-" +mes+"-%0"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}else if(!(mes > 9)) {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', NomeCliente 'Nome', Telefone, NomeProduto 'Produto', QuantidadeProduto 'Quantidade', Preco 'Preço (un)', FormaDePagamento 'Pagamento', PagamentoFuturo 'Futuro', HoraDaVenda 'Dia da Venda' FROM vendapersonalizada WHERE HoraDaVenda LIKE '"+ ano + "-0" +mes+"-%"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						} 
+					}else {
+						try {
+							String query = "SELECT NumeroDaVenda 'Nmr da Venda', NomeCliente 'Nome', Telefone, NomeProduto 'Produto', QuantidadeProduto 'Quantidade', Preco 'Preço (un)', FormaDePagamento 'Pagamento', PagamentoFuturo 'Futuro', HoraDaVenda 'Dia da Venda' FROM vendapersonalizada WHERE HoraDaVenda LIKE '"+ ano + "-" +mes+"-%"+dia+"%' ORDER BY NumeroDaVenda";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+							pst.close();
+							rs.close();
+									
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+					}
+				}else {
+					try {
+						String query = "SELECT NumeroDaVenda 'Nmr da Venda', NomeCliente 'Nome', Telefone, NomeProduto 'Produto', QuantidadeProduto 'Quantidade', Preco 'Preço (un)', FormaDePagamento 'Pagamento', PagamentoFuturo 'Futuro', HoraDaVenda 'Dia da Venda' FROM vendapersonalizada WHERE NumeroDaVenda = " +textFieldNumeroDaVendaRelatorioDeVendas.getText().toString()+" ORDER BY NumeroDaVenda";
+						PreparedStatement pst = conexao.prepareStatement(query);
+						ResultSet rs = pst.executeQuery();
+						tableRelatorioDeVendas.setModel(DbUtils.resultSetToTableModel(rs));
+						pst.close();
+						rs.close();
+								
+					}catch (Exception g) {
+						g.printStackTrace();
+					}
+				}
+			}
+		});
+		btnVendaPersonalizadaRelatorioDeVendas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnVendaPersonalizadaRelatorioDeVendas.setBounds(20, 231, 265, 24);
+		relatorioDeVendas.add(btnVendaPersonalizadaRelatorioDeVendas);
+		
+		JLabel lblDadosDaVenda = new JLabel("Dados da Venda :");
+		lblDadosDaVenda.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		lblDadosDaVenda.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblDadosDaVenda.setBounds(10, 33, 205, 24);
+		relatorioDeVendas.add(lblDadosDaVenda);
+		
+		JLabel lblNumeroDaVenda = new JLabel("Numero da venda :");
+		lblNumeroDaVenda.setBounds(20, 80, 129, 20);
+		relatorioDeVendas.add(lblNumeroDaVenda);
+		
+		textFieldNumeroDaVendaRelatorioDeVendas = new JTextField();
+		textFieldNumeroDaVendaRelatorioDeVendas.setBounds(134, 80, 70, 20);
+		relatorioDeVendas.add(textFieldNumeroDaVendaRelatorioDeVendas);
+		textFieldNumeroDaVendaRelatorioDeVendas.setColumns(10);
+		
+		textFieldDiaRelatorioDeVendas = new JTextField();
+		textFieldDiaRelatorioDeVendas.setBounds(93, 110, 20, 20);
+		relatorioDeVendas.add(textFieldDiaRelatorioDeVendas);
+		textFieldDiaRelatorioDeVendas.setColumns(10);
+		
+		JLabel lblDigitarDataRelatorioDeVendas = new JLabel("Digitar data :");
+		lblDigitarDataRelatorioDeVendas.setBounds(20, 110, 104, 20);
+		relatorioDeVendas.add(lblDigitarDataRelatorioDeVendas);
+		
+		textFieldMesRelatorioDeVendas = new JTextField();
+		textFieldMesRelatorioDeVendas.setColumns(10);
+		textFieldMesRelatorioDeVendas.setBounds(125, 110, 20, 20);
+		relatorioDeVendas.add(textFieldMesRelatorioDeVendas);
+		
+		textFieldAnoRelatorioDeVendas = new JTextField();
+		textFieldAnoRelatorioDeVendas.setColumns(10);
+		textFieldAnoRelatorioDeVendas.setBounds(157, 110, 47, 20);
+		relatorioDeVendas.add(textFieldAnoRelatorioDeVendas);
+		
+		
+		JLabel lbldiaBARRAmesRelatorioDeVendas = new JLabel("/");
+		lbldiaBARRAmesRelatorioDeVendas.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lbldiaBARRAmesRelatorioDeVendas.setBounds(115, 108, 20, 20);
+		relatorioDeVendas.add(lbldiaBARRAmesRelatorioDeVendas);
+		
+		JLabel lblmesBARRAanoRelatorioDeVendas = new JLabel("/");
+		lblmesBARRAanoRelatorioDeVendas.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblmesBARRAanoRelatorioDeVendas.setBounds(147, 108, 46, 20);
+		relatorioDeVendas.add(lblmesBARRAanoRelatorioDeVendas);
+		
+		JLabel lblNewLabel_AteRelatorioDeVendas = new JLabel("At\u00E9 :");
+		lblNewLabel_AteRelatorioDeVendas.setBounds(214, 113, 46, 14);
+		relatorioDeVendas.add(lblNewLabel_AteRelatorioDeVendas);
+		
+		textFieldAteDiaRelatorioDeVendas = new JTextField();
+		textFieldAteDiaRelatorioDeVendas.setColumns(10);
+		textFieldAteDiaRelatorioDeVendas.setBounds(243, 110, 20, 20);
+		relatorioDeVendas.add(textFieldAteDiaRelatorioDeVendas);
+		
+		textFieldAteMesRelatorioDeVendas = new JTextField();
+		textFieldAteMesRelatorioDeVendas.setColumns(10);
+		textFieldAteMesRelatorioDeVendas.setBounds(275, 110, 20, 20);
+		relatorioDeVendas.add(textFieldAteMesRelatorioDeVendas);
+		
+		textFieldAteAnoRelatorioDeVendas = new JTextField();
+		textFieldAteAnoRelatorioDeVendas.setColumns(10);
+		textFieldAteAnoRelatorioDeVendas.setBounds(307, 110, 47, 20);
+		relatorioDeVendas.add(textFieldAteAnoRelatorioDeVendas);
+		
+		JLabel lbldiaBARRAmesRelatorioDeVendasAte = new JLabel("/");
+		lbldiaBARRAmesRelatorioDeVendasAte.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lbldiaBARRAmesRelatorioDeVendasAte.setBounds(265, 108, 20, 20);
+		relatorioDeVendas.add(lbldiaBARRAmesRelatorioDeVendasAte);
+		
+		JLabel lbldiaBARRAanoRelatorioDeVendasAte = new JLabel("/");
+		lbldiaBARRAanoRelatorioDeVendasAte.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lbldiaBARRAanoRelatorioDeVendasAte.setBounds(295, 108, 20, 20);
+		relatorioDeVendas.add(lbldiaBARRAanoRelatorioDeVendasAte);
+		
+		JButton btnNewButtonImprimirVendaVarejoRelatorioDeVendas = new JButton("");
+		btnNewButtonImprimirVendaVarejoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DocumentoRelatorioDeVendasVarejo();
+			}
+		});
+		btnNewButtonImprimirVendaVarejoRelatorioDeVendas.setContentAreaFilled(false);
+		btnNewButtonImprimirVendaVarejoRelatorioDeVendas.setBorderPainted(false);
+		btnNewButtonImprimirVendaVarejoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\bubble-jet-printer-icon.png"));
+		btnNewButtonImprimirVendaVarejoRelatorioDeVendas.setBounds(290, 161, 24, 24);
+		relatorioDeVendas.add(btnNewButtonImprimirVendaVarejoRelatorioDeVendas);
+		
+		JButton btnNewButtonImprimirVendaAtacadoRelatorioDeVendas = new JButton("");
+		btnNewButtonImprimirVendaAtacadoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DocumentoRelatorioDeVendasAtacado();
+			}
+		});
+		btnNewButtonImprimirVendaAtacadoRelatorioDeVendas.setBorderPainted(false);
+		btnNewButtonImprimirVendaAtacadoRelatorioDeVendas.setContentAreaFilled(false);
+		btnNewButtonImprimirVendaAtacadoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\bubble-jet-printer-icon.png"));
+		btnNewButtonImprimirVendaAtacadoRelatorioDeVendas.setBounds(290, 197, 24, 24);
+		relatorioDeVendas.add(btnNewButtonImprimirVendaAtacadoRelatorioDeVendas);
+		
+		JButton btnNewButtonImprimirVendaPersoRelatorioDeVendas = new JButton("");
+		btnNewButtonImprimirVendaPersoRelatorioDeVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DocumentoRelatorioDeVendasPersonalizada();
+			}
+		});
+		btnNewButtonImprimirVendaPersoRelatorioDeVendas.setContentAreaFilled(false);
+		btnNewButtonImprimirVendaPersoRelatorioDeVendas.setBorderPainted(false);
+		btnNewButtonImprimirVendaPersoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\bubble-jet-printer-icon.png"));
+		btnNewButtonImprimirVendaPersoRelatorioDeVendas.setBounds(290, 231, 24, 24);
+		relatorioDeVendas.add(btnNewButtonImprimirVendaPersoRelatorioDeVendas);
+		
+		JLabel lblPlanoDeFundoRelatorioDeVendas = new JLabel("");
+		lblPlanoDeFundoRelatorioDeVendas.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\budweiserfundovendaatacado.jpg"));
+		lblPlanoDeFundoRelatorioDeVendas.setBounds(0, 0, 782, 545);
+		relatorioDeVendas.add(lblPlanoDeFundoRelatorioDeVendas);
+		relatorioDeProdutosAtacado.setLayout(null);
+		
+		
+		//
+		//
+		// RELATORIO DE PRODUTOS
+		//
+		//
+		
+		JMenuBar menuBarRelatorioDeProdutosAtacado = new JMenuBar();
+		menuBarRelatorioDeProdutosAtacado.setBounds(0, 0, 934, 22);
+		menuBarRelatorioDeProdutosAtacado.setBackground(Color.LIGHT_GRAY);
+		relatorioDeProdutosAtacado.add(menuBarRelatorioDeProdutosAtacado);
+
+		JMenu mnProdutosRelatorioDeProdutosAtacado = new JMenu("Produtos");
+		mnProdutosRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarRelatorioDeProdutosAtacado.add(mnProdutosRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmProdutosNaAdegaRelatorioDeProdutosAtacado = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				produtosNaAdega.setVisible(true);
+			}
+		});
+		mntmProdutosNaAdegaRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosRelatorioDeProdutosAtacado.add(mntmProdutosNaAdegaRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmProdutosEmEstoqueRelatorioDeProdutosAtacado = new JMenuItem("Produtos em Estoque");
+		mntmProdutosEmEstoqueRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				produtosEmEstoque.setVisible(true);
+			}
+		});
+		mntmProdutosEmEstoqueRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosRelatorioDeProdutosAtacado.add(mntmProdutosEmEstoqueRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmProdutosParaComprarRelatorioDeProdutosAtacado = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarRelatorioDeProdutosAtacado
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosRelatorioDeProdutosAtacado.add(mntmProdutosParaComprarRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmTodosProdutosRelatorioDeProdutosAtacado = new JMenuItem("Todos Produtos");
+		mntmTodosProdutosRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosProdutosRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosRelatorioDeProdutosAtacado.add(mntmTodosProdutosRelatorioDeProdutosAtacado);
+
+		JMenu mnVenderRelatorioDeProdutosAtacado = new JMenu("Vender");
+		mnVenderRelatorioDeProdutosAtacado
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarRelatorioDeProdutosAtacado.add(mnVenderRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmVendaVarejoRelatorioDeProdutosAtacado = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				vendaVarejo.setVisible(true);
+			}
+		});
+		mntmVendaVarejoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderRelatorioDeProdutosAtacado.add(mntmVendaVarejoRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmVendaAtacadoRelatorioDeProdutosAtacado = new JMenuItem("Venda Atacado");
+		mntmVendaAtacadoRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				vendaAtacado.setVisible(true);
+			}
+		});
+		mntmVendaAtacadoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderRelatorioDeProdutosAtacado.add(mntmVendaAtacadoRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmVendaPersonalizadaRelatorioDeProdutosAtacado = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				vendaPersonalizada.setVisible(true);
+			}
+		});
+		mntmVendaPersonalizadaRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderRelatorioDeProdutosAtacado.add(mntmVendaPersonalizadaRelatorioDeProdutosAtacado);
+		
+		JMenu mnClientesRelatorioDeProdutosAtacado = new JMenu("Clientes");
+		mnClientesRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		menuBarRelatorioDeProdutosAtacado.add(mnClientesRelatorioDeProdutosAtacado);
+		
+		JMenuItem mntmNewMenuClientesAtacadoRelatorioDeProdutosAtacado = new JMenuItem("Clientes Atacado");
+		mntmNewMenuClientesAtacadoRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				relatorioDeProdutosAtacado.setVisible(false);
+			}
+		});
+		mntmNewMenuClientesAtacadoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		mnClientesRelatorioDeProdutosAtacado.add(mntmNewMenuClientesAtacadoRelatorioDeProdutosAtacado);
+
+		JMenu mnFinanceiroRelatorioDeProdutosAtacado = new JMenu("Financeiro");
+		mnFinanceiroRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
+		menuBarRelatorioDeProdutosAtacado.add(mnFinanceiroRelatorioDeProdutosAtacado);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeVendasRelatorioProdutosAtacado = new JMenuItem("Relatorio de Vendas");
+		mntmNewMenuItemRelatorioDeVendasRelatorioProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(true);
+				relatorioDeProdutosAtacado.setVisible(false);
+			}
+		});
+		mntmNewMenuItemRelatorioDeVendasRelatorioProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroRelatorioDeProdutosAtacado.add(mntmNewMenuItemRelatorioDeVendasRelatorioProdutosAtacado);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroAtacado = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_9 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_9.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroRelatorioDeProdutosAtacado.add(mnNewMenu_1_9);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosAtacado = new JMenuItem("Atacado");
+		mnNewMenu_1_9.add(mntmNewMenuItemRelatorioDeProdutosAtacado);
+		mntmNewMenuItemRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_9 = new JMenuItem("Varejo");
+		mntmVarejo_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosAtacado.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_9.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_9.add(mntmVarejo_9);
+		mntmNewMenuItemBancoFinanceiroAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroRelatorioDeProdutosAtacado.add(mntmNewMenuItemBancoFinanceiroAtacado);
+
+		JMenu mnAjudaRelatorioDeProdutosAtacado = new JMenu("Ajuda");
+		mnAjudaRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarRelatorioDeProdutosAtacado.add(mnAjudaRelatorioDeProdutosAtacado);
+
+		JMenuItem mntmDadosDaVersaoRelatorioDeProdutosAtacado = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaRelatorioDeProdutosAtacado.add(mntmDadosDaVersaoRelatorioDeProdutosAtacado);
+		
+		JScrollPane scrollPaneRelatorioDeProdutosRelatorioDeProdutosAtacado = new JScrollPane();
+		scrollPaneRelatorioDeProdutosRelatorioDeProdutosAtacado.setBounds(10, 170, 388, 47);
+		relatorioDeProdutosAtacado.add(scrollPaneRelatorioDeProdutosRelatorioDeProdutosAtacado);
+		
+		tableRelatorioDeProdutosAtacado = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		scrollPaneRelatorioDeProdutosRelatorioDeProdutosAtacado.setViewportView(tableRelatorioDeProdutosAtacado);
+		
+		
+		JRadioButton rdbtnAtacadoRelatorioProdutoAtacado= new JRadioButton("Atacado");
+		rdbtnAtacadoRelatorioProdutoAtacado.setOpaque(false);
+		rdbtnAtacadoRelatorioProdutoAtacado.setFocusPainted(false);
+		rdbtnAtacadoRelatorioProdutoAtacado.setBounds(214, 109, 109, 23);
+		relatorioDeProdutosAtacado.add(rdbtnAtacadoRelatorioProdutoAtacado);
+		
+		JRadioButton rdbtnPersonalizadaRelatorioProdutoAtacado = new JRadioButton("Personalizada");
+		rdbtnPersonalizadaRelatorioProdutoAtacado.setOpaque(false);
+		rdbtnPersonalizadaRelatorioProdutoAtacado.setBounds(214, 79, 109, 23);
+		relatorioDeProdutosAtacado.add(rdbtnPersonalizadaRelatorioProdutoAtacado);
+		
+		
+		JButton btnRelatorioDoProdutoRelatorioDeProdutosAtacado = new JButton("Relatorio do Produto");
+		btnRelatorioDoProdutoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\balance-unbalance-icon.png"));
+		btnRelatorioDoProdutoRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if(!textFieldMesRelatorioRelatorioDeProdutosAtacado.getText().toString().equals("") && !textFieldAnoRelatorioRelatorioDeProdutosAtacado.getText().toString().equals("") && !textFieldIdDoProdutoRelatorioDeProdutosAtacado.getText().toString().equals("")) {
+						int ano = Integer.parseInt(textFieldAnoRelatorioRelatorioDeProdutosAtacado.getText().toString());
+						int mes = Integer.parseInt(textFieldMesRelatorioRelatorioDeProdutosAtacado.getText().toString());
+							if(!(mes > 9) && !(textFieldAnoRelatorioRelatorioDeProdutosAtacado.getText().toString().charAt(0) == '0') ) {
+								try {
+									String query = "SELECT estoque.Produto, SUM(vendaatacado.quantidade + vendapersonalizada.QuantidadeProduto) as QuantidadeVendida, format(SUM(vendaatacado.precoTotal + vendapersonalizada.PrecoTotal),2,'de_DE') as ValorVendido FROM adegagelaguela.vendaatacado "
+										+ "JOIN adegagelaguela.estoque ON estoque.idEstoque = vendaatacado.IDProduto JOIN adegagelaguela.vendapersonalizada ON vendapersonalizada.Produto_ID = vendaatacado.IDProduto "
+										+ "WHERE estoque.idEstoque = "+textFieldIdDoProdutoRelatorioDeProdutosAtacado.getText().toString()+" and vendaatacado.HoraDaVenda LIKE '"+ano+"-0"+mes+"%'";
+									PreparedStatement pst = conexao.prepareStatement(query);
+									ResultSet rs = pst.executeQuery();
+									tableRelatorioDeProdutosAtacado.setModel(DbUtils.resultSetToTableModel(rs));
+									pst.close();
+									rs.close();
+										
+								}catch (Exception g) {
+									g.printStackTrace();
+								}
+							} else 
+								try {
+									String query = "SELECT estoque.Produto, SUM(vendaatacado.quantidade + vendapersonalizada.QuantidadeProduto) as QuantidadeVendida, format(SUM(vendaatacado.precoTotal + vendapersonalizada.PrecoTotal),2,'de_DE') as ValorVendido FROM adegagelaguela.vendaatacado "
+										+ "JOIN adegagelaguela.estoque ON estoque.idEstoque = vendaatacado.IDProduto JOIN adegagelaguela.vendapersonalizada ON vendapersonalizada.Produto_ID = vendaatacado.IDProduto "
+										+ "WHERE estoque.idEstoque = "+textFieldIdDoProdutoRelatorioDeProdutosAtacado.getText().toString()+" and vendaatacado.HoraDaVenda LIKE '"+ano+"-"+mes+"%'";
+									PreparedStatement pst = conexao.prepareStatement(query);
+									ResultSet rs = pst.executeQuery();
+									tableRelatorioDeProdutosAtacado.setModel(DbUtils.resultSetToTableModel(rs));
+									pst.close();
+									rs.close();
+									
+								}catch (Exception g) {
+									g.printStackTrace();
+								}
+					}else JOptionPane.showMessageDialog(null, "Preencher todos os campos para consulta", "", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		btnRelatorioDoProdutoRelatorioDeProdutosAtacado.setBounds(10, 140, 198, 21);
+		relatorioDeProdutosAtacado.add(btnRelatorioDoProdutoRelatorioDeProdutosAtacado);
+		
+		JLabel lblNomeDoProdutoRelatorioDeProdutosAtacado = new JLabel("Produto :");
+		lblNomeDoProdutoRelatorioDeProdutosAtacado.setBounds(10, 80, 130, 20);
+		relatorioDeProdutosAtacado.add(lblNomeDoProdutoRelatorioDeProdutosAtacado);
+		
+		JLabel lblDadosDoProdutoRelatorioDeProdutosAtacado = new JLabel("Dados do Produto ATACADO + PERSONALIZADA:");
+		lblDadosDoProdutoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-And-Pretzel-icon.png"));
+		lblDadosDoProdutoRelatorioDeProdutosAtacado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDadosDoProdutoRelatorioDeProdutosAtacado.setBounds(10, 33, 388, 24);
+		relatorioDeProdutosAtacado.add(lblDadosDoProdutoRelatorioDeProdutosAtacado);
+		
+		textFieldNomeDoProdutoRelatorioDeProdutosAtacado = new JTextField();
+		textFieldNomeDoProdutoRelatorioDeProdutosAtacado.setEditable(false);
+		textFieldNomeDoProdutoRelatorioDeProdutosAtacado.setBounds(71, 80, 137, 20);
+		relatorioDeProdutosAtacado.add(textFieldNomeDoProdutoRelatorioDeProdutosAtacado);
+		textFieldNomeDoProdutoRelatorioDeProdutosAtacado.setColumns(10);
+		
+		textFieldIdDoProdutoRelatorioDeProdutosAtacado = new JTextField();
+		textFieldIdDoProdutoRelatorioDeProdutosAtacado.setEditable(false);
+		textFieldIdDoProdutoRelatorioDeProdutosAtacado.setVisible(false);
+		textFieldIdDoProdutoRelatorioDeProdutosAtacado.setBounds(10, 427, 45, 20);
+		relatorioDeProdutosAtacado.add(textFieldIdDoProdutoRelatorioDeProdutosAtacado);
+		textFieldIdDoProdutoRelatorioDeProdutosAtacado.setColumns(10);
+		
+		JScrollPane scrollPaneListaDeProdutosRelatorioDeProdutosAtacado = new JScrollPane();
+		scrollPaneListaDeProdutosRelatorioDeProdutosAtacado.setBounds(490, 60, 261, 485);
+		relatorioDeProdutosAtacado.add(scrollPaneListaDeProdutosRelatorioDeProdutosAtacado);
+		
+		tableListaDeProdutosRelatorioDeProdutosAtacado = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		tableListaDeProdutosRelatorioDeProdutosAtacado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int linha = tableListaDeProdutosRelatorioDeProdutosAtacado.getSelectedRow();
+				textFieldIdDoProdutoRelatorioDeProdutosAtacado.setText(tableListaDeProdutosRelatorioDeProdutosAtacado.getValueAt(linha, 0).toString());
+				textFieldNomeDoProdutoRelatorioDeProdutosAtacado.setText(tableListaDeProdutosRelatorioDeProdutosAtacado.getValueAt(linha, 1).toString());
+			}
+		});
+		scrollPaneListaDeProdutosRelatorioDeProdutosAtacado.setViewportView(tableListaDeProdutosRelatorioDeProdutosAtacado);
+		
+		JButton btnListaDeProdutosRelatorioDeProdutosAtacado = new JButton("Lista de Produtos");
+		btnListaDeProdutosRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Alphabetical-Sorting-icon.png"));
+		btnListaDeProdutosRelatorioDeProdutosAtacado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "SELECT idEstoque 'Numero de ID', Produto 'Nome do Produto' from adegagelaguela.estoque ORDER BY Produto";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					ResultSet rs = pst.executeQuery();
+					tableListaDeProdutosRelatorioDeProdutosAtacado.setModel(DbUtils.resultSetToTableModel(rs));
+
+					pst.close();
+					rs.close();
+					
+				}catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnListaDeProdutosRelatorioDeProdutosAtacado.setBounds(490, 33, 148, 23);
+		relatorioDeProdutosAtacado.add(btnListaDeProdutosRelatorioDeProdutosAtacado);
+		
+		JLabel lblMesRelatorioRelatorioDeProdutosAtacado = new JLabel("M\u00EAs :");
+		lblMesRelatorioRelatorioDeProdutosAtacado.setBounds(10, 110, 46, 20);
+		relatorioDeProdutosAtacado.add(lblMesRelatorioRelatorioDeProdutosAtacado);
+		
+		JLabel lblAnoRelatorioRelatorioDeProdutosAtacado = new JLabel("Ano :");
+		lblAnoRelatorioRelatorioDeProdutosAtacado.setBounds(107, 110, 46, 20);
+		relatorioDeProdutosAtacado.add(lblAnoRelatorioRelatorioDeProdutosAtacado);
+		
+		textFieldMesRelatorioRelatorioDeProdutosAtacado = new JTextField();
+		textFieldMesRelatorioRelatorioDeProdutosAtacado.setBounds(52, 110, 45, 20);
+		relatorioDeProdutosAtacado.add(textFieldMesRelatorioRelatorioDeProdutosAtacado);
+		textFieldMesRelatorioRelatorioDeProdutosAtacado.setColumns(10);
+		
+		textFieldAnoRelatorioRelatorioDeProdutosAtacado = new JTextField();
+		textFieldAnoRelatorioRelatorioDeProdutosAtacado.setColumns(10);
+		textFieldAnoRelatorioRelatorioDeProdutosAtacado.setBounds(146, 110, 62, 20);
+		relatorioDeProdutosAtacado.add(textFieldAnoRelatorioRelatorioDeProdutosAtacado);
+		
+		JButton btnNewButton_1 = new JButton("Detalhes do Protudo");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Document Relatorio = new Document();
+				String mes = textFieldMesRelatorioRelatorioDeProdutosAtacado.getText().toString();
+				String ano = textFieldAnoRelatorioRelatorioDeProdutosAtacado.getText().toString();
+				String produto = textFieldNomeDoProdutoRelatorioDeProdutosAtacado.getText().toString();
+				
+				try {
+					PdfWriter.getInstance(Relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Produtos\\"+produto+"-"+mes+"-"+ano+".pdf"));
+					Relatorio.open();
+					Relatorio.setPageSize(PageSize.A4);
+					Relatorio.add(new Paragraph("Relatorio de saida de "+produto+" na Venda Atacado:\n"));
+					String query =  "SELECT estoque.Produto, vendaatacado.quantidade, cliente.Nome, cliente.Empresa, cliente.Telefone1, vendaatacado.HoraDaVenda,vendaatacado.preco FROM adegagelaguela.estoque JOIN adegagelaguela.vendaatacado ON idEstoque = IDProduto "
+							+ "JOIN adegagelaguela.cliente ON vendaatacado.IDCliente = cliente.idCliente WHERE vendaatacado.HoraDaVenda Like '"+ano+"-"+mes+"%' AND estoque.Produto LIKE '"+produto+"' ORDER BY Nome;";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					ResultSet rs = pst.executeQuery();
+					rs.next();
+					Paragraph Produto = new Paragraph("Nome: " + rs.getString("cliente.Nome") + "\nEmpresa: " + rs.getString("cliente.Empresa") + "\nTelefone: " + rs.getString("cliente.Telefone1") + "\n"+"Valor vendido (unidade): R$" +rs.getString("vendaatacado.preco")+"\n"
+							+"Quantidade: "+rs.getString("vendaatacado.quantidade")+"\nDia da compra: " +rs.getString("vendaatacado.HoraDaVenda")+"\n\n");
+					Relatorio.add(Produto);
+					while (rs.next()) {
+						Relatorio.add(new Paragraph("\n"));
+						Paragraph Produto2 = new Paragraph("Nome: " + rs.getString("cliente.Nome") + "\nEmpresa: " + rs.getString("cliente.Empresa") + "\nTelefone: " + rs.getString("cliente.Telefone1") + "\n"+"Valor vendido (unidade): R$" +rs.getString("vendaatacado.preco")+"\n"
+								+"Quantidade: "+rs.getString("vendaatacado.quantidade")+"\nDia da compra: " +rs.getString("vendaatacado.HoraDaVenda")+"\n\n");
+						Relatorio.add(Produto2);
+					}
+					pst.close();
+					rs.close();
+					String query2 = "SELECT NomeCliente, Telefone, NomeProduto, QuantidadeProduto, vendapersonalizada.Preco, PrecoDeCusto, HoraDaVenda FROM adegagelaguela.vendapersonalizada "
+							+ "JOIN adegagelaguela.estoque ON Produto_ID = idEstoque  WHERE HoraDaVenda LIKE '"+ano+"-"+mes+"%' and idEstoque LIKE '"+textFieldIdDoProdutoRelatorioDeProdutosAtacado.getText().toString()+"%' ORDER BY NomeCliente;";
+					PreparedStatement pst2 = conexao.prepareStatement(query2);
+					ResultSet rs2 = pst2.executeQuery();
+					rs2.next();
+					Relatorio.add(new Paragraph("\nMovimentação de "+produto+" com a Venda Personalizada:\n"));
+					Paragraph Produto3 = new Paragraph("Nome de quem comprou: " + rs2.getString("NomeCliente") + "\nTelefone: " + rs2.getString("Telefone") +"\n"+"Quantidade: " +rs2.getString("QuantidadeProduto")+ "\n" + "Valor vendido (unidade): R$" +rs2.getString("vendapersonalizada.Preco")+"\n"
+							+"Preço comum (atual): R$"+rs2.getString("PrecoDeCusto")+"\nDia da compra: " +rs2.getString("HoraDaVenda")+"\n\n");
+					Relatorio.add(Produto3);
+					while (rs2.next()) {
+						Relatorio.add(new Paragraph("\n"));
+						Paragraph Produto2 = new Paragraph("Nome de quem comprou: " + rs2.getString("NomeCliente") + "Telefone: " + rs2.getString("Telefone") +"\n"+"Quantidade: " +rs2.getString("QuantidadeProduto")+ "\n" + "Valor vendido (unidade): R$" +rs2.getString("vendapersonalizada.Preco")+"\n"
+								+"Preço comum (atual): R$"+rs2.getString("PrecoDeCusto")+"\nDia da compra: " +rs2.getString("HoraDaVenda")+"\n\n");
+						Relatorio.add(Produto2);
+					}
+					pst2.close();
+					rs2.close();
+					
+				}catch (DocumentException de) {
+					de.printStackTrace();
+				}catch (IOException ioe) {
+					ioe.printStackTrace();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+					try {
+						String query2 = "SELECT NomeCliente, Telefone, NomeProduto, QuantidadeProduto, vendapersonalizada.Preco, PrecoDeCusto, HoraDaVenda FROM adegagelaguela.vendapersonalizada "
+								+ "JOIN adegagelaguela.estoque ON Produto_ID = idEstoque  WHERE HoraDaVenda LIKE '"+ano+"-"+mes+"%' and idEstoque LIKE '"+textFieldIdDoProdutoRelatorioDeProdutosAtacado.getText().toString()+"%' ORDER BY NomeCliente;";
+						PreparedStatement pst2 = conexao.prepareStatement(query2);
+						ResultSet rs2 = pst2.executeQuery();
+						rs2.next();
+						Relatorio.add(new Paragraph("\nMovimentação de "+produto+" com a Venda Personalizada:\n"));
+						Paragraph Produto3 = new Paragraph("Nome de quem comprou: " + rs2.getString("NomeCliente") + "\nTelefone: " + rs2.getString("Telefone") +"\n"+"Quantidade: " +rs2.getString("QuantidadeProduto")+ "\n" + "Valor vendido (unidade): R$" +rs2.getString("vendapersonalizada.Preco")+"\n"
+								+"Preço comum (atual): R$"+rs2.getString("PrecoDeCusto")+"\nDia da compra: " +rs2.getString("HoraDaVenda")+"\n\n");
+						Relatorio.add(Produto3);
+						while (rs2.next()) {
+							Relatorio.add(new Paragraph("\n"));
+							Paragraph Produto2 = new Paragraph("Nome de quem comprou: " + rs2.getString("NomeCliente") + "Telefone: " + rs2.getString("Telefone") +"\n"+"Quantidade: " +rs2.getString("QuantidadeProduto")+ "\n" + "Valor vendido (unidade): R$" +rs2.getString("vendapersonalizada.Preco")+"\n"
+									+"Preço comum (atual): R$"+rs2.getString("PrecoDeCusto")+"\nDia da compra: " +rs2.getString("HoraDaVenda")+"\n\n");
+							Relatorio.add(Produto2);
+						}
+						pst2.close();
+						rs2.close();
+					}catch (SQLException e3) {
+							e3.printStackTrace();
+					} catch (DocumentException e1) {
+						e1.printStackTrace();
+					}
+				}finally {
+					Relatorio.close();
+				}
+				
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Inkjet-Printer-icon.png"));
+		btnNewButton_1.setBounds(10, 228, 198, 23);
+		relatorioDeProdutosAtacado.add(btnNewButton_1);
+	
+		JLabel lblImagemDeFundoRelatorioDeProdutosAtacado = new JLabel("");
+		lblImagemDeFundoRelatorioDeProdutosAtacado.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\JackDanielsApple-TomasArthuzzi-DrinkGarrafa-Blended02-1.jpg"));
+		lblImagemDeFundoRelatorioDeProdutosAtacado.setBounds(0, 0, 800, 573);
+		relatorioDeProdutosAtacado.add(lblImagemDeFundoRelatorioDeProdutosAtacado);
+		bancoFinanceiro.setLayout(null);
+		
+		JLabel lblNewLabel_ImagemDepositoBancoFinanceiro = new JLabel("");
+		lblNewLabel_ImagemDepositoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\money-add-icon.png"));
+		lblNewLabel_ImagemDepositoBancoFinanceiro.setBounds(10, 330, 32, 32);
+		bancoFinanceiro.add(lblNewLabel_ImagemDepositoBancoFinanceiro);
+		
+		//
+		//
+		// Relatorio De Produtos Varejo
+		//
+		//
+		
+		
+		JMenuBar menuBarRelatorioDeProdutosVarejo = new JMenuBar();
+		menuBarRelatorioDeProdutosVarejo.setBounds(0, 0, 934, 22);
+		menuBarRelatorioDeProdutosVarejo.setBackground(Color.LIGHT_GRAY);
+		relatorioDeProdutosVarejo.add(menuBarRelatorioDeProdutosVarejo);
+
+		JMenu mnProdutosRelatorioDeProdutosVarejo = new JMenu("Produtos");
+		mnProdutosRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarRelatorioDeProdutosVarejo.add(mnProdutosRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmProdutosNaAdegaRelatorioDeProdutosVarejo = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				produtosNaAdega.setVisible(true);
+			}
+		});
+		mntmProdutosNaAdegaRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosRelatorioDeProdutosVarejo.add(mntmProdutosNaAdegaRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmProdutosEmEstoqueRelatorioDeProdutosVarejo = new JMenuItem("Produtos em Estoque");
+		mntmProdutosEmEstoqueRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				produtosEmEstoque.setVisible(true);
+			}
+		});
+		mntmProdutosEmEstoqueRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosRelatorioDeProdutosVarejo.add(mntmProdutosEmEstoqueRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmProdutosParaComprarRelatorioDeProdutosVarejo = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarRelatorioDeProdutosVarejo
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosRelatorioDeProdutosVarejo.add(mntmProdutosParaComprarRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmTodosProdutosRelatorioDeProdutosVarejo = new JMenuItem("Todos Produtos");
+		mntmTodosProdutosRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosProdutosRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosRelatorioDeProdutosVarejo.add(mntmTodosProdutosRelatorioDeProdutosVarejo);
+
+		JMenu mnVenderRelatorioDeProdutosVarejo = new JMenu("Vender");
+		mnVenderRelatorioDeProdutosVarejo
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarRelatorioDeProdutosVarejo.add(mnVenderRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmVendaVarejoRelatorioDeProdutosVarejo = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				vendaVarejo.setVisible(true);
+			}
+		});
+		mntmVendaVarejoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderRelatorioDeProdutosVarejo.add(mntmVendaVarejoRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmVendaAtacadoRelatorioDeProdutosVarejo = new JMenuItem("Venda Atacado");
+		mntmVendaAtacadoRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				vendaAtacado.setVisible(true);
+			}
+		});
+		mntmVendaAtacadoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderRelatorioDeProdutosVarejo.add(mntmVendaAtacadoRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmVendaPersonalizadaRelatorioDeProdutosVarejo = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				vendaPersonalizada.setVisible(true);
+			}
+		});
+		mntmVendaPersonalizadaRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderRelatorioDeProdutosVarejo.add(mntmVendaPersonalizadaRelatorioDeProdutosVarejo);
+		
+		JMenu mnClientesRelatorioDeProdutosVarejo = new JMenu("Clientes");
+		mnClientesRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		menuBarRelatorioDeProdutosVarejo.add(mnClientesRelatorioDeProdutosVarejo);
+		
+		JMenuItem mntmNewMenuClientesVarejoRelatorioDeProdutosVarejo = new JMenuItem("Clientes Varejo");
+		mntmNewMenuClientesVarejoRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				relatorioDeProdutosVarejo.setVisible(false);
+			}
+		});
+		mntmNewMenuClientesVarejoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		mnClientesRelatorioDeProdutosVarejo.add(mntmNewMenuClientesVarejoRelatorioDeProdutosVarejo);
+
+		JMenu mnFinanceiroRelatorioDeProdutosVarejo = new JMenu("Financeiro");
+		mnFinanceiroRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
+		menuBarRelatorioDeProdutosVarejo.add(mnFinanceiroRelatorioDeProdutosVarejo);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeVendasRelatorioProdutosVarejo = new JMenuItem("Relatorio de Vendas");
+		mntmNewMenuItemRelatorioDeVendasRelatorioProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(true);
+				relatorioDeProdutosVarejo.setVisible(false);
+			}
+		});
+		mntmNewMenuItemRelatorioDeVendasRelatorioProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroRelatorioDeProdutosVarejo.add(mntmNewMenuItemRelatorioDeVendasRelatorioProdutosVarejo);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroVarejo = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				bancoFinanceiro.setVisible(true);
+			}
+		});
+		
+		JMenu mnNewMenu_1_10 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_10.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroRelatorioDeProdutosVarejo.add(mnNewMenu_1_10);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeProdutosVarejo = new JMenuItem("Atacado");
+		mntmNewMenuItemRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeProdutosVarejo.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mnNewMenu_1_10.add(mntmNewMenuItemRelatorioDeProdutosVarejo);
+		mntmNewMenuItemRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_10 = new JMenuItem("Varejo");
+		mntmVarejo_10.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_10.add(mntmVarejo_10);
+		mntmNewMenuItemBancoFinanceiroVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroRelatorioDeProdutosVarejo.add(mntmNewMenuItemBancoFinanceiroVarejo);
+
+		JMenu mnAjudaRelatorioDeProdutosVarejo = new JMenu("Ajuda");
+		mnAjudaRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarRelatorioDeProdutosVarejo.add(mnAjudaRelatorioDeProdutosVarejo);
+
+		JMenuItem mntmDadosDaVersaoRelatorioDeProdutosVarejo = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaRelatorioDeProdutosVarejo.add(mntmDadosDaVersaoRelatorioDeProdutosVarejo);
+		
+		JScrollPane scrollPaneRelatorioDeProdutosRelatorioDeProdutosVarejo = new JScrollPane();
+		scrollPaneRelatorioDeProdutosRelatorioDeProdutosVarejo.setBounds(10, 170, 388, 47);
+		relatorioDeProdutosVarejo.add(scrollPaneRelatorioDeProdutosRelatorioDeProdutosVarejo);
+		
+		tableRelatorioDeProdutos = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		scrollPaneRelatorioDeProdutosRelatorioDeProdutosVarejo.setViewportView(tableRelatorioDeProdutos);
+		
+		
+		
+		JLabel lblNomeDoProdutoRelatorioDeProdutosVarejo = new JLabel("Produto :");
+		lblNomeDoProdutoRelatorioDeProdutosVarejo.setBounds(10, 80, 130, 20);
+		relatorioDeProdutosVarejo.add(lblNomeDoProdutoRelatorioDeProdutosVarejo);
+		
+		JLabel lblDadosDoProdutoRelatorioDeProdutosVarejo = new JLabel("Dados do Produto VAREJO :");
+		lblDadosDoProdutoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-And-Pretzel-icon.png"));
+		lblDadosDoProdutoRelatorioDeProdutosVarejo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDadosDoProdutoRelatorioDeProdutosVarejo.setBounds(10, 33, 388, 24);
+		relatorioDeProdutosVarejo.add(lblDadosDoProdutoRelatorioDeProdutosVarejo);
+		
+		
+		JTextField textFieldMesRelatorioRelatorioDeProdutosVarejo = new JTextField();
+		textFieldMesRelatorioRelatorioDeProdutosVarejo.setBounds(52, 110, 45, 20);
+		relatorioDeProdutosVarejo.add(textFieldMesRelatorioRelatorioDeProdutosVarejo);
+		textFieldMesRelatorioRelatorioDeProdutosVarejo.setColumns(10);
+		
+		JTextField textFieldAnoRelatorioRelatorioDeProdutosVarejo = new JTextField();
+		textFieldAnoRelatorioRelatorioDeProdutosVarejo.setColumns(10);
+		textFieldAnoRelatorioRelatorioDeProdutosVarejo.setBounds(146, 110, 62, 20);
+		relatorioDeProdutosVarejo.add(textFieldAnoRelatorioRelatorioDeProdutosVarejo);
+		
+		JTextField textFieldNomeDoProdutoRelatorioDeProdutosVarejo = new JTextField();
+		textFieldNomeDoProdutoRelatorioDeProdutosVarejo.setEditable(false);
+		textFieldNomeDoProdutoRelatorioDeProdutosVarejo.setBounds(71, 80, 137, 20);
+		relatorioDeProdutosVarejo.add(textFieldNomeDoProdutoRelatorioDeProdutosVarejo);
+		textFieldNomeDoProdutoRelatorioDeProdutosVarejo.setColumns(10);
+		
+		JTextField textFieldIdDoProdutoRelatorioDeProdutosVarejo = new JTextField();
+		textFieldIdDoProdutoRelatorioDeProdutosVarejo.setEditable(false);
+		textFieldIdDoProdutoRelatorioDeProdutosVarejo.setVisible(false);
+		textFieldIdDoProdutoRelatorioDeProdutosVarejo.setBounds(256, 80, 45, 20);
+		relatorioDeProdutosVarejo.add(textFieldIdDoProdutoRelatorioDeProdutosVarejo);
+		textFieldIdDoProdutoRelatorioDeProdutosVarejo.setColumns(10);
+		
+		JScrollPane scrollPaneListaDeProdutosRelatorioDeProdutosVarejo = new JScrollPane();
+		scrollPaneListaDeProdutosRelatorioDeProdutosVarejo.setBounds(490, 60, 261, 485);
+		relatorioDeProdutosVarejo.add(scrollPaneListaDeProdutosRelatorioDeProdutosVarejo);
+		
+		tableListaDeProdutosRelatorioDeProdutos = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		tableListaDeProdutosRelatorioDeProdutos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int linha = tableListaDeProdutosRelatorioDeProdutos.getSelectedRow();
+				textFieldIdDoProdutoRelatorioDeProdutosVarejo.setText(tableListaDeProdutosRelatorioDeProdutos.getValueAt(linha, 0).toString());
+				textFieldNomeDoProdutoRelatorioDeProdutosVarejo.setText(tableListaDeProdutosRelatorioDeProdutos.getValueAt(linha, 1).toString());
+			}
+		});
+		scrollPaneListaDeProdutosRelatorioDeProdutosVarejo.setViewportView(tableListaDeProdutosRelatorioDeProdutos);
+		
+		JButton btnListaDeProdutosRelatorioDeProdutosVarejo = new JButton("Lista de Produtos");
+		btnListaDeProdutosRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Data-Alphabetical-Sorting-icon.png"));
+		btnListaDeProdutosRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "SELECT Id 'Numero de ID', Nome 'Nome do Produto' from adegagelaguela.lojatatuape ORDER BY Nome";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					ResultSet rs = pst.executeQuery();
+					tableListaDeProdutosRelatorioDeProdutos.setModel(DbUtils.resultSetToTableModel(rs));
+
+					pst.close();
+					rs.close();
+					
+				}catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnListaDeProdutosRelatorioDeProdutosVarejo.setBounds(490, 33, 148, 23);
+		relatorioDeProdutosVarejo.add(btnListaDeProdutosRelatorioDeProdutosVarejo);
+		
+		JLabel lblMesRelatorioRelatorioDeProdutosVarejo = new JLabel("M\u00EAs :");
+		lblMesRelatorioRelatorioDeProdutosVarejo.setBounds(10, 110, 46, 20);
+		relatorioDeProdutosVarejo.add(lblMesRelatorioRelatorioDeProdutosVarejo);
+		
+		JLabel lblAnoRelatorioRelatorioDeProdutosVarejo = new JLabel("Ano :");
+		lblAnoRelatorioRelatorioDeProdutosVarejo.setBounds(107, 110, 46, 20);
+		relatorioDeProdutosVarejo.add(lblAnoRelatorioRelatorioDeProdutosVarejo);
+
+		
+		JButton btnRelatorioDoProdutoRelatorioDeProdutosVarejo = new JButton("Relatorio do Produto");
+		btnRelatorioDoProdutoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\balance-unbalance-icon.png"));
+		btnRelatorioDoProdutoRelatorioDeProdutosVarejo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textFieldMesRelatorioRelatorioDeProdutosVarejo.getText().toString().equals("") && !textFieldAnoRelatorioRelatorioDeProdutosVarejo.getText().toString().equals("") && !textFieldIdDoProdutoRelatorioDeProdutosVarejo.getText().toString().equals("")) {
+					int ano = Integer.parseInt(textFieldAnoRelatorioRelatorioDeProdutosVarejo.getText().toString());
+					int mes = Integer.parseInt(textFieldMesRelatorioRelatorioDeProdutosVarejo.getText().toString());
+						if(!(mes > 9) && !(textFieldAnoRelatorioRelatorioDeProdutosVarejo.getText().toString().charAt(0) == '0') ) {
+							try {
+								String query = "SELECT Produto, SUM(Quantidade) as QuantidadeVendida, format(SUM(PrecoTotal),2,'de_DE') as ValorVendido FROM adegagelaguela.vendavarejo WHERE IDProduto = (?) and vendavarejo.HoraDaVenda LIKE  '"+ano+"-0"+mes+"%'";
+								PreparedStatement pst = conexao.prepareStatement(query);
+								pst.setString(1, textFieldIdDoProdutoRelatorioDeProdutosVarejo.getText().toString());
+								ResultSet rs = pst.executeQuery();
+								tableRelatorioDeProdutos.setModel(DbUtils.resultSetToTableModel(rs));
+			
+								pst.close();
+								rs.close();
+								
+							}catch (Exception g) {
+								g.printStackTrace();
+							}
+						} else 
+							try {
+							String query = "SELECT Produto, SUM(Quantidade) as QuantidadeVendida, format(SUM(PrecoTotal),2,'de_DE') as ValorVendido FROM adegagelaguela.vendavarejo WHERE IDProduto = (?) and vendavarejo.HoraDaVenda LIKE '"+ano+"-"+mes+"%'";
+							PreparedStatement pst = conexao.prepareStatement(query);
+							pst.setString(1, textFieldIdDoProdutoRelatorioDeProdutosVarejo.getText().toString());
+							ResultSet rs = pst.executeQuery();
+							tableRelatorioDeProdutos.setModel(DbUtils.resultSetToTableModel(rs));
+		
+							pst.close();
+							rs.close();
+							
+						}catch (Exception g) {
+							g.printStackTrace();
+						}
+				}else JOptionPane.showMessageDialog(null, "Preencher todos os campos para consulta", "", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		btnRelatorioDoProdutoRelatorioDeProdutosVarejo.setBounds(10, 140, 198, 21);
+		relatorioDeProdutosVarejo.add(btnRelatorioDoProdutoRelatorioDeProdutosVarejo);
+		
+		JLabel lblImagemDeFundoRelatorioDeProdutosVarejo = new JLabel("");
+		lblImagemDeFundoRelatorioDeProdutosVarejo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\FundoRelatorioVarejo.jpg"));
+		lblImagemDeFundoRelatorioDeProdutosVarejo.setBounds(0, 0, 800, 573);
+		relatorioDeProdutosVarejo.add(lblImagemDeFundoRelatorioDeProdutosVarejo);
+		bancoFinanceiro.setLayout(null);
+
+		
+		
+		
+		
+		
+		
+		//
+		//
+		// BANCO FINANCEIRO
+		//
+		//
+		
+		JMenuBar menuBarBancoFinanceiro = new JMenuBar();
+		menuBarBancoFinanceiro.setBounds(0, 0, 934, 22);
+		menuBarBancoFinanceiro.setBackground(Color.LIGHT_GRAY);
+		bancoFinanceiro.add(menuBarBancoFinanceiro);
+
+		JMenu mnProdutosBancoFinanceiro = new JMenu("Produtos");
+		mnProdutosBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Product-sale-report-icon.png"));
+		menuBarBancoFinanceiro.add(mnProdutosBancoFinanceiro);
+
+		JMenuItem mntmProdutosNaAdegaBancoFinanceiro = new JMenuItem("Produtos na Adega");
+		mntmProdutosNaAdegaBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				produtosNaAdega.setVisible(true);
+			}
+		});
+		mntmProdutosNaAdegaBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Beer-icon.png"));
+		mnProdutosBancoFinanceiro.add(mntmProdutosNaAdegaBancoFinanceiro);
+
+		JMenuItem mntmProdutosEmEstoqueBancoFinanceiro = new JMenuItem("Produtos em Estoque");
+		mntmProdutosEmEstoqueBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				produtosEmEstoque.setVisible(true);
+			}
+		});
+		mntmProdutosEmEstoqueBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		mnProdutosBancoFinanceiro.add(mntmProdutosEmEstoqueBancoFinanceiro);
+
+		JMenuItem mntmProdutosParaComprarBancoFinanceiro = new JMenuItem("Produtos para Comprar");
+		mntmProdutosParaComprarBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				produtosParaComprar.setVisible(true);
+			}
+		});
+		mntmProdutosParaComprarBancoFinanceiro
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-cart-icon.png"));
+		mnProdutosBancoFinanceiro.add(mntmProdutosParaComprarBancoFinanceiro);
+
+		JMenuItem mntmTodosProdutosBancoFinanceiro = new JMenuItem("Todos Produtos");
+		mntmTodosProdutosBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				todosProdutos.setVisible(true);
+			}
+		});
+		mntmTodosProdutosBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\store-market-stall-icon.png"));
+		mnProdutosBancoFinanceiro.add(mntmTodosProdutosBancoFinanceiro);
+
+		JMenu mnVenderBancoFinanceiro = new JMenu("Vender");
+		mnVenderBancoFinanceiro
+				.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		menuBarBancoFinanceiro.add(mnVenderBancoFinanceiro);
+
+		JMenuItem mntmVendaVarejoBancoFinanceiro = new JMenuItem("Venda Varejo");
+		mntmVendaVarejoBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				vendaVarejo.setVisible(true);
+			}
+		});
+		mntmVendaVarejoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Administrator-Blue-icon.png"));
+		mnVenderBancoFinanceiro.add(mntmVendaVarejoBancoFinanceiro);
+
+		JMenuItem mntmVendaAtacadoBancoFinanceiro = new JMenuItem("Venda Atacado");
+		mntmVendaAtacadoBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				vendaAtacado.setVisible(true);
+			}
+		});
+		mntmVendaAtacadoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\shop-icon.png"));
+		mnVenderBancoFinanceiro.add(mntmVendaAtacadoBancoFinanceiro);
+
+		JMenuItem mntmVendaPersonalizadaBancoFinanceiro = new JMenuItem("Venda Personalizada");
+		mntmVendaPersonalizadaBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				vendaPersonalizada.setVisible(true);
+			}
+		});
+		mntmVendaPersonalizadaBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Time-Meeting-icon.png"));
+		mnVenderBancoFinanceiro.add(mntmVendaPersonalizadaBancoFinanceiro);
+		
+		JMenu mnClientesBancoFinanceiro = new JMenu("Clientes");
+		mnClientesBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Office-Customer-Male-Light-icon.png"));
+		menuBarBancoFinanceiro.add(mnClientesBancoFinanceiro);
+		
+		JMenuItem mntmNewMenuClientesAtacadoBancoFinanceiro = new JMenuItem("Clientes Atacado");
+		mntmNewMenuClientesAtacadoBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clientesAtacado.setVisible(true);
+				bancoFinanceiro.setVisible(false);
+			}
+		});
+		mntmNewMenuClientesAtacadoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		mnClientesBancoFinanceiro.add(mntmNewMenuClientesAtacadoBancoFinanceiro);
+
+		JMenu mnFinanceiroBancoFinanceiro = new JMenu("Financeiro");
+		mnFinanceiroBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon (1).png"));
+		menuBarBancoFinanceiro.add(mnFinanceiroBancoFinanceiro);
+		
+		JMenuItem mntmNewMenuItemRelatorioDeVendasBancoFinanceiro = new JMenuItem("Relatorio de Vendas");
+		mntmNewMenuItemRelatorioDeVendasBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				relatorioDeVendas.setVisible(true);
+				bancoFinanceiro.setVisible(false);
+			}
+		});
+		mntmNewMenuItemRelatorioDeVendasBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\vendas.png"));
+		mnFinanceiroBancoFinanceiro.add(mntmNewMenuItemRelatorioDeVendasBancoFinanceiro);
+		
+		JMenu mnNewMenu_1_11 = new JMenu("Relatorio de Produtos");
+		mnNewMenu_1_11.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Globe-terrestre-2-icon.png"));
+		mnFinanceiroBancoFinanceiro.add(mnNewMenu_1_11);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiro = new JMenuItem("Atacado");
+		mntmNewMenuItemBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				relatorioDeProdutosAtacado.setVisible(true);
+			}
+		});
+		mnNewMenu_1_11.add(mntmNewMenuItemBancoFinanceiro);
+		mntmNewMenuItemBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Cocoa-Storage-icon.png"));
+		
+		JMenuItem mntmVarejo_11 = new JMenuItem("Varejo");
+		mntmVarejo_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bancoFinanceiro.setVisible(false);
+				relatorioDeProdutosVarejo.setVisible(true);
+			}
+		});
+		mntmVarejo_11.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\youtube-shop-icon.png"));
+		mnNewMenu_1_11.add(mntmVarejo_11);
+		
+		JMenuItem mntmNewMenuItemBancoFinanceiroMenuUnicial_11 = new JMenuItem("Banco Financeiro");
+		mntmNewMenuItemBancoFinanceiroMenuUnicial_11.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\coins-icon.png"));
+		mnFinanceiroBancoFinanceiro.add(mntmNewMenuItemBancoFinanceiroMenuUnicial_11);
+
+		JMenu mnAjudaBancoFinanceiro = new JMenu("Ajuda");
+		mnAjudaBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Actions-help-about-icon.png"));
+		menuBarBancoFinanceiro.add(mnAjudaBancoFinanceiro);
+
+		JMenuItem mntmDadosDaVersaoBancoFinanceiro = new JMenuItem("Dados da Vers\u00E3o");
+		mntmDadosDaVersaoBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Versão 1.0.0 Beta\nContato do Desenvolvedor:\nEmail: Pedrohhouro@gmail.com\nTelefone: +55 11 992256425",
+						"Dados da versão", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmDadosDaVersaoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Help-and-Support-icon.png"));
+		mnAjudaBancoFinanceiro.add(mntmDadosDaVersaoBancoFinanceiro);
+		
+		textFieldPagarFuncionarioBancoFinanceiro = new JTextField();
+		textFieldPagarFuncionarioBancoFinanceiro.setEditable(false);
+		textFieldPagarFuncionarioBancoFinanceiro.setBounds(652, 455, 98, 20);
+		bancoFinanceiro.add(textFieldPagarFuncionarioBancoFinanceiro);
+		textFieldPagarFuncionarioBancoFinanceiro.setColumns(10);
+		
+		JLabel lblNewLabelCofreBancoFinanceiro = new JLabel("");
+		lblNewLabelCofreBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\Strong-box-money-icon.png"));
+		lblNewLabelCofreBancoFinanceiro.setBounds(20, 63, 128, 137);
+		bancoFinanceiro.add(lblNewLabelCofreBancoFinanceiro);
+		
+		txtQuantiaNoCofreBancoFinanceiro = new JTextField();
+		txtQuantiaNoCofreBancoFinanceiro.setText("");
+		Cofre();
+		txtQuantiaNoCofreBancoFinanceiro.setEditable(false);
+		txtQuantiaNoCofreBancoFinanceiro.setBounds(20, 200, 120, 20);
+		bancoFinanceiro.add(txtQuantiaNoCofreBancoFinanceiro);
+		txtQuantiaNoCofreBancoFinanceiro.setColumns(10);
+		
+		textFieldIDFuncionarioBancoFinanceiro = new JTextField();
+		textFieldIDFuncionarioBancoFinanceiro.setEditable(false);
+		textFieldIDFuncionarioBancoFinanceiro.setVisible(false);
+		textFieldIDFuncionarioBancoFinanceiro.setBounds(657, 512, 32, 22);
+		bancoFinanceiro.add(textFieldIDFuncionarioBancoFinanceiro);
+		textFieldIDFuncionarioBancoFinanceiro.setColumns(10);
+
+		textFieldNomeFuncionarioBancoFinanceiro = new JTextField();
+		textFieldNomeFuncionarioBancoFinanceiro.setEditable(false);
+		textFieldNomeFuncionarioBancoFinanceiro.setBounds(652, 424, 98, 20);
+		bancoFinanceiro.add(textFieldNomeFuncionarioBancoFinanceiro);
+		textFieldNomeFuncionarioBancoFinanceiro.setColumns(10);
+		
+		JLabel lblNewLabel_ImagemPagarFuncionarioBancoFinanceiro = new JLabel("");
+		lblNewLabel_ImagemPagarFuncionarioBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\payment-icon.png"));
+		lblNewLabel_ImagemPagarFuncionarioBancoFinanceiro.setBounds(594, 427, 48, 48);
+		bancoFinanceiro.add(lblNewLabel_ImagemPagarFuncionarioBancoFinanceiro);
+		
+		JButton btnNewButton_PagarFuncionarioBancoFinanceiro = new JButton("Pagar Funcionario");
+		btnNewButton_PagarFuncionarioBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "INSERT INTO adegagelaguela.pagamentos (idFuncionario, ValorPago) VALUES (?, ?)";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					pst.setString(1, textFieldIDFuncionarioBancoFinanceiro.getText());
+					pst.setString(2, textFieldPagarFuncionarioBancoFinanceiro.getText());
+					pst.execute();
+					JOptionPane.showMessageDialog(null, "Funcionario Pago !");	
+					pst.close();
+					Cofre();
+					textFieldIDFuncionarioBancoFinanceiro.setText("");
+					textFieldPagarFuncionarioBancoFinanceiro.setText("");
+				} catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_PagarFuncionarioBancoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton_PagarFuncionarioBancoFinanceiro.setBounds(594, 484, 156, 17);
+		bancoFinanceiro.add(btnNewButton_PagarFuncionarioBancoFinanceiro);
+		
+		JScrollPane scrollPaneListaDeFuncionariosBancoFinanceiro = new JScrollPane();
+		scrollPaneListaDeFuncionariosBancoFinanceiro.setBounds(551, 124, 199, 280);
+		bancoFinanceiro.add(scrollPaneListaDeFuncionariosBancoFinanceiro);
+		
+		tableListaDeFuncionariosBancoFinanceiro = new JTable() {
+	        private static final long serialVersionUID = 1L;
+
+	        public boolean isCellEditable(int row, int column) {                
+	               return false;               
+	        };
+	        
+	    };
+		tableListaDeFuncionariosBancoFinanceiro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int linha = tableListaDeFuncionariosBancoFinanceiro.getSelectedRow();
+				textFieldIDFuncionarioBancoFinanceiro.setText(tableListaDeFuncionariosBancoFinanceiro.getValueAt(linha, 0).toString());
+				textFieldNomeFuncionarioBancoFinanceiro.setText(tableListaDeFuncionariosBancoFinanceiro.getValueAt(linha, 1).toString());
+				textFieldPagarFuncionarioBancoFinanceiro.setText(tableListaDeFuncionariosBancoFinanceiro.getValueAt(linha, 3).toString());
+			}
+		});
+		scrollPaneListaDeFuncionariosBancoFinanceiro.setViewportView(tableListaDeFuncionariosBancoFinanceiro);
+		
+		JButton btnNewButton_ListaDeFuncionarioBancoFinanceiro = new JButton("Lista de funcionarios");
+		btnNewButton_ListaDeFuncionarioBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "SELECT idfuncionarios 'ID', Nome, Funcao 'Cargo', Salario 'Salário' FROM adegagelaguela.funcionarios ORDER BY Nome";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					ResultSet rs = pst.executeQuery();
+					tableListaDeFuncionariosBancoFinanceiro.setModel(DbUtils.resultSetToTableModel(rs));
+
+					pst.close();
+					rs.close();
+
+				} catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_ListaDeFuncionarioBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\User-Group-icon.png"));
+		btnNewButton_ListaDeFuncionarioBancoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton_ListaDeFuncionarioBancoFinanceiro.setBounds(565, 99, 170, 20);
+		bancoFinanceiro.add(btnNewButton_ListaDeFuncionarioBancoFinanceiro);
+		
+		JButton btnNewButton_RealizarRetiradaBancoFinanceiro = new JButton("Realizar Retirada");
+		btnNewButton_RealizarRetiradaBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "UPDATE adegagelaguela.cofre SET QuantiaRetirada = (?) + QuantiaRetirada WHERE (idcofre = 1)";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					pst.setString(1, textField_RealizarRetiradaBancoFinanceiro.getText());
+					pst.execute();
+					JOptionPane.showMessageDialog(null, "Retirada realizada");
+					pst.close();
+					Cofre();
+					textField_RealizarRetiradaBancoFinanceiro.setText("");
+				} catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_RealizarRetiradaBancoFinanceiro.setBounds(52, 439, 128, 23);
+		bancoFinanceiro.add(btnNewButton_RealizarRetiradaBancoFinanceiro);
+		
+		textField_RealizarRetiradaBancoFinanceiro = new JTextField();
+		textField_RealizarRetiradaBancoFinanceiro.setBounds(52, 410, 128, 20);
+		bancoFinanceiro.add(textField_RealizarRetiradaBancoFinanceiro);
+		textField_RealizarRetiradaBancoFinanceiro.setColumns(10);
+		
+		JLabel lblNewLabel_PagarFuncionarioBancoFinanceiro = new JLabel("Pagamento de Funcionarios :");
+		lblNewLabel_PagarFuncionarioBancoFinanceiro.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_PagarFuncionarioBancoFinanceiro.setBounds(532, 63, 218, 24);
+		bancoFinanceiro.add(lblNewLabel_PagarFuncionarioBancoFinanceiro);
+		
+		textField_RealizarDepositoBancoFinanceiro = new JTextField();
+		textField_RealizarDepositoBancoFinanceiro.setBounds(52, 322, 128, 20);
+		bancoFinanceiro.add(textField_RealizarDepositoBancoFinanceiro);
+		textField_RealizarDepositoBancoFinanceiro.setColumns(10);
+		
+		JButton btnNewButton_RealizarDepositoBancoFinanceiro = new JButton("Realizar Deposito");
+		btnNewButton_RealizarDepositoBancoFinanceiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String query = "UPDATE adegagelaguela.cofre SET QuantiaTotal = (?) + QuantiaTotal WHERE (idcofre = 1)";
+					PreparedStatement pst = conexao.prepareStatement(query);
+					pst.setString(1, textField_RealizarDepositoBancoFinanceiro.getText());
+					pst.execute();
+					JOptionPane.showMessageDialog(null, "Deposito realizado");
+					pst.close();
+					Cofre();
+					textField_RealizarDepositoBancoFinanceiro.setText("");
+				} catch (Exception g) {
+					g.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_RealizarDepositoBancoFinanceiro.setBounds(52, 350, 128, 23);
+		bancoFinanceiro.add(btnNewButton_RealizarDepositoBancoFinanceiro);
+		
+		JLabel lblNewLabel_ImagemRetiradaBancoFinanceiro = new JLabel("");
+		lblNewLabel_ImagemRetiradaBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\money-delete-icon.png"));
+		lblNewLabel_ImagemRetiradaBancoFinanceiro.setBounds(10, 423, 32, 32);
+		bancoFinanceiro.add(lblNewLabel_ImagemRetiradaBancoFinanceiro);
+		
+		textFieldMesBancoFinanceiro = new JTextField();
+		textFieldMesBancoFinanceiro.setBounds(60, 495, 32, 20);
+		bancoFinanceiro.add(textFieldMesBancoFinanceiro);
+		textFieldMesBancoFinanceiro.setColumns(10);
+		
+		textFieldAnoBancoFinanceiro = new JTextField();
+		textFieldAnoBancoFinanceiro.setBounds(134, 495, 46, 20);
+		bancoFinanceiro.add(textFieldAnoBancoFinanceiro);
+		textFieldAnoBancoFinanceiro.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Baixar Movimenta\u00E7\u00E3o");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DocumentoRegistroBancario();
+				textFieldMesBancoFinanceiro.setText("");
+				textFieldAnoBancoFinanceiro.setText("");
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\printer-icon.png"));
+		btnNewButton.setBounds(10, 523, 170, 24);
+		bancoFinanceiro.add(btnNewButton);
+		
+		JLabel lblMesBancoFinanceiro = new JLabel("M\u00EAs :");
+		lblMesBancoFinanceiro.setForeground(Color.WHITE);
+		lblMesBancoFinanceiro.setBounds(23, 495, 46, 20);
+		bancoFinanceiro.add(lblMesBancoFinanceiro);
+		
+		JLabel lblAnoBancoFinanceiro = new JLabel("Ano :");
+		lblAnoBancoFinanceiro.setForeground(Color.WHITE);
+		lblAnoBancoFinanceiro.setBounds(102, 495, 46, 20);
+		bancoFinanceiro.add(lblAnoBancoFinanceiro);
+		rdbtnDetalharBancoFinanceiro = new JRadioButton("Detalhada");
+		rdbtnDetalharBancoFinanceiro.setRequestFocusEnabled(false);
+		rdbtnDetalharBancoFinanceiro.setOpaque(false);
+		rdbtnDetalharBancoFinanceiro.setFocusable(false);
+		rdbtnDetalharBancoFinanceiro.setFocusPainted(false);
+		rdbtnDetalharBancoFinanceiro.setBounds(10, 547, 98, 23);
+		bancoFinanceiro.add(rdbtnDetalharBancoFinanceiro);
+		
+		
+		JLabel lblNewLabel_ImagemDeFundoBancoFinanceiro = new JLabel("");
+		lblNewLabel_ImagemDeFundoBancoFinanceiro.setIcon(new ImageIcon("C:\\Users\\Pedro\\Pictures\\Camera Roll\\drink_pronto.jpg"));
+		lblNewLabel_ImagemDeFundoBancoFinanceiro.setBounds(0, 0, 800, 570);
+		bancoFinanceiro.add(lblNewLabel_ImagemDeFundoBancoFinanceiro);
+		
+		
 		//
 		//
 		// TELA DE LOGIN
@@ -3216,6 +5818,7 @@ public class ApplicationView {
 					mntmTodosOsProdutosProdutosEmEstoque.setVisible(false);
 					mntmProdutosParaComprarProdutosNaAdega.setVisible(false);
 					mntmTodosOsProdutosProdutosParaComprar.setVisible(false);
+					mnClientesMenuInicial.setVisible(false);
 					mnFinanceiroMenuInicial.setVisible(false);
 					mntmVendaAtacadoMenuInicial.setVisible(false);
 					mntmVendaPersonalizadaMenuInicial.setVisible(false);
@@ -3225,6 +5828,14 @@ public class ApplicationView {
 					mnFinanceiroTodosOsProdutos.setVisible(false);
 					mntmVendaAtacadoTodosOsProdutos.setVisible(false);
 					mntmVendaPersonalizadaTodosOsProdutos.setVisible(false);
+					mnClientesProdutosNaAdega.setVisible(false);
+					mnClientesTodosOsProdutos.setVisible(false);
+					mnClientesVendaVarejo.setVisible(false);
+					mnFinanceiroVendaVarejo.setVisible(false);
+					mntmVendaAtacadoVendaVarejo.setVisible(false);
+					mntmVendaPersonalizadaVendaVarejo.setVisible(false);
+					mntmProdutosEmEstoqueVendaVarejo.setVisible(false);
+					mntmProdutosParaComprarVendaVarejo.setVisible(false);
 					btnEntrar.getRootPane().setDefaultButton(btnEntrar);
 				} else if (checkLoginADM(textLogin.getText(), new String(txtSenha.getText()))) {
 					menuInicial.setVisible(true);
@@ -3287,6 +5898,9 @@ public class ApplicationView {
 		lblNewLabelImagemDeFundo.setIcon(new ImageIcon("C:\\Users\\Pedro\\Desktop\\gelaguela_lib\\Icones\\Blue-Label-e1489370807665.jpg"));
 		lblNewLabelImagemDeFundo.setBounds(0, -22, 789, 630);
 		telaDeLogin.add(lblNewLabelImagemDeFundo);
+		
+
+		
 
 	}
 
@@ -3315,7 +5929,7 @@ public class ApplicationView {
 	//
 	public void refreshtableProdutosNaAdega() {
 		try {
-			String query = "SELECT Id 'ID', Nome 'Nome do Produto', Unidades, format(Preco,2,'de_DE') 'Preço por Un', format(PrecoTotal,2,'de_DE') 'Valor total' FROM adegagelaguela.lojaTatuape ORDER BY Nome";
+			String query = "SELECT Id 'ID', Nome 'Nome do Produto', Unidades, Preco 'Preço por Un', format(PrecoTotal,2,'de_DE') 'Valor total' FROM adegagelaguela.lojaTatuape ORDER BY Nome";
 			PreparedStatement pst = conexao.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			tableProdutosNaAdega.setModel(DbUtils.resultSetToTableModel(rs));
@@ -3330,7 +5944,7 @@ public class ApplicationView {
 
 	public void refreshtableProdutosEmEstoque() {
 		try {
-			String query = "Select idEstoque 'ID',Produto, QuantidadeAtual 'Quantidade', format(PrecoDeCusto,2,'de_DE') 'Preco Un',format(PrecoTotal,2,'de_DE') 'Valor Total' From estoque ORDER BY Produto";
+			String query = "Select idEstoque 'ID',Produto, QuantidadeAtual 'Quantidade', PrecoDeCusto 'Preco Un',format(PrecoTotal,2,'de_DE') 'Valor Total' From estoque ORDER BY Produto";
 			PreparedStatement pst = conexao.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			tableProdutosEmEstoque.setModel(DbUtils.resultSetToTableModel(rs));
@@ -3371,13 +5985,44 @@ public class ApplicationView {
 			g.printStackTrace();
 		}
 	}
+	
+	public void refreshTableClientesClientes() {
+		try {
+			String query = "SELECT idCliente 'ID', Nome, CPF, Email, Telefone1, Telefone2, Empresa, CNPJ, TelefoneEmpresa 'Telefone da Empresa', Endereco 'Endereço', Numero 'Nº', Bairro, Cidade FROM adegagelaguela.cliente";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			tableClientesClientes.setModel(DbUtils.resultSetToTableModel(rs));
+			somaClientes();
+			pst.close();
+			rs.close();
+		} catch (Exception g) {
+			g.printStackTrace();
+		}
+	}
+	
+	public void somaClientes() {
+		try { 
+			String query = "SELECT COUNT(*) FROM adegagelaguela.cliente";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			tableNmrClientes.setModel(DbUtils.resultSetToTableModel(rs));
+			textFieldNmrDeCliente.setText(tableNmrClientes.getValueAt(0, 0).toString());
+			pst.close();
+			rs.close();
+			
+		}catch (Exception g) {
+			g.printStackTrace();
+		}
+		
+	}
+	
 	public void refreshTableClientesVendaAtacado() {
 		try {
 			String query = "SELECT idCliente 'ID', Nome 'Cliente', Empresa FROM adegagelaguela.cliente";
 			PreparedStatement pst = conexao.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			tableClientesVendaAtacado_1.setModel(DbUtils.resultSetToTableModel(rs));
-
+			
 			pst.close();
 			rs.close();
 		} catch (Exception g) {
@@ -3398,26 +6043,33 @@ public class ApplicationView {
 			g.printStackTrace();
 		}
 	}
-	public void refreshtableCarrinhoVendaAtacado() {
+	
+	public void refreshTableProdutoVendaVarejo() {
 		try {
-			String query = "SELECT adegagelaguela.carrinho.idCarrinho 'ID', adegagelaguela.estoque.Produto, adegagelaguela.carrinho.QuantidadeAVender 'Quantidade', "
-					+ "format(adegagelaguela.carrinho.PrecoDeVenda ,2,'de_DE') 'Preco Unidade', format(adegagelaguela.carrinho.PrecoTotal ,2,'de_DE')'Preço Total' FROM adegagelaguela.carrinho "
-					+ "JOIN adegagelaguela.estoque ON adegagelaguela.carrinho.Estoque_idEstoque = adegagelaguela.estoque.idEstoque WHERE adegagelaguela.carrinho.NumeroDaVenda = ?" ;
+			String query = "SELECT Id 'ID', Nome 'Nome do Produto', Unidades, Preco 'Preço por Un' FROM adegagelaguela.lojaTatuape ORDER BY Nome";
 			PreparedStatement pst = conexao.prepareStatement(query);
-			pst.setString(1,  txt_NumeroDaVendaAtacado.getText());
 			ResultSet rs = pst.executeQuery();
-			tableProdutosNoCarrinhoVendaAtacado.setModel(DbUtils.resultSetToTableModel(rs));
+			table_ProdutoVendaVarejo.setModel(DbUtils.resultSetToTableModel(rs));
 
-			String query2 = "SELECT format(SUM(PrecoTotal),2,'de_DE') as soma FROM adegagelaguela.carrinho WHERE NumeroDaVenda = ?";
-			PreparedStatement pst2 = conexao.prepareStatement(query2);
-			pst2.setString(1,  txt_NumeroDaVendaAtacado.getText());
-			ResultSet rs2 = pst2.executeQuery();
-			tablePrecoTotal.setModel(DbUtils.resultSetToTableModel(rs2));
-			textFieldPrecoTotalVendaAtacado.setText("R$: " + tablePrecoTotal.getValueAt(0, 0).toString());
 			pst.close();
 			rs.close();
-			pst2.close();
-			rs2.close();
+
+		} catch (Exception g) {
+			g.printStackTrace();
+		}
+	}
+	
+	public void Cofre() {
+		try {
+			String query = "SELECT QuantiaAtual FROM adegagelaguela.cofre";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			txtQuantiaNoCofreBancoFinanceiro.setText("R$: " + rs.getString(1));
+
+			pst.close();
+			rs.close();
+
 		} catch (Exception g) {
 			g.printStackTrace();
 		}
@@ -3439,7 +6091,7 @@ public class ApplicationView {
 		int quantidade =0;
 		try{
 			Statement stm = conexao.createStatement(); 
-			ResultSet rs = stm.executeQuery("SELECT NumeroDaVenda FROM adegagelaguela.carrinho ORDER BY NumeroDaVenda DESC LIMIT 1");  
+			ResultSet rs = stm.executeQuery("SELECT NumeroDaVenda FROM adegagelaguela.vendaatacado ORDER BY NumeroDaVenda DESC LIMIT 1");  
 			if (rs.next()) {
 				quantidade = rs.getInt(1);
 			}
@@ -3498,7 +6150,7 @@ public class ApplicationView {
 		int quantidade =0;
 		try{
 			Statement stm = conexao.createStatement(); 
-			ResultSet rs = stm.executeQuery("SELECT NumeroDaVenda FROM adegagelaguela.venda ORDER BY NumeroDaVenda DESC LIMIT 1;");  
+			ResultSet rs = stm.executeQuery("SELECT NumeroDaVenda FROM adegagelaguela.vendaatacado ORDER BY NumeroDaVenda DESC LIMIT 1;");  
 			if (rs.next()) {
 				quantidade = rs.getInt(1);
 			}
@@ -3507,6 +6159,148 @@ public class ApplicationView {
 			g.printStackTrace();
 		}
 		return quantidade;
+	}
+	
+	public void DocumentoRegistroBancario() {
+		Document Relatorio = new Document();
+		String mes = textFieldMesBancoFinanceiro.getText().toString();
+		String ano = textFieldAnoBancoFinanceiro.getText().toString();
+		
+		if(!rdbtnDetalharBancoFinanceiro.isSelected()) {
+			try {
+				PdfWriter.getInstance(Relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Banco\\MovimentaçãoBancaria-"+mes+"-"+ano+".pdf"));
+				Relatorio.open();
+				Relatorio.setPageSize(PageSize.A4);
+				Relatorio.add(new Paragraph("Pagamentos a funcionarios:\n"));
+				String query =  "SELECT Nome, Funcao, Salario ,PagamentoDeFuncionario, HoraDoRegistro FROM adegagelaguela.registrobancario JOIN adegagelaguela.funcionarios ON IDFuncionario = idfuncionarios WHERE HoraDoRegistro LIKE '"+ano+"-"+mes+"%' GROUP BY IDFuncionario";
+				PreparedStatement pst = conexao.prepareStatement(query);
+				ResultSet rs = pst.executeQuery();
+				rs.next();
+				Paragraph Funcionario = new Paragraph("Dados do Funcinario "+ ":\n"+"Nome: " + rs.getString("Nome") + "\n"+"Função: " +rs.getString("Funcao")+ "\n" + "Salário: R$" +rs.getString("Salario")+"\n"+"Hora do Pagamento: " +rs.getString("HoraDoRegistro")+ "\nValor Pago: R$" + rs.getString("PagamentoDeFuncionario")+ "\n\n\n");
+				Relatorio.add(Funcionario);
+				while (rs.next()) {
+					Relatorio.add(new Paragraph("\n"));
+					Paragraph Funcionario2 = new Paragraph("Dados do Funcinario "+ ":\n"+"Nome: " + rs.getString("Nome") + "\n"+"Função: " +rs.getString("Funcao")+ "\n" + "Salário: R$" +rs.getString("Salario")+"\n"+"Hora do Pagamento: " +rs.getString("HoraDoRegistro")+ "\nValor Pago: R$" + rs.getString("PagamentoDeFuncionario")+ "\n\n\n");
+					Relatorio.add(Funcionario2);
+				}
+				pst.close();
+				rs.close();
+				Relatorio.add(new Paragraph("Movimentação Bancaria:\n"));
+				String query2 =  "SELECT format(SUM(EntradaDeDinheiro),2,'de_DE') as EntradaDeDinheiro, format(SUM(SaidaDeDinheiro),2,'de_DE') as SaidaDeDinheiro FROM adegagelaguela.registrobancario Where HoraDoRegistro like '"+ano+"-"+mes+"%'";
+				PreparedStatement pst2 = conexao.prepareStatement(query2);
+				ResultSet rs2 = pst2.executeQuery();
+				rs2.next();
+				Paragraph Movimento = new Paragraph("Quantia que Entrou no mês "+mes+": R$" + rs2.getString("EntradaDeDinheiro") +"\nQuantia que Saiu no mês "+mes+": R$" +rs2.getString("SaidaDeDinheiro")+"");
+				Relatorio.add(Movimento);
+				rs2.close();
+				pst2.close();
+				
+			}catch (DocumentException de) {
+				de.printStackTrace();
+			}catch (IOException ioe) {
+				ioe.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				Relatorio.close();
+			}
+		}else {
+			try {
+				PdfWriter.getInstance(Relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Banco\\MovimentaçãoBancaria-"+mes+"-"+ano+"-DETALHADA.pdf"));
+				Relatorio.open();
+				Relatorio.setPageSize(PageSize.A4);
+				Relatorio.add(new Paragraph("Pagamentos a funcionarios:\n"));
+				String query =  "SELECT Nome, Funcao, Salario ,PagamentoDeFuncionario, HoraDoRegistro FROM adegagelaguela.registrobancario JOIN adegagelaguela.funcionarios ON IDFuncionario = idfuncionarios WHERE HoraDoRegistro LIKE '"+ano+"-"+mes+"%' GROUP BY IDFuncionario";
+				PreparedStatement pst = conexao.prepareStatement(query);
+				ResultSet rs = pst.executeQuery();
+				rs.next();
+				Paragraph Funcionario = new Paragraph("Dados do Funcinario "+ ":\n"+"Nome: " + rs.getString("Nome") + "\n"+"Função: " +rs.getString("Funcao")+ "\n" + "Salário: R$" +rs.getString("Salario")+"\n"+"Hora do Pagamento: " +rs.getString("HoraDoRegistro")+ "\nValor Pago: R$" + rs.getString("PagamentoDeFuncionario")+ "\n\n\n");
+				Relatorio.add(Funcionario);
+				while (rs.next()) {
+					Relatorio.add(new Paragraph("\n"));
+					Paragraph Funcionario2 = new Paragraph("Dados do Funcinario "+ ":\n"+"Nome: " + rs.getString("Nome") + "\n"+"Função: " +rs.getString("Funcao")+ "\n" + "Salário: R$" +rs.getString("Salario")+"\n"+"Hora do Pagamento: " +rs.getString("HoraDoRegistro")+ "\nValor Pago: R$" + rs.getString("PagamentoDeFuncionario")+ "\n\n\n");
+					Relatorio.add(Funcionario2);
+				}
+				pst.close();
+				rs.close();
+				Relatorio.add(new Paragraph("Movimentação Bancaria:\n"));
+				String query2 =  "SELECT idregistro, IDFuncionario, EntradaDeDinheiro,SaidaDeDinheiro,PagamentoDeFuncionario,HoraDoRegistro FROM adegagelaguela.registrobancario Where HoraDoRegistro like '"+ano+"-"+mes+"%'";
+				PreparedStatement pst2 = conexao.prepareStatement(query2);
+				ResultSet rs2 = pst2.executeQuery();
+				rs2.next();
+				Paragraph Movimento = new Paragraph("Quantia movimentada: \nEntrou: R$" + rs2.getString("EntradaDeDinheiro") +" \nSaiu: R$" +rs2.getString("SaidaDeDinheiro")+ "\nFoi pago: R$"+rs2.getString("PagamentoDeFuncionario")+"\n Hora do Registro: "+ rs2.getString("HoraDoRegistro")+"\n\n");
+				Relatorio.add(Movimento);
+				while(rs2.next()) {
+					Paragraph Movimento2 = new Paragraph("Quantia movimentada: \nEntrou: R$" + rs2.getString("EntradaDeDinheiro") +"\nSaiu: R$" +rs2.getString("SaidaDeDinheiro")+ "\nFoi pago: R$"+rs2.getString("PagamentoDeFuncionario")+"\n Hora do Registro: "+ rs2.getString("HoraDoRegistro")+"\n\n");
+					Relatorio.add(Movimento2);
+				}
+				rs2.close();
+				pst2.close();
+				
+			}catch (DocumentException de) {
+				de.printStackTrace();
+			}catch (IOException ioe) {
+				ioe.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				Relatorio.close();
+			}
+		}
+	}
+	
+	public void DocumentoVendaPersonalizada() {
+		Document venda = new Document();
+		String numeroDaVenda = NumeroDaVendaToPDF().toString();
+		int contador =1;
+		try{
+			
+			PdfWriter.getInstance(venda, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\VENDAS\\Venda-Personalizada-" + numeroDaVenda + ".pdf"));
+			venda.open();
+			venda.setPageSize(PageSize.A4);
+			venda.add(new Paragraph("VENDA DE NUMERO " + numeroDaVenda +" :\n"));
+			
+			String query =  "SELECT NomeCliente 'Nome', Email, Telefone, Empresa, CPFouRG, NomeProduto 'Produto', QuantidadeProduto 'Quantidade', format(Preco,2,'de_DE') 'Valor',FormaDePagamento 'Forma de Pagamento', PagamentoFuturo 'Pagamento Futuro', HoraDaVenda 'Hora da Venda' "
+					+ "FROM vendapersonalizada WHERE adegagelaguela.vendapersonalizada.NumeroDaVenda = (?)";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			pst.setString(1, txt_NmrVendaVendaPersonalizada.getText().toString());
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			Paragraph cliente = new Paragraph("Dados do cliente "+ ":\n"+"Nome: " + rs.getString("Nome") + "\n"+"Telefone: " +rs.getString("Telefone")+ "\n" + "Empresa: " +rs.getString("Empresa")+"\n"+"Hora da venda: " +rs.getString("Hora da Venda")+ "\n" + "Forma de Pagamento: " +rs.getString("Forma de Pagamento")+ "\n" + "Pagar no Futuro?: " 
+					+rs.getString("Pagamento Futuro")+ "\n\n\n");
+			venda.add(cliente);
+			Paragraph produto1 = new Paragraph("Produto "+ contador +" :\nProduto: "+rs.getString("Produto")+ "\n" + "Valor R$:" +rs.getString("Valor")+ "\n" + "Quantidade: " +rs.getString("Quantidade")+"\n\n");
+			venda.add(produto1);
+			while(rs.next()){
+				contador++;
+				Paragraph produto = new Paragraph("Produto "+ contador +" :\nProduto: "+rs.getString("Produto")+ "\n" + "Valor R$:" +rs.getString("Valor")+ "\n" + "Quantidade: " +rs.getString("Quantidade")+"\n\n");
+				venda.add(produto);
+				venda.add(new Paragraph ("\n\n"));
+			}
+			rs.close();
+			pst.close();
+			
+			String query2 =  "SELECT format(SUM(Preco),2,'de_DE') as soma FROM adegagelaguela.vendapersonalizada WHERE NumeroDaVenda = (?)";
+			pst = conexao.prepareStatement(query2);
+			pst.setString(1, txt_NmrVendaVendaPersonalizada.getText().toString());
+			rs = pst.executeQuery();
+			rs.next();
+			Paragraph valortotal = new Paragraph("Valor total dos produtos R$:" + rs.getString("soma"));
+			rs.close();
+			pst.close();
+			venda.add(new Paragraph ("Total de produtos: " + contador));
+			venda.add(valortotal);
+			venda.close();
+			
+		}catch (DocumentException de) {
+			de.printStackTrace();
+		}catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			venda.close();
+		}
 	}
 	
 	
@@ -3574,10 +6368,9 @@ public class ApplicationView {
 			venda.setPageSize(PageSize.A4);
 			venda.add(new Paragraph("VENDA DE NUMERO " + numeroDaVenda +" :\n"));
 			
-			String query =  "SELECT cliente.Nome, cliente.Empresa, estoque.Produto 'Produto', format(carrinho.PrecoDeVenda ,2,'de_DE') 'Valor',carrinho.QuantidadeAVender 'Quantidade' , format(carrinho.PrecoTotal ,2,'de_DE') 'PreçoT', "
-					+ " venda.HoraDaVenda 'Hora da Venda', venda.FormaDePgmt 'Forma de Pagamento', venda.PagamentoFuturo 'Pagamento Futuro', format(venda.Desconto ,2,'de_DE') 'Desconto' "
-					+ "FROM adegagelaguela.venda JOIN adegagelaguela.cliente ON venda.Cliente_idCliente = cliente.idCliente JOIN adegagelaguela.carrinho ON venda.Carrinho_idCarrinho = carrinho.idCarrinho "
-					+ "JOIN adegagelaguela.estoque ON adegagelaguela.carrinho.Estoque_idEstoque = estoque.idEstoque WHERE adegagelaguela.venda.NumeroDaVenda = (?)";
+			String query =  "SELECT cliente.Nome, cliente.Empresa, produto 'Produto', format(preco,2,'de_DE') 'Valor', quantidade 'Quantidade', format(precoTotal ,2,'de_DE') 'PreçoT',"
+					+ " HoraDaVenda 'Hora da Venda', FormaDePagamento 'Forma de Pagamento', PagarFuturo 'Pagamento Futuro', format(Desconto ,2,'de_DE') 'Desconto' FROM adegagelaguela.vendaatacado "
+					+ "JOIN adegagelaguela.cliente ON adegagelaguela.cliente.idCliente = vendaatacado.IDCliente WHERE NumeroDaVenda = (?);";
 			PreparedStatement pst = conexao.prepareStatement(query);
 			pst.setString(1, numeroDaVenda);
 			ResultSet rs = pst.executeQuery();
@@ -3598,7 +6391,7 @@ public class ApplicationView {
 			rs.close();
 			pst.close();
 			
-			String query2 =  "SELECT format(SUM(PrecoTotal),2,'de_DE') as soma FROM adegagelaguela.carrinho WHERE NumeroDaVenda = (?)";
+			String query2 =  "SELECT format(SUM(precoTotal),2,'de_DE') as soma FROM adegagelaguela.vendaatacado WHERE NumeroDaVenda = (?)";
 			pst = conexao.prepareStatement(query2);
 			pst.setString(1, numeroDaVenda);
 			rs = pst.executeQuery();
@@ -3620,4 +6413,309 @@ public class ApplicationView {
 			venda.close();
 		}
 	}
+	
+	public void DocumentoRelatorioDeVendasVarejo() {
+		Document relatorio = new Document();
+		
+		String dia = textFieldDiaRelatorioDeVendas.getText().toString();
+		String mes = textFieldMesRelatorioDeVendas.getText().toString();
+		String ano = textFieldAnoRelatorioDeVendas.getText().toString();
+		String ateDia = textFieldAteDiaRelatorioDeVendas.getText().toString();
+		String ateMes = textFieldAteMesRelatorioDeVendas.getText().toString();
+		String ateAno = textFieldAteAnoRelatorioDeVendas.getText().toString();
+		
+		try{
+			String contador;
+			PdfWriter.getInstance(relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Relatorio de Vendas\\Relatorio-Venda-Varejo-"+ dia +"-"+ mes +"-"+ ano+"_"+"ate" +"_"+ ateDia +"-"+ ateMes+"-"+ ateAno+".pdf"));
+			relatorio.open();
+			relatorio.setPageSize(PageSize.A4);
+			relatorio.add(new Paragraph("RELATORIO VENDA VAREJO "+ano+"-"+mes+"-"+dia +" Ate "+ ateAno+"-"+ateMes+"-"+ateDia+"\n"));
+			String query =  "SELECT format(SUM(PrecoTotal),2,'de_DE') as soma, NumeroDaVenda, FormaDePagamento, HoraDaVenda FROM adegagelaguela.vendavarejo WHERE HoraDaVenda BETWEEN '"+ano+"-"+mes+"-"+dia+"%' AND '"+ateAno+"-"+ateMes+"-"+ateDia+"%' GROUP BY HoraDaVenda";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			Paragraph dadosVenda = new Paragraph("\n\nDados da Compra:\nNumeroDaVenda: " +rs.getString("NumeroDaVenda")+ "\n"+ "Forma de Pagamento : "+rs.getString("FormaDePagamento")+ "\n" + "Hora Da Venda : "+rs.getString("HoraDaVenda")+ "\n" + "Valor total da venda : " +rs.getString("soma")+"\nItens :\n");
+			relatorio.add(dadosVenda);
+			contador = rs.getString("NumeroDaVenda");
+			String query2 = "SELECT Produto, Quantidade, Preco FROM adegagelaguela.vendavarejo WHERE NumeroDaVenda ="+ contador +"";
+			PreparedStatement pst2 = conexao.prepareStatement(query2);
+			ResultSet rs2 = pst2.executeQuery();
+			rs2.next();
+			Paragraph dadosProduto = new Paragraph("Produto : " +rs2.getString("Produto")+ "\n"+ "Quantidade : "+rs2.getString("Quantidade") + "\n"+"Preço :"+rs2.getString("Preco")+"\n");
+			relatorio.add(dadosProduto);
+
+			while(rs2.next()){
+				Paragraph dadosProduto2 = new Paragraph("Produto : " +rs2.getString("Produto")+ "\n"+ "Quantidade : "+rs2.getString("Quantidade") + "\n"+"Preço :"+rs2.getString("Preco")+"\n");
+				relatorio.add(dadosProduto2);
+			}
+			
+			while(rs.next()){
+				contador = rs.getString("NumeroDaVenda");
+				String query3 = "SELECT Produto, Quantidade, Preco FROM adegagelaguela.vendavarejo WHERE NumeroDaVenda ="+ contador +"";
+				PreparedStatement pst3 = conexao.prepareStatement(query3);
+				ResultSet rs3 = pst3.executeQuery();
+				rs3.next();
+				Paragraph dadosVenda2 = new Paragraph("\n\nDados da Compra\nNumeroDaVenda: " +rs.getString("NumeroDaVenda")+ "\n"+ "Forma de Pagamento : "+rs.getString("FormaDePagamento")+ "\n" + "Hora Da Venda : "+rs.getString("HoraDaVenda")+ "\n" + "Valor total da venda : " +rs.getString("soma")+"\nItens :\n");
+				relatorio.add(dadosVenda2);
+				Paragraph dadosProduto2 = new Paragraph("Produto : " +rs3.getString("Produto")+ "\n"+ "Quantidade : "+rs3.getString("Quantidade") + "\n"+"Preço :"+rs3.getString("Preco")+"\n");
+				relatorio.add(dadosProduto2);
+					while(rs3.next()){
+						Paragraph dadosProduto3 = new Paragraph("Produto : " +rs3.getString("Produto")+ "\n"+ "Quantidade : "+rs3.getString("Quantidade") + "\n"+"Preço :"+rs3.getString("Preco")+"\n");
+						relatorio.add(dadosProduto3);
+					}
+				}
+			rs.close();
+			pst.close();
+			
+			relatorio.close();
+			
+		}catch (DocumentException de) {
+			de.printStackTrace();
+		}catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			relatorio.close();
+		}
+	}
+	public void DocumentoRelatorioDeVendasAtacado() {
+		Document relatorio = new Document();
+		
+		String dia = textFieldDiaRelatorioDeVendas.getText().toString();
+		String mes = textFieldMesRelatorioDeVendas.getText().toString();
+		String ano = textFieldAnoRelatorioDeVendas.getText().toString();
+		String ateDia = textFieldAteDiaRelatorioDeVendas.getText().toString();
+		String ateMes = textFieldAteMesRelatorioDeVendas.getText().toString();
+		String ateAno = textFieldAteAnoRelatorioDeVendas.getText().toString();
+		
+		try{
+
+			PdfWriter.getInstance(relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Relatorio de Vendas\\Relatorio-Venda-Atacado-"+ dia +"-"+ mes +"-"+ ano+"_"+"ate" +"_"+ ateDia +"-"+ ateMes+"-"+ ateAno+".pdf"));
+			relatorio.open();
+			relatorio.setPageSize(PageSize.A4);
+			relatorio.add(new Paragraph("RELATORIO VENDA Atacado "+ano+"-"+mes+"-"+dia +" Ate "+ ateAno+"-"+ateMes+"-"+ateDia+"\n"));
+			
+			String query =  "SELECT cliente.Nome 'Cliente', cliente.Empresa 'Empresa', cliente.CPF 'CPF', cliente.Telefone1 'Telefone', vendaatacado.FormaDePagamento 'Forma de Pagamento', vendaatacado.Desconto 'Desconto', vendaatacado.NumeroDaVenda 'Numero da Venda', "
+					+ "vendaatacado.PagarFuturo 'Pagar futuro', vendaatacado.HoraDaVenda 'HoraDaVenda', format(SUM(precoTotal),2,'de_DE') as soma FROM adegagelaguela.vendaatacado JOIN adegagelaguela.cliente ON vendaatacado.IDCliente = cliente.idCliente WHERE HoraDaVenda BETWEEN  '"+ano+"-"+mes+"-"+dia+"%' AND '"+ateAno+"-"+ateMes+"-"+ateDia+"%'  GROUP BY NumeroDaVenda";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			Paragraph dados = new Paragraph("NumeroDaVenda: " +rs.getString("Numero da Venda")+ "\n"+ "Cliente: "+rs.getString("Cliente")+ "\n" + "Telefone : "+rs.getString("Telefone")+ "\n" + "Empresa : "+rs.getString("Empresa")+ "\n" +
+					"CPF: "+rs.getString("CPF")+ "\n" +"Forma De Pagamento : "+rs.getString("Forma de Pagamento")+ "\n"+"Valor da Venda: "+rs.getString("soma")+ "\n" +"Pagar no Futuro: "+rs.getString("Pagar futuro")+ "\nDesconto:"+ rs.getString("Desconto")+"\n" + "HoraDaVenda: " +rs.getString("HoraDaVenda")+"\n\n");
+			relatorio.add(dados);
+			String query2 = "SELECT produto, quantidade, preco FROM adegagelaguela.vendaatacado WHERE NumeroDaVenda =" + rs.getString("Numero da Venda")+"";
+			PreparedStatement pst2 = conexao.prepareStatement(query2);
+			ResultSet rs2 = pst2.executeQuery();
+			Paragraph produto = new Paragraph("Produtos vendidos:\n");
+			relatorio.add(produto);
+			while (rs2.next()) {
+				Paragraph dadosp = new Paragraph("Produto: " + rs2.getString("produto") + "\n Quantidade: "+ rs2.getString("quantidade") + "\n Preço: R$"+ rs2.getString("preco") + "\n");
+				relatorio.add(dadosp);
+			}
+			relatorio.add(new Paragraph ("\n\n"));
+			while(rs.next()){
+				Paragraph dados2 =new Paragraph("NumeroDaVenda: " +rs.getString("Numero da Venda")+ "\n"+ "Cliente: "+rs.getString("Cliente")+ "\n" + "Telefone : "+rs.getString("Telefone")+ "\n" + "Empresa : "+rs.getString("Empresa")+ "\n" +
+						"CPF: "+rs.getString("CPF")+ "\n" +"Forma De Pagamento : "+rs.getString("Forma de Pagamento")+ "\n"+"Valor da Venda: "+rs.getString("soma")+ "\n" +"Pagar no Futuro: "+rs.getString("Pagar futuro")+ "\nDesconto:"+ rs.getString("Desconto")+"\n" + "HoraDaVenda: " +rs.getString("HoraDaVenda")+"\n\n");
+				relatorio.add(dados2);
+				String query3 = "SELECT produto, quantidade, preco FROM adegagelaguela.vendaatacado WHERE NumeroDaVenda =" + rs.getString("Numero da Venda")+"";
+				PreparedStatement pst3 = conexao.prepareStatement(query3);
+				ResultSet rs3= pst3.executeQuery();
+				Paragraph produto2 = new Paragraph("Produtos vendidos:\n");
+				relatorio.add(produto2);
+				while (rs3.next()) {
+					Paragraph dadosp = new Paragraph("Produto: " + rs3.getString("produto") + "\n Quantidade: "+ rs3.getString("quantidade") + "\n Preço: R$"+ rs3.getString("preco"));
+					relatorio.add(dadosp);
+				}
+				relatorio.add(new Paragraph ("\n\n"));
+				rs3.close();
+				pst3.close();
+			}
+			rs.close();
+			pst.close();
+			rs2.close();
+			pst2.close();
+			relatorio.close();
+			
+		}catch (DocumentException de) {
+			de.printStackTrace();
+		}catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			relatorio.close();
+		}
+	}
+	public void DocumentoRelatorioDeVendasPersonalizada() {
+		Document relatorio = new Document();
+		
+		String dia = textFieldDiaRelatorioDeVendas.getText().toString();
+		String mes = textFieldMesRelatorioDeVendas.getText().toString();
+		String ano = textFieldAnoRelatorioDeVendas.getText().toString();
+		String ateDia = textFieldAteDiaRelatorioDeVendas.getText().toString();
+		String ateMes = textFieldAteMesRelatorioDeVendas.getText().toString();
+		String ateAno = textFieldAteAnoRelatorioDeVendas.getText().toString();
+		
+		try{
+
+			PdfWriter.getInstance(relatorio, new FileOutputStream("C:\\Users\\Pedro\\Desktop\\Relatorio de Vendas\\Relatorio-Venda-Personalizada-"+ dia +"-"+ mes +"-"+ ano+"_"+"ate" +"_"+ ateDia +"-"+ ateMes+"-"+ ateAno+".pdf"));
+			relatorio.open();
+			relatorio.setPageSize(PageSize.A4);
+			relatorio.add(new Paragraph("RELATORIO VENDA Personalizada "+ano+"-"+mes+"-"+dia +" Ate "+ ateAno+"-"+ateMes+"-"+ateDia+"\n"));
+			
+			String query =  "SELECT NomeCliente 'Nome', Email,Telefone, Empresa, CPFouRG, NumeroDaVenda, FormaDePagamento, PagamentoFuturo, HoraDaVenda, format(SUM(precoTotal),2,'de_DE') as soma FROM adegagelaguela.vendapersonalizada WHERE HoraDaVenda BETWEEN '"+ano+"-"+mes+"-"+dia+"%' AND '"+ateAno+"-"+ateMes+"-"+ateDia+"%'  GROUP BY NumeroDaVenda";
+			PreparedStatement pst = conexao.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			Paragraph dados = new Paragraph("NumeroDaVenda: " +rs.getString("NumeroDaVenda")+ "\n"+ "Cliente: "+rs.getString("Nome")+ "\n" +"Email : "+rs.getString("Email")+ "\n" + "Telefone : "+rs.getString("Telefone")+ "\n" + "Empresa : "+rs.getString("Empresa")+ "\n" +
+					"CPF ou RG : "+rs.getString("CPFouRG")+ "\n" +"Forma De Pagamento : "+rs.getString("FormaDePagamento")+ "\n"+"Valor da Venda: "+rs.getString("soma")+ "\n" +"Pagar no Futuro: "+rs.getString("PagamentoFuturo")+ "\n" + "HoraDaVenda: " +rs.getString("HoraDaVenda")+"\n\n");
+			relatorio.add(dados);
+			String query2 = "SELECT NomeProduto, QuantidadeProduto, Preco FROM adegagelaguela.vendapersonalizada WHERE NumeroDaVenda =" + rs.getString("NumeroDaVenda")+"";
+			PreparedStatement pst2 = conexao.prepareStatement(query2);
+			ResultSet rs2 = pst2.executeQuery();
+			Paragraph produto = new Paragraph("Produtos vendidos:\n");
+			relatorio.add(produto);
+			while (rs2.next()) {
+				Paragraph dadosp = new Paragraph("Produto: " + rs2.getString("NomeProduto") + "\n Quantidade: "+ rs2.getString("QuantidadeProduto") + "\n Preço: R$"+ rs2.getString("Preco") + "\n");
+				relatorio.add(dadosp);
+			}
+			relatorio.add(new Paragraph ("\n\n"));
+			while(rs.next()){
+				Paragraph dados2 = new Paragraph("NumeroDaVenda: " +rs.getString("NumeroDaVenda")+ "\n"+ "Cliente: "+rs.getString("Nome")+ "\n" +"Email : "+rs.getString("Email")+ "\n" + "Telefone : "+rs.getString("Telefone")+ "\n" + "Empresa : "+rs.getString("Empresa")+ "\n" +
+						"CPF ou RG : "+rs.getString("CPFouRG")+ "\n" +"Forma De Pagamento : "+rs.getString("FormaDePagamento")+ "\n"+"Valor da Venda: "+rs.getString("soma")+ "\n" +"Pagar no Futuro: "+rs.getString("PagamentoFuturo")+ "\n" + "HoraDaVenda: " +rs.getString("HoraDaVenda")+"\n\n");
+				relatorio.add(dados2);
+				String query3 = "SELECT NomeProduto, QuantidadeProduto, Preco FROM adegagelaguela.vendapersonalizada WHERE NumeroDaVenda =" + rs.getString("NumeroDaVenda")+"";
+				PreparedStatement pst3 = conexao.prepareStatement(query3);
+				ResultSet rs3= pst3.executeQuery();
+				Paragraph produto2 = new Paragraph("Produtos vendidos:\n");
+				relatorio.add(produto2);
+				while (rs3.next()) {
+					Paragraph dadosp = new Paragraph("Produto: " + rs3.getString("NomeProduto") + "\n Quantidade: "+ rs3.getString("QuantidadeProduto") + "\n Preço: R$"+ rs3.getString("Preco"));
+					relatorio.add(dadosp);
+				}
+				relatorio.add(new Paragraph ("\n\n"));
+				rs3.close();
+				pst3.close();
+			}
+			rs.close();
+			pst.close();
+			rs2.close();
+			pst2.close();
+			relatorio.close();
+			
+		}catch (DocumentException de) {
+			de.printStackTrace();
+		}catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			relatorio.close();
+		}
+	}
+	
+	public void limpadorDeDadosProdutosEmEstoque() {
+		textFieldIdProdutosEmEstoque.setText("");
+		textFieldNomeProdutosEmEstoque.setText("");
+		textFieldUnidadesProdutosEmEstoque.setText("");
+		textFieldPrecoProdutosEmEstoque.setText("");
+		
+	}
+
+	public void limpadorDeDadosProdutosNaAdega() {
+		textFieldIdProdutosNaAdega.setText("");
+		textFieldNomeProdutosNaAdega.setText("");
+		textFieldQuantidadeProdutosNaAdega.setText("");
+		textFieldPrecoProdutosNaAdega.setText(null);
+	}
+
+	public void limpadorDeDadosProdutosParaComprar() {
+		textFieldNomeProdutosParaComprar.setText("");
+		textFieldIdProdutosParaComprar.setText("");
+		textFieldQuantidadeProdutosParaComprar.setText("");
+		textFieldPrecoProdutosParaComprar.setText("");
+		
+	}
+
+	public void limpadorDeDadosTodosProdutos() {
+		textFieldIdTodosOsProdutos.setText("");
+		textFieldNomeTodosOsProdutos.setText("");
+		textFieldPrecoTodosOsProdutos.setText("");
+	}
+
+	public void limpadorDeDadosVendaVarejo() {
+		textFieldVendaVendaVarejo.setText("");
+		textField_PrecoVendaVarejo.setText("");
+		textField_QuantidadeVendaVarejo.setText("");
+		textField_TrocoVendaVarejo.setText("");
+		textField_ValorPagoVendaVarejo.setText("");
+		textField_ValorTotalVendaVarejo.setText("");
+		textFieldIDProdutoVendaVarejo.setText("");
+		textFieldProdutoVendaVarejo.setText("");
+		
+	}
+
+	public void limpadorDeDadosVendaAtacado() {
+		textField_DescontoVendaAtacado.setText("");
+		textField_NomeDoProdutoVendaAtacado.setText("");
+		textField_PrecoParaOCarrinhoVendaAtacado.setText("");
+		textField_PrecoVendaAtacado.setText("");
+		textField_QuantidadeUnidadeVendaAtacado.setText("");
+		textFieldIdDoProdutoVendaAtacado.setText("");
+		textFieldNomeClienteCarrinhoVendaAtacado.setText("");
+		textFieldNomeDaEmpresaVendaAtacado.setText("");
+		textFieldPrecoTotalVendaAtacado.setText("");
+		
+	}
+
+	public void limpadorDeDadosVendaPersonalizada() {
+		textField_CPFRGVendaPersonalizada.setText("");
+		textField_EmailVendaPersonalizada.setText("");
+		textField_EmpresaVendaPersonalizada.setText("");
+		textField_NomeClienteVendaPersonalizada.setText("");
+		textField_PrecoVendaPersonalizada.setText("");
+		textField_QuantidadeVendaPersonalizada.setText("");
+		textField_TelefoneVendaPersonalizada.setText("");
+		textField_ValorProdutoVendaPersonalizada.setText("");
+		textFieldIDVendaPersonalizada.setText("");
+		textFieldNomeProdutoVendaPersonalizada.setText("");
+	}
+
+	public void limpadorDeDadosClientes() {
+		textField_Telefone1Cliente.setText(null);
+		textField_Telefone2Cliente.setText(null);
+		textField_BairroCliente.setText(null);
+		textField_CidadeCliente.setText(null);
+		textField_CNPJCliente.setText(null);
+		textField_CPFCliente.setText(null);
+		textField_EmailCliente.setText(null);
+		textField_EmpresaCliente.setText(null);
+		textField_EnderecoCliente.setText(null);
+		textField_NmrCliente.setText(null);
+		textField_NomeDoClienteCliente.setText(null);
+		textField_TelEmpresaCliente.setText(null);
+		
+	}
+
+	public void limpadorDeDadosProdutos() {
+		
+	}
+
+	public void limpadorDeDadosRelatorioDeVendas() {
+		
+	}
+
+	public void limpadorDeDadosRelatorioDeProdutosAtacado() {
+		
+	}
+
+	public void limpadorDeDadosRelatorioDeProdutosVarejo() {
+		
+	}
+
+	public void limpadorDeDadosBancoFinanceiro() {
+		
+	}
+	
 }

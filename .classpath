@@ -13,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQLConnector"/>
 	<classpathentry kind="lib" path="C:/java-lips/jdbc-connectors/rs2xml.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rs2xml"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/gelaguela_lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
